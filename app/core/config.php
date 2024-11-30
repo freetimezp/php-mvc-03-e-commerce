@@ -1,14 +1,17 @@
 <?php
 
 //path
-$path_root = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+$path_root = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'];
+$path_root = str_replace("index.php", "", $path_root);
+
 define('ROOT', $path_root);
-define('TEMPLATE', "eshop");
+define('THEME', 'eshop/');
 define('ASSETS', $path_root . "assets/");
-define('ASSETS_TEMPLATE', $path_root . "assets/" . TEMPLATE . "/");
+
 
 //title
 define('WEBSITE_TITLE', "Project | MVC | E-Shop");
+
 
 //database
 define('DB_NAME', 'eshop_db');
