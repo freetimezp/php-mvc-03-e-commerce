@@ -17,6 +17,8 @@ define('WEBSITE_TITLE', "Project | MVC | E-Shop");
 define('DB_NAME', 'eshop_db');
 define('DB_USER', 'root');
 define('DB_PASS', '');
+define('DB_TYPE', 'mysql');
+define('DB_HOST', 'localhost');
 
 //debug
 define("DEBUG", true);
