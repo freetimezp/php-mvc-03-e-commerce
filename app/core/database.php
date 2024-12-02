@@ -22,11 +22,40 @@ class Database
             return self::$con;
         }
 
-        $a = new self();
+        return $instance = new self();
+    }
 
-        return self::$con;
+
+    //read from db
+    public function read($query, $data = [])
+    {
+        $stm = self::$con->prepare($query);
+        $result = $stm->execute($data);
+
+        if ($result) {
+            $data = $stm->fetchAll(PDO::FETCH_OBJ);
+
+            if (is_array($data)) {
+                return $data;
+            }
+        }
+
+        return false;
+    }
+
+    //write to db
+    public function write($query, $data = [])
+    {
+        $stm = self::$con->prepare($query);
+        $result = $stm->execute($data);
+
+        if ($result) {
+            return true;
+        }
+
+        return false;
     }
 }
 
-$db = Database::getInstance();
+//$db = Database::getInstance();
 //show($db);
