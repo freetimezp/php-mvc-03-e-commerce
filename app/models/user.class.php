@@ -53,6 +53,7 @@ class User
             //save
             $data['rank'] = "customer";
             $data['date'] = date("Y-m-d H:i:s");
+            $data['password'] = hash("sha1", $data['password']);
 
             $query = "INSERT INTO users (url_address, name, email, password, rank, date) 
                 VALUES (:url_address, :name, :email, :password, :rank, :date)";
@@ -68,7 +69,43 @@ class User
         $_SESSION['error'] = $this->error;
     }
 
-    public function login($POST) {}
+    public function login($POST)
+    {
+        $data = [];
+        $db = Database::getInstance();
+
+        $data['email'] = trim($_POST['email']);
+        $data['password'] = trim($_POST['password']);
+
+        //validate email
+        if (empty($data['email']) || !preg_match("/^[a-zA-Z0-9_-]+@[a-zA-Z]+.[a-zA-Z]+$/", $data['email'])) {
+            $this->error .= "Please enter a valid email. Use only letters, numbers, -, _. <br>";
+        }
+
+        //validate passwords
+        if (strlen($data['password']) < 8) {
+            $this->error .= "Password must be at least 8 characters long. <br>";
+        }
+
+        if ($this->error == "") {
+            //get user from db
+            $data['password'] = hash("sha1", $data['password']);
+
+            $query = "SELECT * FROM users WHERE email = :email && password = :password LIMIT 1";
+            $result = $db->read($query, $data);
+            if (is_array($result)) {
+                $_SESSION['user_url'] = $result[0]->url_address;
+
+                header("Location: " . ROOT . "home");
+                die;
+            }
+
+            //if email not found or password not match
+            $this->error .= "User not found or password is incorrect. <br>";
+        }
+
+        $_SESSION['error'] = $this->error;
+    }
 
     public function get_user($url) {}
 

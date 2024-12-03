@@ -36,6 +36,12 @@
                             <ul class="nav nav-pills">
                                 <li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
                                 <li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
+                                <li style="max-width: 200px; overflow-x: hidden;">
+                                    <a href="#" style="display: flex; align-items:center; column-gap: 5px;">
+                                        <i class="fa fa-user"></i>
+                                        <span><?= $_SESSION['user_url']; ?></span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
