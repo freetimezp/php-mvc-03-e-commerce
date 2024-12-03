@@ -7,6 +7,8 @@ class User
     public function signup($POST)
     {
         $data = [];
+        $db = Database::getInstance();
+
         $data['name'] = trim($_POST['name']);
         $data['email'] = trim($_POST['email']);
         $data['password'] = trim($_POST['password']);
@@ -31,16 +33,30 @@ class User
         }
 
 
+        //check if email already exist
+        $sql = "SELECT * FROM users WHERE email = :email LIMIT 1";
+        $check = $db->read($sql, ['email' => $data['email']]);
+        if (is_array($check)) {
+            $this->error .= "This email already in use. Try another, please. <br>";
+        }
+
+
+        //check unique url string id
+        $data['url_address'] = $this->random_string(60);
+        $sql2 = "SELECT * FROM users WHERE url_address = :url_address LIMIT 1";
+        $check2 = $db->read($sql2, ['url_address' => $data['url_address']]);
+        if (is_array($check2)) {
+            $data['url_address'] = $this->random_string(60);
+        }
+
         if ($this->error == "") {
             //save
             $data['rank'] = "customer";
-            $data['url_address'] = $this->random_string(60);
             $data['date'] = date("Y-m-d H:i:s");
 
             $query = "INSERT INTO users (url_address, name, email, password, rank, date) 
                 VALUES (:url_address, :name, :email, :password, :rank, :date)";
 
-            $db = Database::getInstance();
             $result = $db->write($query, $data);
 
             if ($result) {
@@ -48,6 +64,8 @@ class User
                 die;
             }
         }
+
+        $_SESSION['error'] = $this->error;
     }
 
     public function login($POST) {}
