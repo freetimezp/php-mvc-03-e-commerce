@@ -119,4 +119,33 @@ class User
         }
         return $text;
     }
+
+
+    public function check_login()
+    {
+        if (isset($_SESSION['user_url'])) {
+            $arr['url'] = $_SESSION['user_url'];
+
+            $query = "SELECT * FROM users WHERE url_address = :url LIMIT 1";
+            $db = Database::getInstance();
+            $result = $db->read($query, $arr);
+
+            if (is_array($result)) {
+                return $result[0];
+            }
+        }
+
+        return false;
+    }
+
+
+    public function logout()
+    {
+        if (isset($_SESSION['user_url'])) {
+            unset($_SESSION['user_url']);
+        }
+
+        header("Location: " . ROOT . "home");
+        die;
+    }
 }

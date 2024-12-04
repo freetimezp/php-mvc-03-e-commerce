@@ -36,12 +36,15 @@
                             <ul class="nav nav-pills">
                                 <li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
                                 <li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
-                                <li style="max-width: 200px; overflow-x: hidden;">
-                                    <a href="#" style="display: flex; align-items:center; column-gap: 5px;">
-                                        <i class="fa fa-user"></i>
-                                        <span><?= $_SESSION['user_url']; ?></span>
-                                    </a>
-                                </li>
+
+                                <?php if (isset($data['user_data'])): ?>
+                                    <li style="max-width: 200px; overflow-x: hidden;">
+                                        <a href="#" style="display: flex; align-items:center; column-gap: 5px;">
+                                            <i class="fa fa-user"></i>
+                                            <span><?= ucfirst($data['user_data']->name); ?></span>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
                             </ul>
                         </div>
                     </div>
@@ -98,7 +101,12 @@
                                 <li><a href="<?= ROOT ?>"><i class="fa fa-star"></i> Wishlist</a></li>
                                 <li><a href="<?= ROOT ?>checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                 <li><a href="<?= ROOT ?>cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                <li><a href="<?= ROOT ?>login"><i class="fa fa-lock"></i> Login</a></li>
+
+                                <?php if (isset($data['user_data'])): ?>
+                                    <li><a href="<?= ROOT ?>logout"><i class="fa fa-lock"></i> Logout</a></li>
+                                <?php else: ?>
+                                    <li><a href="<?= ROOT ?>login"><i class="fa fa-lock"></i> Login</a></li>
+                                <?php endif; ?>
                             </ul>
                         </div>
                     </div>
