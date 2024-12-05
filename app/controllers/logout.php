@@ -6,5 +6,7 @@ class Logout extends Controller
     {
         $user = $this->load_model("user");
         $user->logout();
+
+        $this->view("home");
     }
 }

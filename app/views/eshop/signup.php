@@ -11,8 +11,10 @@
                     </div>
                     <h2>New User Signup!</h2>
                     <form method="POST">
-                        <input type="text" name="name" placeholder="Name" />
-                        <input type="email" name="email" placeholder="Email Address" />
+                        <input type="text" value="<?= isset($_POST['name']) ? $_POST['name'] : ''; ?>"
+                            name="name" placeholder="Name" />
+                        <input type="email" value="<?= isset($_POST['email']) ? $_POST['email'] : ''; ?>"
+                            name="email" placeholder="Email Address" />
                         <input type="password" name="password" placeholder="Password" />
                         <input type="password" name="password2" placeholder="Confirm Password" />
                         <button type="submit" class="btn btn-default">Signup</button>
