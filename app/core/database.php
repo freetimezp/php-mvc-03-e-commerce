@@ -55,6 +55,23 @@ class Database
 
         return false;
     }
+
+
+    public function query($query, $data = [])
+    {
+        $con = Database::getInstance();
+        $stm = $con->prepare($query);
+
+        $check = $stm->execute($data);
+        if ($check) {
+            $result = $stm->fetchAll(PDO::FETCH_OBJ);
+            if (is_array($result) && count($result)) {
+                return $result;
+            }
+        }
+
+        return false;
+    }
 }
 
 //$db = Database::getInstance();

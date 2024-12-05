@@ -4,6 +4,8 @@ class User
 {
     private $error = "";
 
+    protected $table = 'users';
+
     public function signup($POST)
     {
         $data = [];
@@ -147,5 +149,23 @@ class User
 
         header("Location: " . ROOT . "home");
         die;
+    }
+
+
+    //create table users
+    public function create_table()
+    {
+        $query = "create table if not exists models(
+			id int primary key auto_increment,
+			url_address varchar(60) not null,
+			name varchar(20) not null,
+			email varchar(100) not null,
+			password varchar(64) not null,
+			date datetime not null,
+			rank varchar(10) not null			
+		)";
+        $db = new Database();
+        //show($db);
+        $db->query($query);
     }
 }
