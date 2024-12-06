@@ -24,6 +24,11 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72"
         href="<?= ASSETS . THEME ?>images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="<?= ASSETS . THEME ?>images/ico/apple-touch-icon-57-precomposed.png">
+
+
+    <!-- Custom styles for this admin template -->
+    <link href="<?= ASSETS ?>admin/assets/css/style.css" rel="stylesheet">
+    <link href="<?= ASSETS ?>admin/assets/css/style-responsive.css" rel="stylesheet">
 </head><!--/head-->
 
 <body>
@@ -97,7 +102,10 @@
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
-                                <li><a href="<?= ROOT ?>"><i class="fa fa-user"></i> Account</a></li>
+                                <?php if (isset($data['user_data']) && $data['user_data']->rank == 'admin'): ?>
+                                    <li><a href="<?= ROOT ?>profile"><i class="fa fa-user"></i> Profile</a></li>
+                                <?php endif; ?>
+
                                 <li><a href="<?= ROOT ?>"><i class="fa fa-star"></i> Wishlist</a></li>
                                 <li><a href="<?= ROOT ?>checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                 <li><a href="<?= ROOT ?>cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>

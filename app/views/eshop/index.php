@@ -723,7 +723,6 @@
 												<p>Easy Polo Black Edition</p>
 												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 											</div>
-
 										</div>
 									</div>
 								</div>

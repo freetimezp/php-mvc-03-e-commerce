@@ -123,7 +123,7 @@ class User
     }
 
 
-    public function check_login()
+    public function check_login($redirect = false)
     {
         if (isset($_SESSION['user_url'])) {
             $arr['url'] = $_SESSION['user_url'];
@@ -135,6 +135,11 @@ class User
             if (is_array($result)) {
                 return $result[0];
             }
+        }
+
+        if ($redirect) {
+            header("Location: " . ROOT . "login");
+            die;
         }
 
         return false;

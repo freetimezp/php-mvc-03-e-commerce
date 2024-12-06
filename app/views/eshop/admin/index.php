@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="<?= ASSETS ?>admin/assets/js/gritter/css/jquery.gritter.css" />
     <link rel="stylesheet" type="text/css" href="<?= ASSETS ?>admin/assets/lineicons/style.css">
 
-    <!-- Custom styles for this template -->
+    <!-- Custom styles for this admin template -->
     <link href="<?= ASSETS ?>admin/assets/css/style.css" rel="stylesheet">
     <link href="<?= ASSETS ?>admin/assets/css/style-responsive.css" rel="stylesheet">
 
@@ -358,7 +358,7 @@
                                         var myDoughnut = new Chart(document.getElementById("serverstatus01").getContext("2d")).Doughnut(doughnutData);
                                     </script>
                                 </div>
-                                <! --/grey-panel -->
+                                <!--/grey-panel -->
                             </div><!-- /col-md-4-->
 
 
