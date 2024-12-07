@@ -123,23 +123,46 @@ class User
     }
 
 
-    public function check_login($redirect = false)
+    public function check_login($redirect = false, $allowed = [])
     {
-        if (isset($_SESSION['user_url'])) {
-            $arr['url'] = $_SESSION['user_url'];
+        $db = Database::getInstance();
+        if (count($allowed) > 0) {
+            //show("here admin");
 
-            $query = "SELECT * FROM users WHERE url_address = :url LIMIT 1";
-            $db = Database::getInstance();
+            $arr['url'] = isset($_SESSION['user_url']) ? $_SESSION['user_url'] : "";
+            $query = "SELECT rank FROM users WHERE url_address = :url LIMIT 1";
             $result = $db->read($query, $arr);
 
             if (is_array($result)) {
-                return $result[0];
-            }
-        }
+                $result = $result[0];
+                //show($result->rank);
 
-        if ($redirect) {
+                if (in_array($result->rank, $allowed)) {
+                    return $result;
+                }
+            }
+
             header("Location: " . ROOT . "login");
             die;
+        } else {
+            //show("here customer or not admin");
+
+            if (isset($_SESSION['user_url'])) {
+                $arr = false;
+                $arr['url'] = $_SESSION['user_url'];
+
+                $query = "SELECT * FROM users WHERE url_address = :url LIMIT 1";
+                $result = $db->read($query, $arr);
+
+                if (is_array($result)) {
+                    return $result[0];
+                }
+            }
+
+            if ($redirect) {
+                header("Location: " . ROOT . "login");
+                die;
+            }
         }
 
         return false;

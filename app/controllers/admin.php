@@ -7,7 +7,7 @@ class Admin extends Controller
         $data['page_title'] = "Admin";
 
         $user = $this->load_model('user');
-        $user_data = $user->check_login();
+        $user_data = $user->check_login(true, ['admin']);
 
         if (!empty($user_data)) {
             $data['user_data'] = $user_data;
