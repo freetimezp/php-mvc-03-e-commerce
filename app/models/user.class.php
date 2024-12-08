@@ -183,7 +183,7 @@ class User
     //create table users
     public function create_table()
     {
-        $query = "create table if not exists models(
+        $query = "create table if not exists users(
 			id int primary key auto_increment,
 			url_address varchar(60) not null,
 			name varchar(20) not null,
@@ -191,6 +191,40 @@ class User
 			password varchar(64) not null,
 			date datetime not null,
 			rank varchar(10) not null			
+		)";
+        $db = new Database();
+        //show($db);
+        $db->query($query);
+    }
+
+    //create table categories
+    public function create_table_categories()
+    {
+        $query = "create table if not exists categories(
+			id int primary key auto_increment,
+			category varchar(30) not null		
+		)";
+        $db = new Database();
+        //show($db);
+        $db->query($query);
+    }
+
+    //create table products
+    public function create_table_products()
+    {
+        $query = "create table if not exists products(
+			id int primary key auto_increment,
+			user_url varchar(60) not null,
+			description varchar(250) not null,
+			category int not null,
+			price double not null,
+			quantity int not null,
+			image varchar(500) null,
+			image2 varchar(500) null,
+			image3 varchar(500) null,
+			image4 varchar(500) null,
+			date datetime not null,
+			slag varchar(100) not null		
 		)";
         $db = new Database();
         //show($db);

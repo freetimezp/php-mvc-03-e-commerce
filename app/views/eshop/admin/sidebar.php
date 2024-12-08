@@ -42,6 +42,7 @@
                     <span>Categories</span>
                 </a>
                 <ul class="sub">
+                    <li><a href="<?= ROOT ?>admin/categories">View Categories</a></li>
                     <li><a href="<?= ROOT ?>admin/categories/add">Add New Category</a></li>
                     <li><a href="<?= ROOT ?>admin/categories/edit">Edit Category</a></li>
                     <li><a href="<?= ROOT ?>admin/categories/delete">Delete Category</a></li>
