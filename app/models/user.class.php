@@ -130,7 +130,7 @@ class User
             //show("here admin");
 
             $arr['url'] = isset($_SESSION['user_url']) ? $_SESSION['user_url'] : "";
-            $query = "SELECT rank FROM users WHERE url_address = :url LIMIT 1";
+            $query = "SELECT * FROM users WHERE url_address = :url LIMIT 1";
             $result = $db->read($query, $arr);
 
             if (is_array($result)) {
