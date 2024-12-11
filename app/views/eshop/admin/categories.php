@@ -5,6 +5,27 @@
 <!-- ADMIN SIDEBAR -->
 <?php $this->view("admin/sidebar", $data);  ?>
 
+<style type="text/css">
+    .add_new {
+        width: 700px;
+        height: 400px;
+        background-color: #cecccc;
+        position: absolute;
+        padding: 6px;
+        display: block;
+        box-shadow: 0px 0px 10px #aaa;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .add_new button {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+    }
+</style>
 
 <h3>Categories</h3>
 
@@ -14,13 +35,29 @@
             <table class="table table-striped table-advance table-hover">
                 <h4>
                     Product Categories |
-                    <button class="btn btn-primary btn-xs">
+                    <button class="btn btn-primary btn-sm" onclick="show_add_new(event)">
                         <i class="fa fa-plus"></i> Add new
                     </button>
                 </h4>
 
                 <!-- add new category -->
-                <div class="add_new"></div>
+                <div class="add_new hide">
+                    <h4 class="mb">
+                        <i class="fa fa-angle-right"></i> Add new Category
+                    </h4>
+
+                    <form class="form-horizontal style-form" method="post">
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Category:</label>
+                            <div class="col-sm-10">
+                                <input name="category" type="text" class="form-control" id="category">
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-sm btn-primary">Save</button>
+                    </form>
+
+                </div>
 
                 <hr>
                 <thead>
@@ -57,8 +94,15 @@
     </div><!-- /col-md-12 -->
 </div><!-- /row -->
 
+<script>
+    function show_add_new(e) {
 
+        const show_box = document.querySelector(".add_new");
 
+        show_box.classList.toggle('hide');
+
+    };
+</script>
 
 <!-- ADMIN FOOTER -->
 <?php $this->view("admin/footer", $data);  ?>

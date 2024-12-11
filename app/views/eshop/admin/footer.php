@@ -25,7 +25,7 @@
 <script src="<?= ASSETS ?>admin/assets/js/jquery.ui.touch-punch.min.js"></script>
 <script class="include" type="text/javascript" src="<?= ASSETS ?>admin/assets/js/jquery.dcjqaccordion.2.7.js"></script>
 <script src="<?= ASSETS ?>admin/assets/js/jquery.scrollTo.min.js"></script>
-<script src="<?= ASSETS ?>admin/assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+<!-- <script src="<?= ASSETS ?>admin/assets/js/jquery.nicescroll.js" type="text/javascript"></script> -->
 
 
 <!--common script for all pages-->
@@ -36,9 +36,9 @@
 <script>
     //custom select box
 
-    $(function() {
-        $('select.styled').customSelect();
-    });
+    // $(function() {
+    //     $('select.styled').customSelect();
+    // });
 </script>
 
 </body>
