@@ -25,6 +25,12 @@
         bottom: 20px;
         right: 20px;
     }
+
+    .add_new button.btn-secondary {
+        position: absolute;
+        bottom: 20px;
+        right: 80px;
+    }
 </style>
 
 <h3>Categories</h3>
@@ -54,7 +60,12 @@
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-sm btn-primary">Save</button>
+                        <button type="button" class="btn btn-sm btn-secondary"
+                            onclick="show_add_new(event)">Cancel
+                        </button>
+                        <button type="button" class="btn btn-sm btn-primary"
+                            onclick="send_data(event)">Save
+                        </button>
                     </form>
 
                 </div>
@@ -96,11 +107,27 @@
 
 <script>
     function show_add_new(e) {
-
         const show_box = document.querySelector(".add_new");
-
         show_box.classList.toggle('hide');
+    };
 
+    function collect_data(e) {
+
+    };
+
+    function send_data(data) {
+        const ajax = new XMLHttpRequest();
+        const form = new FormData();
+
+        form.append('name', 'myname');
+        ajax.addEventListener("readystatechange", function() {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                alert(ajax.responseText);
+            }
+        });
+
+        ajax.open("POST", "<?= ROOT ?>ajax", true);
+        ajax.send(form);
     };
 </script>
 
