@@ -56,7 +56,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Category:</label>
                             <div class="col-sm-10">
-                                <input name="category" type="text" class="form-control" id="category">
+                                <input name="category" type="text" class="form-control" id="category" required>
                             </div>
                         </div>
 
@@ -64,7 +64,7 @@
                             onclick="show_add_new(event)">Cancel
                         </button>
                         <button type="button" class="btn btn-sm btn-primary"
-                            onclick="send_data(event)">Save
+                            onclick="collect_data(event)">Save
                         </button>
                     </form>
 
@@ -106,28 +106,43 @@
 </div><!-- /row -->
 
 <script>
-    function show_add_new(e) {
+    const category = document.getElementById("category");
+
+    function show_add_new() {
         const show_box = document.querySelector(".add_new");
         show_box.classList.toggle('hide');
+        category.value = "";
     };
 
     function collect_data(e) {
+        if (category.value.trim() == "" || !isNaN(category.value.trim())) {
+            alert("Plaese, enter a new category name..");
+        }
 
+        var data = category.value.trim();
+
+        send_data({
+            data: data
+        });
     };
 
-    function send_data(data) {
+    function send_data(data = {}) {
         const ajax = new XMLHttpRequest();
-        const form = new FormData();
 
-        form.append('name', 'myname');
         ajax.addEventListener("readystatechange", function() {
             if (ajax.readyState == 4 && ajax.status == 200) {
-                alert(ajax.responseText);
+                handle_result(ajax.responseText);
             }
         });
 
         ajax.open("POST", "<?= ROOT ?>ajax", true);
-        ajax.send(form);
+        ajax.send(JSON.stringify(data));
+    };
+
+    function handle_result(result) {
+        alert(result);
+
+        show_add_new();
     };
 </script>
 

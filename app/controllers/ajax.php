@@ -5,7 +5,6 @@ class Ajax extends Controller
     public function index()
     {
         $data = file_get_contents("php://input");
-        //print_r(json_decode($data, true));
-        print_r($_POST);
+        print_r(json_decode($data, true));
     }
 }
