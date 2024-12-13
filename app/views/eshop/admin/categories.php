@@ -122,7 +122,8 @@
         var data = category.value.trim();
 
         send_data({
-            data: data
+            data: data,
+            data_type: "add_category"
         });
     };
 
@@ -140,9 +141,19 @@
     };
 
     function handle_result(result) {
-        alert(result);
+        if (result != "") {
+            var obj = JSON.parse(result);
 
-        show_add_new();
+            if (typeof obj.message_type != 'undefined') {
+                if (obj.message_type == 'info') {
+                    alert(obj.message);
+                    show_add_new();
+                } else {
+                    alert(obj.message);
+                }
+            }
+        }
+
     };
 </script>
 
