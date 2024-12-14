@@ -25,6 +25,11 @@ class Database
         return $instance = new self();
     }
 
+    public static function newInstance()
+    {
+        return $instance = new self();
+    }
+
 
     //read from db
     public function read($query, $data = [])

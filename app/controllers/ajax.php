@@ -6,6 +6,7 @@ class Ajax extends Controller
     {
         $data = file_get_contents("php://input");
         $data = json_decode($data);
+        //var_dump($data);
 
         if (is_object($data)) {
             if ($data->data_type == 'add_category') {
@@ -23,7 +24,10 @@ class Ajax extends Controller
                 } else {
                     $arr['message'] = 'Category added successfully';
                     $arr['message_type'] = 'info';
-                    $arr['data'] = "";
+
+                    $cats = $category->get_all();
+                    $arr['data'] = $category->make_table($cats);
+                    //var_dump($cats);
 
                     echo json_encode($arr);
                 }

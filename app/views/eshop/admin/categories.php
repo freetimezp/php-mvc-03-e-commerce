@@ -74,18 +74,14 @@
                 <thead>
                     <tr>
                         <th><i class="fa fa-bullhorn"></i> Category</th>
-                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> Descrition</th>
-                        <th><i class="fa fa-bookmark"></i> Price</th>
                         <th><i class=" fa fa-edit"></i> Status</th>
                         <th><i class=" fa fa-edit"></i> Actions</th>
 
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="table_body">
                     <tr>
                         <td><a href="basic_table.html#">Company Ltd</a></td>
-                        <td class="hidden-phone">Lorem Ipsum dolor</td>
-                        <td>12000.00$ </td>
                         <td><span class="label label-info label-mini">Enabled</span></td>
                         <td>
                             <button class="btn btn-success btn-xs">
@@ -106,7 +102,7 @@
 </div><!-- /row -->
 
 <script>
-    const category = document.getElementById("category");
+    var category = document.getElementById("category");
 
     function show_add_new() {
         const show_box = document.querySelector(".add_new");
@@ -140,7 +136,10 @@
         ajax.send(JSON.stringify(data));
     };
 
+
     function handle_result(result) {
+        //console.log(result);
+
         if (result != "") {
             var obj = JSON.parse(result);
 
@@ -148,6 +147,9 @@
                 if (obj.message_type == 'info') {
                     alert(obj.message);
                     show_add_new();
+
+                    var table_body = document.querySelector("#table_body");
+                    table_body.innerHTML = obj.data;
                 } else {
                     alert(obj.message);
                 }
