@@ -29,6 +29,16 @@ class Admin extends Controller
             $data['user_data'] = $user_data;
         }
 
+        $db = Database::newInstance();
+        $categories = $db->read("SELECT * FROM categories ORDER BY id DESC");
+
+        $category = $this->load_model("category");
+        $table_rows = $category->make_table($categories);
+
+        if (!empty($categories)) {
+            $data['table_rows'] = $table_rows;
+        }
+
         //show($data);
         $this->view("admin/categories", $data);
     }

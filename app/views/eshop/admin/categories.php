@@ -80,8 +80,13 @@
                     </tr>
                 </thead>
                 <tbody id="table_body">
-                    <tr>
-                        <td><a href="basic_table.html#">Company Ltd</a></td>
+                    <?php if (
+                        isset($data['table_rows'])
+                        && (!empty($data['table_rows']) || $data['table_rows'] != "")
+                    ): ?>
+                        <?= $data['table_rows']; ?>
+                    <?php else: ?>
+                        <td><a href="basic_table.html#">Example row</a></td>
                         <td><span class="label label-info label-mini">Enabled</span></td>
                         <td>
                             <button class="btn btn-success btn-xs">
@@ -94,7 +99,7 @@
                                 <i class="fa fa-trash-o "></i>
                             </button>
                         </td>
-                    </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div><!-- /content-panel -->
