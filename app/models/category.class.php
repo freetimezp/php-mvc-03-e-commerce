@@ -22,7 +22,15 @@ class Category
         return false;
     }
 
-    public function adit($data) {}
+    public function edit($id, $category)
+    {
+        $db = Database::newInstance();
+        $arr['id'] = $id;
+        $arr['category'] = $category;
+        $query = "UPDATE categories SET category = :category WHERE id = :id LIMIT 1";
+
+        $db->write($query, $arr);
+    }
 
     public function delete($id)
     {
@@ -52,6 +60,7 @@ class Category
                 $cat_row->disabled = $cat_row->disabled ? "Disabled" : "Enabled";
 
                 $args = $cat_row->id . ",'" . $cat_row->disabled . "'";
+                $edit_args = $cat_row->id . ",'" . $cat_row->category . "'";
 
                 $result .= "<tr>";
                 $result .= '
@@ -66,7 +75,7 @@ class Category
                     </td>
                     <td>
                         <button class="btn btn-primary btn-xs" row_id="' . $cat_row->id  . '"
-                            onclick="edit_row(' . $cat_row->id  . ')">
+                            onclick="show_edit_category(' . $edit_args  . ', event)">
                             <i class="fa fa-pencil"></i>
                         </button>
                         <button class="btn btn-danger btn-xs" row_id="' . $cat_row->id . '"

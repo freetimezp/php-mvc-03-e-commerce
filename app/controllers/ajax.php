@@ -40,7 +40,7 @@ class Ajax extends Controller
                 //delete category
                 $category->delete($data->id);
 
-                $arr['message'] = "Your message was deleted!";
+                $arr['message'] = "Your category was deleted!";
                 $_SESSION['error'] = "";
 
                 $arr['message_type'] = 'info';
@@ -63,6 +63,20 @@ class Ajax extends Controller
 
                 $arr['message_type'] = 'info';
                 $arr['data_type'] = "disable_row";
+
+                $cats = $category->get_all();
+                $arr['data'] = $category->make_table($cats);
+
+                echo json_encode($arr);
+            } else if ($data->data_type == 'edit_category') {
+                //edit category
+                $category->edit($data->id, $data->category);
+
+                $arr['message'] = "Your category was updated!";
+                $_SESSION['error'] = "";
+
+                $arr['message_type'] = 'info';
+                $arr['data_type'] = "edit_category";
 
                 $cats = $category->get_all();
                 $arr['data'] = $category->make_table($cats);

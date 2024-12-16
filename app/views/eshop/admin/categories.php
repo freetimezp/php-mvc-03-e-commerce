@@ -6,7 +6,8 @@
 <?php $this->view("admin/sidebar", $data);  ?>
 
 <style type="text/css">
-    .add_new {
+    .add_new,
+    .edit_category {
         width: 700px;
         height: 400px;
         background-color: #cecccc;
@@ -20,13 +21,15 @@
         display: none;
     }
 
-    .add_new button {
+    .add_new button,
+    .edit_category button {
         position: absolute;
         bottom: 20px;
         right: 20px;
     }
 
-    .add_new button.btn-secondary {
+    .add_new button.btn-secondary,
+    .edit_category button.btn-secondary {
         position: absolute;
         bottom: 20px;
         right: 80px;
@@ -67,8 +70,32 @@
                             onclick="collect_data(event)">Save
                         </button>
                     </form>
-
                 </div>
+                <!-- end add new category -->
+
+                <!-- edit category -->
+                <div class="edit_category hide">
+                    <h4 class="mb">
+                        <i class="fa fa-angle-right"></i> Edit Category
+                    </h4>
+
+                    <form class="form-horizontal style-form" method="post">
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Category:</label>
+                            <div class="col-sm-10">
+                                <input name="category" type="text" class="form-control" id="category_edit" required>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-sm btn-secondary"
+                            onclick="show_edit_category(0, '', event)">Cancel
+                        </button>
+                        <button type="button" class="btn btn-sm btn-primary"
+                            onclick="collect_edit_data(event)">Save
+                        </button>
+                    </form>
+                </div>
+                <!-- end edit category -->
 
                 <hr>
                 <thead>
@@ -104,12 +131,26 @@
 </div><!-- /row -->
 
 <script>
+    var EDIT_ID = 0;
     var category = document.getElementById("category");
 
     function show_add_new() {
         const show_box = document.querySelector(".add_new");
         show_box.classList.toggle('hide');
         category.value = "";
+    };
+
+    function show_edit_category(id, category, e) {
+        EDIT_ID = id;
+
+        const show_edit_box = document.querySelector(".edit_category");
+        let category_input = document.getElementById("category_edit");
+
+        if (category_input) {
+            category_input.value = category;
+        }
+
+        show_edit_box.classList.toggle('hide');
     };
 
     function collect_data(e) {
@@ -122,6 +163,22 @@
         send_data({
             data: data,
             data_type: "add_category"
+        });
+    };
+
+    function collect_edit_data(e) {
+        let category_input = document.getElementById("category_edit");
+
+        if (category_input.value.trim() == "" || !isNaN(category_input.value.trim())) {
+            alert("Plaese, enter a new category name..");
+        }
+
+        var data = category_input.value.trim();
+
+        send_data({
+            id: EDIT_ID,
+            category: data,
+            data_type: "edit_category"
         });
     };
 
@@ -162,6 +219,12 @@
                     table_body.innerHTML = obj.data;
                 } else if (obj.data_type == 'disable_row') {
                     //console.log(obj);
+                    var table_body = document.querySelector("#table_body");
+                    table_body.innerHTML = obj.data;
+                } else if (obj.data_type == 'edit_category') {
+                    //console.log(obj);
+                    show_edit_category(0, '', false);
+
                     var table_body = document.querySelector("#table_body");
                     table_body.innerHTML = obj.data;
                 }
