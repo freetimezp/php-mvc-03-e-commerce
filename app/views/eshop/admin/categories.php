@@ -158,6 +158,8 @@
                     }
                 } else if (obj.data_type == 'delete_row') {
                     //console.log(obj);
+                    var table_body = document.querySelector("#table_body");
+                    table_body.innerHTML = obj.data;
                 } else if (obj.data_type == 'disable_row') {
                     //console.log(obj);
                     var table_body = document.querySelector("#table_body");
@@ -168,15 +170,24 @@
     };
 
     function edit_row(id) {
-        console.log(id);
+        //console.log(id);
 
-
+        send_data({
+            data_type: ""
+        });
     };
 
     function delete_row(id) {
-        console.log(id);
+        //console.log(id);
 
+        var answer = confirm("Are you sure you want to delete this row?");
 
+        if (!answer) return;
+
+        send_data({
+            data_type: "delete_row",
+            id: id
+        });
     };
 
     function disable_row(id, state) {

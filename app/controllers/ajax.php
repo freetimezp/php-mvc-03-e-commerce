@@ -37,14 +37,21 @@ class Ajax extends Controller
                     echo json_encode($arr);
                 }
             } else if ($data->data_type == 'delete_row') {
+                //delete category
+                $category->delete($data->id);
+
                 $arr['message'] = "Your message was deleted!";
                 $_SESSION['error'] = "";
 
                 $arr['message_type'] = 'info';
                 $arr['data_type'] = "delete_row";
 
+                $cats = $category->get_all();
+                $arr['data'] = $category->make_table($cats);
+
                 echo json_encode($arr);
             } else if ($data->data_type == 'disable_row') {
+                //disable category
                 $id = $data->id;
                 $disabled = ($data->current_state == "Disabled") ? 0 : 1;
 

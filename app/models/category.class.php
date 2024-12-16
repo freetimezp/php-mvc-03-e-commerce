@@ -4,7 +4,7 @@ class Category
 {
     public function create($DATA)
     {
-        $db = Database::getInstance();
+        $db = Database::newInstance();
 
         $arr['category'] = ucwords($DATA->data);
 
@@ -24,7 +24,14 @@ class Category
 
     public function adit($data) {}
 
-    public function delete($data) {}
+    public function delete($id)
+    {
+        $db = Database::newInstance();
+        $id = (int)$id;
+        $query = "DELETE FROM categories WHERE id = '$id' LIMIT 1";
+
+        $db->write($query);
+    }
 
     public function get_all()
     {
