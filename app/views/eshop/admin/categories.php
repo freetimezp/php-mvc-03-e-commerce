@@ -82,16 +82,13 @@
                 <tbody id="table_body">
                     <?php if (
                         isset($data['table_rows'])
-                        && (!empty($data['table_rows']) || $data['table_rows'] != "")
+                        && (!empty($table_rows) || $table_rows != "")
                     ): ?>
                         <?= $data['table_rows']; ?>
                     <?php else: ?>
                         <td><a href="basic_table.html#">Example row</a></td>
                         <td><span class="label label-info label-mini">Enabled</span></td>
                         <td>
-                            <button class="btn btn-success btn-xs">
-                                <i class="fa fa-check"></i>
-                            </button>
                             <button class="btn btn-primary btn-xs">
                                 <i class="fa fa-pencil"></i>
                             </button>
@@ -148,20 +145,47 @@
         if (result != "") {
             var obj = JSON.parse(result);
 
-            if (typeof obj.message_type != 'undefined') {
-                if (obj.message_type == 'info') {
-                    alert(obj.message);
-                    show_add_new();
+            if (typeof obj.data_type != 'undefined') {
+                if (obj.data_type == 'add_new') {
+                    if (obj.message_type == 'info') {
+                        alert(obj.message);
+                        show_add_new();
 
+                        var table_body = document.querySelector("#table_body");
+                        table_body.innerHTML = obj.data;
+                    } else {
+                        alert(obj.message);
+                    }
+                } else if (obj.data_type == 'delete_row') {
+                    //console.log(obj);
+                } else if (obj.data_type == 'disable_row') {
+                    //console.log(obj);
                     var table_body = document.querySelector("#table_body");
                     table_body.innerHTML = obj.data;
-                } else {
-                    alert(obj.message);
                 }
             }
         }
+    };
+
+    function edit_row(id) {
+        console.log(id);
+
 
     };
+
+    function delete_row(id) {
+        console.log(id);
+
+
+    };
+
+    function disable_row(id, state) {
+        send_data({
+            data_type: "disable_row",
+            id: id,
+            current_state: state
+        });
+    }
 </script>
 
 <!-- ADMIN FOOTER -->

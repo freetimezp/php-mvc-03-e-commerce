@@ -40,20 +40,30 @@ class Category
         $result = "";
 
         if (is_array($cats)) {
-
             foreach ($cats as $cat_row) {
+                $class = $cat_row->disabled == 0 ? "success" : "warning";
+                $cat_row->disabled = $cat_row->disabled ? "Disabled" : "Enabled";
+
+                $args = $cat_row->id . ",'" . $cat_row->disabled . "'";
+
                 $result .= "<tr>";
                 $result .= '
                     <td><a href="basic_table.html"> ' . $cat_row->category . '</a></td>
-                    <td><span class="label label-info label-mini">' . $cat_row->disabled . '</span></td>
                     <td>
-                        <button class="btn btn-success btn-xs">
-                            <i class="fa fa-check"></i>
-                        </button>
-                        <button class="btn btn-primary btn-xs">
+                        <span 
+                            class="label label-' . $class .  ' label-mini" 
+                            style="cursor: pointer;" 
+                            onclick="disable_row(' . $args . ')"> 
+                            ' . $cat_row->disabled . ' 
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-xs" row_id="' . $cat_row->id  . '"
+                            onclick="edit_row(' . $cat_row->id  . ')">
                             <i class="fa fa-pencil"></i>
                         </button>
-                        <button class="btn btn-danger btn-xs">
+                        <button class="btn btn-danger btn-xs" row_id="' . $cat_row->id . '"
+                            onclick="delete_row(' . $cat_row->id  . ')">
                             <i class="fa fa-trash-o "></i>
                         </button>
                     </td>     
