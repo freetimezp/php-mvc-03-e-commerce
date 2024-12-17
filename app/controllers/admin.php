@@ -42,4 +42,30 @@ class Admin extends Controller
         //show($data);
         $this->view("admin/categories", $data);
     }
+
+
+    public function products()
+    {
+        $data['page_title'] = "Admin";
+
+        $user = $this->load_model('user');
+        $user_data = $user->check_login(true, ['admin']);
+
+        if (!empty($user_data)) {
+            $data['user_data'] = $user_data;
+        }
+
+        $db = Database::newInstance();
+        $products = $db->read("SELECT * FROM products ORDER BY id DESC");
+
+        $product = $this->load_model("product");
+        $table_rows = $product->make_table($products);
+
+        if (!empty($products)) {
+            $data['table_rows'] = $table_rows;
+        }
+
+        //show($data);
+        $this->view("admin/products", $data);
+    }
 }
