@@ -9,7 +9,7 @@
     .add_new,
     .edit_product {
         width: 700px;
-        height: 400px;
+        height: 500px;
         background-color: #cecccc;
         position: absolute;
         padding: 6px;
@@ -57,9 +57,71 @@
 
                     <form class="form-horizontal style-form" method="post">
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">Product:</label>
+                            <label class="col-sm-2 col-sm-2 control-label">Description:</label>
                             <div class="col-sm-10">
-                                <input name="product" type="text" class="form-control" id="product" required>
+                                <input name="product-title" type="text" class="form-control"
+                                    id="product-description" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Quantity:</label>
+                            <div class="col-sm-4">
+                                <input name="product-quantity" type="number" class="form-control"
+                                    id="product-quantity" value="1" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group d-flex">
+                            <label class="col-sm-2 col-sm-2 control-label">Category:</label>
+                            <div class="col-sm-4">
+                                <select name="product-category" id="product-category" class="form-control">
+                                    <option>Choose:</option>
+                                    <?php if (isset($categories)): ?>
+                                        <?php foreach ($categories as $cat_row): ?>
+                                            <option value="<?= $cat_row->id ?>">
+                                                <?= $cat_row->category ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Price:</label>
+                            <div class="col-sm-10">
+                                <input name="product-price" type="number" class="form-control"
+                                    id="product-price" value="0.00" step="0.01" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Image:</label>
+                            <div class="col-sm-10">
+                                <input name="product-image" type="file" class="form-control"
+                                    id="product-image" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Image2(optional):</label>
+                            <div class="col-sm-10">
+                                <input name="product-image-2" type="file" class="form-control"
+                                    id="product-image-2" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Image3(optional):</label>
+                            <div class="col-sm-10">
+                                <input name="product-image-3" type="file" class="form-control"
+                                    id="product-image-3" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Image4(optional):</label>
+                            <div class="col-sm-10">
+                                <input name="product-image-4" type="file" class="form-control"
+                                    id="product-image-4" required>
                             </div>
                         </div>
 
@@ -103,7 +165,6 @@
                         <th><i class="fa fa-bullhorn"></i> Product</th>
                         <th><i class=" fa fa-edit"></i> Status</th>
                         <th><i class=" fa fa-edit"></i> Actions</th>
-
                     </tr>
                 </thead>
                 <tbody id="table_body">

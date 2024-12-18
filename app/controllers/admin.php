@@ -57,13 +57,14 @@ class Admin extends Controller
 
         $db = Database::newInstance();
         $products = $db->read("SELECT * FROM products ORDER BY id DESC");
+        $categories = $db->read("SELECT * FROM categories WHERE disabled = 0 ORDER BY id DESC");
+
 
         $product = $this->load_model("product");
         $table_rows = $product->make_table($products);
 
-        if (!empty($products)) {
-            $data['table_rows'] = $table_rows;
-        }
+        $data['table_rows'] = $table_rows;
+        $data['categories'] = $categories;
 
         //show($data);
         $this->view("admin/products", $data);
