@@ -48,38 +48,31 @@ class Product
         return $db->read("SELECT * FROM products ORDER BY id DESC");
     }
 
-    public function make_table($cats)
+    public function make_table($products)
     {
-        //print_r($cats);
+        //print_r($products);
 
         $result = "";
 
-        if (is_array($cats)) {
-            foreach ($cats as $cat_row) {
-                $class = $cat_row->disabled == 0 ? "success" : "warning";
-                $cat_row->disabled = $cat_row->disabled ? "Disabled" : "Enabled";
-
-                $args = $cat_row->id . ",'" . $cat_row->disabled . "'";
-                $edit_args = $cat_row->id . ",'" . $cat_row->category . "'";
+        if (is_array($products)) {
+            foreach ($products as $product_row) {
+                $edit_args = $product_row->id . ",'" . $product_row->description . "'";
 
                 $result .= "<tr>";
                 $result .= '
-                    <td><a href="basic_table.html"> ' . $cat_row->category . '</a></td>
+                    <td><a href="basic_table.html"> ' . $product_row->description . '</a></td>
                     <td>
-                        <span 
-                            class="label label-' . $class .  ' label-mini" 
-                            style="cursor: pointer;" 
-                            onclick="disable_row(' . $args . ')"> 
-                            ' . $cat_row->disabled . ' 
+                        <span> 
+                            
                         </span>
                     </td>
                     <td>
-                        <button class="btn btn-primary btn-xs" row_id="' . $cat_row->id  . '"
-                            onclick="show_edit_category(' . $edit_args  . ', event)">
+                        <button class="btn btn-primary btn-xs" row_id="' . $product_row->id  . '"
+                            onclick="show_edit_productegory(' . $edit_args  . ', event)">
                             <i class="fa fa-pencil"></i>
                         </button>
-                        <button class="btn btn-danger btn-xs" row_id="' . $cat_row->id . '"
-                            onclick="delete_row(' . $cat_row->id  . ')">
+                        <button class="btn btn-danger btn-xs" row_id="' . $product_row->id . '"
+                            onclick="delete_row(' . $product_row->id  . ')">
                             <i class="fa fa-trash-o "></i>
                         </button>
                     </td>     

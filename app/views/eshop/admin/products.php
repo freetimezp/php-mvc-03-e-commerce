@@ -191,7 +191,9 @@
             }
         });
 
-        ajax.open("POST", "<?= ROOT ?>ajax", true);
+        //console.log(data);
+
+        ajax.open("POST", "<?= ROOT ?>ajax_product", true);
         ajax.send(JSON.stringify(data));
     };
 
@@ -210,6 +212,7 @@
 
                         var table_body = document.querySelector("#table_body");
                         table_body.innerHTML = obj.data;
+
                     } else {
                         alert(obj.message);
                     }

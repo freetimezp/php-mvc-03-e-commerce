@@ -191,7 +191,7 @@
             }
         });
 
-        ajax.open("POST", "<?= ROOT ?>ajax", true);
+        ajax.open("POST", "<?= ROOT ?>ajax_category", true);
         ajax.send(JSON.stringify(data));
     };
 
