@@ -2,7 +2,7 @@
 
 class Product
 {
-    public function create($DATA)
+    public function create($DATA, $FILES)
     {
         $db = Database::newInstance();
 
@@ -31,10 +31,40 @@ class Product
             $_SESSION['error'] .= "Please, enter a valid price. <br>";
         }
 
+        //check images
+        $arr['image'] = "";
+        $arr['image2'] = "";
+        $arr['image3'] = "";
+        $arr['image4'] = "";
+
+        $allowed[] = "image/jpeg";
+        $allowed[] = "image/png";
+        $allowed[] = "image/gif";
+
+        $folder = 'uploads/';
+        $size = 1 * 1024 * 1024; //1 mb size
+
+        if (!file_exists($folder)) {
+            mkdir($folder, 0777, true);
+        }
+
+        foreach ($FILES as $key => $img_row) {
+            if ($img_row['error'] == 0 && in_array($img_row['type'], $allowed)) {
+                if ($img_row['size'] < $size) {
+                    $destination = $folder . $img_row['name'];
+                    move_uploaded_file($img_row['tmp_name'], $destination);
+                    $arr[$key] = $destination;
+                } else {
+                    $_SESSION['error'] .= "Image size must be less then 1 mb. <br>";
+                }
+            }
+        }
+
+
         if (!isset($_SESSION['error']) || $_SESSION['error'] == "") {
             $query = "INSERT INTO products 
-                (description, user_url, category, quantity, price, date)
-                VALUES (:description, :user_url, :category, :quantity, :price, :date)";
+                (description, user_url, category, quantity, price, image, image2, image3, image4, date)
+                VALUES (:description, :user_url, :category, :quantity, :price, :image, :image2, :image3, :image4, :date)";
             $check = $db->write($query, $arr);
 
             if ($check) return true;
@@ -69,7 +99,7 @@ class Product
         return $db->read("SELECT * FROM products ORDER BY id DESC");
     }
 
-    public function make_table($products)
+    public function make_table($products, $model = null)
     {
         //print_r($products);
 
@@ -79,14 +109,17 @@ class Product
             foreach ($products as $product_row) {
                 $edit_args = $product_row->id . ",'" . $product_row->description . "'";
 
+                $one_cat = $model->get_one($product_row->category);
+
                 $result .= "<tr>";
                 $result .= '
+                    <td><a href="basic_table.html"> ' . $product_row->id . '</a></td>
                     <td><a href="basic_table.html"> ' . $product_row->description . '</a></td>
-                    <td>
-                        <span> 
-                            
-                        </span>
-                    </td>
+                    <td><a href="basic_table.html"> ' . $product_row->quantity . '</a></td>
+                    <td><a href="basic_table.html"> ' . $one_cat->category . '</a></td>
+                    <td><a href="basic_table.html"> ' . $product_row->price . '$ </a></td>
+                    <td><a href="basic_table.html"> ' . date("jS M, Y", strtotime($product_row->date)) . '</a></td>
+
                     <td>
                         <button class="btn btn-primary btn-xs" row_id="' . $product_row->id  . '"
                             onclick="show_edit_productegory(' . $edit_args  . ', event)">

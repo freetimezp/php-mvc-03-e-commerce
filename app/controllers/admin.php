@@ -61,7 +61,8 @@ class Admin extends Controller
 
 
         $product = $this->load_model("product");
-        $table_rows = $product->make_table($products);
+        $category = $this->load_model("category");
+        $table_rows = $product->make_table($products, $category);
 
         $data['table_rows'] = $table_rows;
         $data['categories'] = $categories;

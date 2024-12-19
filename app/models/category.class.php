@@ -48,6 +48,16 @@ class Category
         return $db->read("SELECT * FROM categories ORDER BY id DESC");
     }
 
+    public function get_one($id)
+    {
+        $id = (int)$id;
+        $db = Database::newInstance();
+
+        $data = $db->read("SELECT * FROM categories WHERE id = '$id' LIMIT 1");
+
+        return $data[0];
+    }
+
     public function make_table($cats)
     {
         //print_r($cats);

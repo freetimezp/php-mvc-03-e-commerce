@@ -162,8 +162,12 @@
                 <hr>
                 <thead>
                     <tr>
-                        <th><i class="fa fa-bullhorn"></i> Product</th>
-                        <th><i class=" fa fa-edit"></i> Status</th>
+                        <th>#</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Date</th>
                         <th><i class=" fa fa-edit"></i> Actions</th>
                     </tr>
                 </thead>
@@ -175,7 +179,6 @@
                         <?= $data['table_rows']; ?>
                     <?php else: ?>
                         <td><a href="basic_table.html#">Example row</a></td>
-                        <td><span class="label label-info label-mini">Enabled</span></td>
                         <td>
                             <button class="btn btn-primary btn-xs">
                                 <i class="fa fa-pencil"></i>
@@ -220,6 +223,8 @@
     };
 
     function collect_data(e) {
+        var data = new FormData();
+
         var productDescription = document.getElementById("product-description");
         if (productDescription.value.trim() == "" || !isNaN(productDescription.value.trim())) {
             alert("Plaese, enter a new product description..");
@@ -244,19 +249,43 @@
             return;
         }
 
+        var productImage = document.getElementById("product-image");
+        if (productImage.files.length == 0) {
+            alert("Plaese, choose product image..");
+            return;
+        }
+
+
+        var productImage2 = document.getElementById("product-image-2");
+        if (productImage2.files.length > 0) {
+            data.append('image2', productImage2.files[0]);
+        }
+
+        var productImage3 = document.getElementById("product-image-3");
+        if (productImage3.files.length > 0) {
+            data.append('image3', productImage3.files[0]);
+        }
+
+        var productImage4 = document.getElementById("product-image-4");
+        if (productImage4.files.length > 0) {
+            data.append('image4', productImage4.files[0]);
+        }
+
 
         var productDescription = productDescription.value.trim();
         var productQuantity = productQuantity.value.trim();
         var productCategory = productCategory.value.trim();
         var productPrice = productPrice.value.trim();
 
-        send_data({
-            description: productDescription,
-            quantity: productQuantity,
-            category: productCategory,
-            price: productPrice,
-            data_type: "add_product"
-        });
+
+        data.append('description', productDescription);
+        data.append('quantity', productQuantity);
+        data.append('category', productCategory);
+        data.append('price', productPrice);
+        data.append('image', productImage.files[0]);
+        data.append('data_type', "add_product");
+
+        send_data_files(data);
     };
 
     function collect_edit_data(e) {
@@ -290,6 +319,20 @@
         ajax.send(JSON.stringify(data));
     };
 
+    function send_data_files(formdata) {
+        const ajax = new XMLHttpRequest();
+
+        ajax.addEventListener("readystatechange", function() {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                handle_result(ajax.responseText);
+            }
+        });
+
+        //console.log(data);
+
+        ajax.open("POST", "<?= ROOT ?>ajax_product", true);
+        ajax.send(formdata);
+    };
 
     function handle_result(result) {
         //console.log(result);
