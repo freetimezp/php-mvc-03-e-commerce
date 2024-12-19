@@ -12,6 +12,8 @@ class Ajax_product extends Controller
             $DB = Database::newInstance();
             $product = $this->load_model('product');
 
+            //show($data);
+
             if ($data->data_type == 'add_product') {
                 //add new product
                 $check = $product->create($data);

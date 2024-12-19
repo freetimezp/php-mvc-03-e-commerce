@@ -193,12 +193,17 @@
 
 <script>
     var EDIT_ID = 0;
-    var product = document.getElementById("product");
+    var productDescription = document.getElementById("product-description");
+
+    var productImage = document.getElementById("product-image");
+    var productImage2 = document.getElementById("product-image-2");
+    var productImage3 = document.getElementById("product-image-3");
+    var productImage4 = document.getElementById("product-image-4");
 
     function show_add_new() {
         const show_box = document.querySelector(".add_new");
         show_box.classList.toggle('hide');
-        product.value = "";
+        productDescription.value = "";
     };
 
     function show_edit_product(id, product, e) {
@@ -215,14 +220,41 @@
     };
 
     function collect_data(e) {
-        if (product.value.trim() == "" || !isNaN(product.value.trim())) {
-            alert("Plaese, enter a new product name..");
+        var productDescription = document.getElementById("product-description");
+        if (productDescription.value.trim() == "" || !isNaN(productDescription.value.trim())) {
+            alert("Plaese, enter a new product description..");
+            return;
         }
 
-        var data = product.value.trim();
+        var productQuantity = document.getElementById("product-quantity");
+        if (productQuantity.value.trim() == "" || isNaN(productQuantity.value.trim())) {
+            alert("Plaese, enter product quantity..");
+            return;
+        }
+
+        var productCategory = document.getElementById("product-category");
+        if (productCategory.value.trim() == "" || isNaN(productCategory.value.trim())) {
+            alert("Plaese, choose product category..");
+            return;
+        }
+
+        var productPrice = document.getElementById("product-price");
+        if (productPrice.value.trim() == "" || isNaN(productPrice.value.trim())) {
+            alert("Plaese, enter product price..");
+            return;
+        }
+
+
+        var productDescription = productDescription.value.trim();
+        var productQuantity = productQuantity.value.trim();
+        var productCategory = productCategory.value.trim();
+        var productPrice = productPrice.value.trim();
 
         send_data({
-            data: data,
+            description: productDescription,
+            quantity: productQuantity,
+            category: productCategory,
+            price: productPrice,
             data_type: "add_product"
         });
     };
