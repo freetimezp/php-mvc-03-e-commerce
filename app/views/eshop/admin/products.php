@@ -143,9 +143,71 @@
 
                     <form class="form-horizontal style-form" method="post">
                         <div class="form-group">
-                            <label class="col-sm-2 col-sm-2 control-label">Product:</label>
+                            <label class="col-sm-2 col-sm-2 control-label">Description:</label>
                             <div class="col-sm-10">
-                                <input name="product" type="text" class="form-control" id="product_edit" required>
+                                <input name="product-title" type="text" class="form-control"
+                                    id="edit-product-description" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Quantity:</label>
+                            <div class="col-sm-4">
+                                <input name="product-quantity" type="number" class="form-control"
+                                    id="edit-product-quantity" value="1" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group d-flex">
+                            <label class="col-sm-2 col-sm-2 control-label">Category:</label>
+                            <div class="col-sm-4">
+                                <select name="product-category" id="edit-product-category" class="form-control">
+                                    <option>Choose:</option>
+                                    <?php if (isset($categories)): ?>
+                                        <?php foreach ($categories as $cat_row): ?>
+                                            <option value="<?= $cat_row->id ?>">
+                                                <?= $cat_row->category ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Price:</label>
+                            <div class="col-sm-10">
+                                <input name="product-price" type="number" class="form-control"
+                                    id="edit-product-price" value="0.00" step="0.01" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Image:</label>
+                            <div class="col-sm-10">
+                                <input name="edit-product-image" type="file" class="form-control"
+                                    id="edit-product-image" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Image2(optional):</label>
+                            <div class="col-sm-10">
+                                <input name="product-image-2" type="file" class="form-control"
+                                    id="edit-product-image-2" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Image3(optional):</label>
+                            <div class="col-sm-10">
+                                <input name="product-image-3" type="file" class="form-control"
+                                    id="edit-product-image-3" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Image4(optional):</label>
+                            <div class="col-sm-10">
+                                <input name="product-image-4" type="file" class="form-control"
+                                    id="edit-product-image-4" required>
                             </div>
                         </div>
 
@@ -164,6 +226,7 @@
                     <tr>
                         <th>#</th>
                         <th>Product</th>
+                        <th>Image</th>
                         <th>Quantity</th>
                         <th>Category</th>
                         <th>Price</th>
@@ -196,7 +259,7 @@
 
 <script>
     var EDIT_ID = 0;
-    var productDescription = document.getElementById("product-description");
+    var productDescription = document.getElementById("edit-product-description");
 
     var productImage = document.getElementById("product-image");
     var productImage2 = document.getElementById("product-image-2");
@@ -213,10 +276,10 @@
         EDIT_ID = id;
 
         const show_edit_box = document.querySelector(".edit_product");
-        let product_input = document.getElementById("product_edit");
+        let edit_product_description = document.getElementById("edit-product-description");
 
-        if (product_input) {
-            product_input.value = product;
+        if (edit_product_description) {
+            edit_product_description.value = product;
         }
 
         show_edit_box.classList.toggle('hide');

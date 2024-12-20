@@ -115,6 +115,9 @@ class Product
                 $result .= '
                     <td><a href="basic_table.html"> ' . $product_row->id . '</a></td>
                     <td><a href="basic_table.html"> ' . $product_row->description . '</a></td>
+                    <td><a href="basic_table.html">
+                        <img src= "' . ROOT . $product_row->image . '" style="width: 200px;" />
+                    </a></td>
                     <td><a href="basic_table.html"> ' . $product_row->quantity . '</a></td>
                     <td><a href="basic_table.html"> ' . $one_cat->category . '</a></td>
                     <td><a href="basic_table.html"> ' . $product_row->price . '$ </a></td>
@@ -122,7 +125,7 @@ class Product
 
                     <td>
                         <button class="btn btn-primary btn-xs" row_id="' . $product_row->id  . '"
-                            onclick="show_edit_productegory(' . $edit_args  . ', event)">
+                            onclick="show_edit_product(' . $edit_args  . ', event)">
                             <i class="fa fa-pencil"></i>
                         </button>
                         <button class="btn btn-danger btn-xs" row_id="' . $product_row->id . '"
