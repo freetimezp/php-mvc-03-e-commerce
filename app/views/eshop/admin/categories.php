@@ -167,21 +167,27 @@
 <script>
     var EDIT_ID = 0;
     var category = document.getElementById("category");
+    let category_parent_input = document.getElementById("parent_edit");
 
     function show_add_new() {
         const show_box = document.querySelector(".add_new");
         show_box.classList.toggle('hide');
         category.value = "";
+        category_parent_input.value = 0;
     };
 
-    function show_edit_category(id, category, e) {
+    function show_edit_category(id, category, parent, e) {
         EDIT_ID = id;
 
         const show_edit_box = document.querySelector(".edit_category");
         let category_input = document.getElementById("category_edit");
-
         if (category_input) {
             category_input.value = category;
+        }
+
+        let category_parent_input = document.getElementById("parent_edit");
+        if (category_parent_input) {
+            category_parent_input.value = parent;
         }
 
         show_edit_box.classList.toggle('hide');
@@ -212,7 +218,7 @@
         }
 
         let parent_input = document.getElementById("parent_edit");
-        if (isNaN(category.value.trim())) {
+        if (isNaN(parent_input.value.trim())) {
             alert("Plaese, choose a parent category..");
         }
 
@@ -268,7 +274,7 @@
                     table_body.innerHTML = obj.data;
                 } else if (obj.data_type == 'edit_category') {
                     //console.log(obj);
-                    show_edit_category(0, '', false);
+                    show_edit_category(0, '', '', false);
 
                     var table_body = document.querySelector("#table_body");
                     table_body.innerHTML = obj.data;

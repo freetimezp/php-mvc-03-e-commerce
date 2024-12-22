@@ -72,7 +72,7 @@ class Category
                 $cat_row->disabled = $cat_row->disabled ? "Disabled" : "Enabled";
 
                 $args = $cat_row->id . ",'" . $cat_row->disabled . "'";
-                $edit_args = $cat_row->id . ",'" . $cat_row->category . "'";
+                $edit_args = $cat_row->id . ",'" . $cat_row->category . "'," . $cat_row->parent;
 
                 $parent = "";
                 foreach ($cats as $cat_row2) {
