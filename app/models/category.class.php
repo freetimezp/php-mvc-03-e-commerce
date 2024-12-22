@@ -6,14 +6,15 @@ class Category
     {
         $db = Database::newInstance();
 
-        $arr['category'] = ucwords($DATA->data);
+        $arr['category'] = ucwords($DATA->category);
+        $arr['parent'] = ucwords($DATA->parent);
 
         if (!preg_match('/^[a-zA-Z]+/', trim($arr['category']))) {
             $_SESSION['error'] = "Please, enter a valid category name.";
         }
 
         if (!isset($_SESSION['error']) || $_SESSION['error'] == "") {
-            $query = "INSERT INTO categories (category) VALUES (:category)";
+            $query = "INSERT INTO categories (category, parent) VALUES (:category, :parent)";
             $check = $db->write($query, $arr);
 
             if ($check) return true;
@@ -22,12 +23,13 @@ class Category
         return false;
     }
 
-    public function edit($id, $category)
+    public function edit($data)
     {
         $db = Database::newInstance();
-        $arr['id'] = $id;
-        $arr['category'] = $category;
-        $query = "UPDATE categories SET category = :category WHERE id = :id LIMIT 1";
+        $arr['id'] = $data->id;
+        $arr['category'] = $data->category;
+        $arr['parent'] = $data->parent;
+        $query = "UPDATE categories SET category = :category, parent = :parent WHERE id = :id LIMIT 1";
 
         $db->write($query, $arr);
     }
@@ -72,9 +74,17 @@ class Category
                 $args = $cat_row->id . ",'" . $cat_row->disabled . "'";
                 $edit_args = $cat_row->id . ",'" . $cat_row->category . "'";
 
+                $parent = "";
+                foreach ($cats as $cat_row2) {
+                    if ($cat_row->parent == $cat_row2->id) {
+                        $parent = $cat_row2->category;
+                    }
+                }
+
                 $result .= "<tr>";
                 $result .= '
                     <td><a href="basic_table.html"> ' . $cat_row->category . '</a></td>
+                    <td><a href="basic_table.html"> ' . $parent . '</a></td>
                     <td>
                         <span 
                             class="label label-' . $class .  ' label-mini" 

@@ -31,12 +31,17 @@ class Admin extends Controller
 
         $db = Database::newInstance();
         $categories = $db->read("SELECT * FROM categories ORDER BY id DESC");
+        $categories_enabled = $db->read("SELECT * FROM categories WHERE disabled = 0 ORDER BY id DESC");
 
         $category = $this->load_model("category");
         $table_rows = $category->make_table($categories);
 
         if (!empty($categories)) {
             $data['table_rows'] = $table_rows;
+        }
+
+        if (!empty($categories_enabled)) {
+            $data['categories'] = $categories_enabled;
         }
 
         //show($data);

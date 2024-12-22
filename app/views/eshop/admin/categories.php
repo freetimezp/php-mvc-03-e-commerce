@@ -63,6 +63,22 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Parent(optional):</label>
+                            <div class="col-sm-10">
+                                <select name="parent" id="parent" class="form-control">
+                                    <option value="0">Choose:</option>
+                                    <?php if (isset($categories)): ?>
+                                        <?php foreach ($categories as $cat_row): ?>
+                                            <option value="<?= $cat_row->id ?>">
+                                                <?= $cat_row->category ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
+                        </div>
+
                         <button type="button" class="btn btn-sm btn-secondary"
                             onclick="show_add_new(event)">Cancel
                         </button>
@@ -83,7 +99,23 @@
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Category:</label>
                             <div class="col-sm-10">
-                                <input name="category" type="text" class="form-control" id="category_edit" required>
+                                <input name="category_edit" type="text" class="form-control" id="category_edit" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Parent(optional):</label>
+                            <div class="col-sm-10">
+                                <select name="parent_edit" id="parent_edit" class="form-control">
+                                    <option value="0">Choose:</option>
+                                    <?php if (isset($categories)): ?>
+                                        <?php foreach ($categories as $cat_row): ?>
+                                            <option value="<?= $cat_row->id ?>">
+                                                <?= $cat_row->category ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
                             </div>
                         </div>
 
@@ -101,6 +133,7 @@
                 <thead>
                     <tr>
                         <th><i class="fa fa-bullhorn"></i> Category</th>
+                        <th><i class=" fa fa-table"></i> Parent</th>
                         <th><i class=" fa fa-edit"></i> Status</th>
                         <th><i class=" fa fa-edit"></i> Actions</th>
 
@@ -114,6 +147,7 @@
                         <?= $data['table_rows']; ?>
                     <?php else: ?>
                         <td><a href="basic_table.html#">Example row</a></td>
+                        <td><a href="basic_table.html#">Parent</a></td>
                         <td><span class="label label-info label-mini">Enabled</span></td>
                         <td>
                             <button class="btn btn-primary btn-xs">
@@ -154,30 +188,41 @@
     };
 
     function collect_data(e) {
+        var category = document.getElementById("category");
         if (category.value.trim() == "" || !isNaN(category.value.trim())) {
             alert("Plaese, enter a new category name..");
         }
 
-        var data = category.value.trim();
+        var parent = document.getElementById("parent");
+
+        var category = category.value.trim();
+        var parent = parent.value.trim();
 
         send_data({
-            data: data,
+            category: category,
+            parent: parent,
             data_type: "add_category"
         });
     };
 
     function collect_edit_data(e) {
         let category_input = document.getElementById("category_edit");
-
         if (category_input.value.trim() == "" || !isNaN(category_input.value.trim())) {
             alert("Plaese, enter a new category name..");
         }
 
-        var data = category_input.value.trim();
+        let parent_input = document.getElementById("parent_edit");
+        if (isNaN(category.value.trim())) {
+            alert("Plaese, choose a parent category..");
+        }
+
+        var category = category_input.value.trim();
+        var parent = parent_input.value.trim();
 
         send_data({
             id: EDIT_ID,
-            category: data,
+            category: category,
+            parent: parent,
             data_type: "edit_category"
         });
     };

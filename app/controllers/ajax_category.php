@@ -4,6 +4,8 @@ class Ajax_category extends Controller
 {
     public function index()
     {
+        $_SESSION['error'] = "";
+
         $data = file_get_contents("php://input");
         $data = json_decode($data);
         //var_dump($data);
@@ -70,7 +72,7 @@ class Ajax_category extends Controller
                 echo json_encode($arr);
             } else if ($data->data_type == 'edit_category') {
                 //edit category
-                $category->edit($data->id, $data->category);
+                $category->edit($data);
 
                 $arr['message'] = "Your category was updated!";
                 $_SESSION['error'] = "";
