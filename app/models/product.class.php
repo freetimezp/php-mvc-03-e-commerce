@@ -109,6 +109,20 @@ class Product
             foreach ($products as $product_row) {
                 $edit_args = $product_row->id . ",'" . $product_row->description . "'";
 
+                $info = [];
+                $info['id'] = $product_row->id;
+                $info['description'] = $product_row->description;
+                $info['category'] = $product_row->category;
+                $info['quantity'] = $product_row->quantity;
+                $info['price'] = $product_row->price;
+                $info['image'] = $product_row->image;
+                $info['image2'] = $product_row->image2;
+                $info['image3'] = $product_row->image3;
+                $info['image4'] = $product_row->image4;
+
+                $info = json_encode($info);
+                $info = str_replace('"', "'", $info); // for correct json reading in js
+
                 $one_cat = $model->get_one($product_row->category);
 
                 $result .= "<tr>";
@@ -124,7 +138,7 @@ class Product
                     <td><a href="basic_table.html"> ' . date("jS M, Y", strtotime($product_row->date)) . '</a></td>
 
                     <td>
-                        <button class="btn btn-primary btn-xs" row_id="' . $product_row->id  . '"
+                        <button info="' . $info . '" class="btn btn-primary btn-xs" row_id="' . $product_row->id  . '"
                             onclick="show_edit_product(' . $edit_args  . ', event)">
                             <i class="fa fa-pencil"></i>
                         </button>

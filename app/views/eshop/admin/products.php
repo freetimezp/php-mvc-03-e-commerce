@@ -34,6 +34,12 @@
         bottom: 20px;
         right: 80px;
     }
+
+    .edit_product_images img {
+        max-width: 200px;
+        height: 150px;
+        margin: 20px 10px;
+    }
 </style>
 
 <h3>Products</h3>
@@ -211,6 +217,9 @@
                             </div>
                         </div>
 
+                        <div class="js-product-images edit_product_images"></div>
+
+
                         <button type="button" class="btn btn-sm btn-secondary"
                             onclick="show_edit_product(0, '', event)">Cancel
                         </button>
@@ -275,11 +284,43 @@
     function show_edit_product(id, product, e) {
         EDIT_ID = id;
 
+        var a = e.currentTarget.getAttribute("info");
+        var info = JSON.parse(a.replaceAll("'", '"'));
+        console.log(info);
         const show_edit_box = document.querySelector(".edit_product");
-        let edit_product_description = document.getElementById("edit-product-description");
 
+        let edit_product_description = document.querySelector("#edit-product-description");
         if (edit_product_description) {
-            edit_product_description.value = product;
+            edit_product_description.value = info.description;
+        }
+
+        let edit_product_category = document.querySelector("#edit-product-category");
+        if (edit_product_category) {
+            edit_product_category.value = info.category;
+        }
+
+        let edit_product_quantity = document.querySelector("#edit-product-quantity");
+        if (edit_product_quantity) {
+            edit_product_quantity.value = info.quantity;
+        }
+
+        let edit_product_price = document.querySelector("#edit-product-price");
+        if (edit_product_price) {
+            edit_product_price.value = info.price;
+        }
+
+        let js_product_images = document.querySelector(".js-product-images");
+        if (js_product_images) {
+            js_product_images.innerHTML = `<img src="<?= ROOT ?>${info.image}" />`;
+            if (info.image2) {
+                js_product_images.innerHTML += `<img src="<?= ROOT ?>${info.image2}" />`;
+            }
+            if (info.image3) {
+                js_product_images.innerHTML += `<img src="<?= ROOT ?>${info.image3}" />`;
+            }
+            if (info.image4) {
+                js_product_images.innerHTML += `<img src="<?= ROOT ?>${info.image4}" />`;
+            }
         }
 
         show_edit_box.classList.toggle('hide');
