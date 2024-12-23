@@ -73,7 +73,8 @@ class Ajax_product extends Controller
                 echo json_encode($arr);
             } else if ($data->data_type == 'edit_product') {
                 //edit product
-                $product->edit($data->id, $data->product);
+                //var_dump($data);
+                $product->edit($data, $_FILES);
 
                 $arr['message'] = "Your product was updated!";
                 $_SESSION['error'] = "";
@@ -82,7 +83,7 @@ class Ajax_product extends Controller
                 $arr['data_type'] = "edit_product";
 
                 $cats = $product->get_all();
-                $arr['data'] = $product->make_table($cats);
+                $arr['data'] = $product->make_table($cats, $category);
 
                 echo json_encode($arr);
             }

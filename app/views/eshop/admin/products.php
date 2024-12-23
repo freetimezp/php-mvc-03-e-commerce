@@ -268,12 +268,12 @@
 
 <script>
     var EDIT_ID = 0;
-    var productDescription = document.getElementById("edit-product-description");
+    let productDescription = document.getElementById("edit-product-description");
 
-    var productImage = document.getElementById("product-image");
-    var productImage2 = document.getElementById("product-image-2");
-    var productImage3 = document.getElementById("product-image-3");
-    var productImage4 = document.getElementById("product-image-4");
+    let productImage = document.getElementById("product-image");
+    let productImage2 = document.getElementById("product-image-2");
+    let productImage3 = document.getElementById("product-image-3");
+    let productImage4 = document.getElementById("product-image-4");
 
     function show_add_new() {
         const show_box = document.querySelector(".add_new");
@@ -282,44 +282,46 @@
     };
 
     function show_edit_product(id, product, e) {
-        EDIT_ID = id;
-
-        var a = e.currentTarget.getAttribute("info");
-        var info = JSON.parse(a.replaceAll("'", '"'));
-        console.log(info);
         const show_edit_box = document.querySelector(".edit_product");
 
-        let edit_product_description = document.querySelector("#edit-product-description");
-        if (edit_product_description) {
-            edit_product_description.value = info.description;
-        }
+        if (e) {
+            var a = e.currentTarget.getAttribute("info");
+            var info = JSON.parse(a.replaceAll("'", '"'));
+            //console.log(info);
+            EDIT_ID = info.id;
 
-        let edit_product_category = document.querySelector("#edit-product-category");
-        if (edit_product_category) {
-            edit_product_category.value = info.category;
-        }
-
-        let edit_product_quantity = document.querySelector("#edit-product-quantity");
-        if (edit_product_quantity) {
-            edit_product_quantity.value = info.quantity;
-        }
-
-        let edit_product_price = document.querySelector("#edit-product-price");
-        if (edit_product_price) {
-            edit_product_price.value = info.price;
-        }
-
-        let js_product_images = document.querySelector(".js-product-images");
-        if (js_product_images) {
-            js_product_images.innerHTML = `<img src="<?= ROOT ?>${info.image}" />`;
-            if (info.image2) {
-                js_product_images.innerHTML += `<img src="<?= ROOT ?>${info.image2}" />`;
+            let edit_product_description = document.querySelector("#edit-product-description");
+            if (edit_product_description) {
+                edit_product_description.value = info.description;
             }
-            if (info.image3) {
-                js_product_images.innerHTML += `<img src="<?= ROOT ?>${info.image3}" />`;
+
+            let edit_product_category = document.querySelector("#edit-product-category");
+            if (edit_product_category) {
+                edit_product_category.value = info.category;
             }
-            if (info.image4) {
-                js_product_images.innerHTML += `<img src="<?= ROOT ?>${info.image4}" />`;
+
+            let edit_product_quantity = document.querySelector("#edit-product-quantity");
+            if (edit_product_quantity) {
+                edit_product_quantity.value = info.quantity;
+            }
+
+            let edit_product_price = document.querySelector("#edit-product-price");
+            if (edit_product_price) {
+                edit_product_price.value = info.price;
+            }
+
+            let js_product_images = document.querySelector(".js-product-images");
+            if (js_product_images) {
+                js_product_images.innerHTML = `<img src="<?= ROOT ?>${info.image}" />`;
+                if (info.image2) {
+                    js_product_images.innerHTML += `<img src="<?= ROOT ?>${info.image2}" />`;
+                }
+                if (info.image3) {
+                    js_product_images.innerHTML += `<img src="<?= ROOT ?>${info.image3}" />`;
+                }
+                if (info.image4) {
+                    js_product_images.innerHTML += `<img src="<?= ROOT ?>${info.image4}" />`;
+                }
             }
         }
 
@@ -393,19 +395,68 @@
     };
 
     function collect_edit_data(e) {
-        let product_input = document.getElementById("product_edit");
+        var data = new FormData();
 
-        if (product_input.value.trim() == "" || !isNaN(product_input.value.trim())) {
-            alert("Plaese, enter a new product name..");
+        var productDescription = document.getElementById("edit-product-description");
+        if (productDescription.value.trim() == "" || !isNaN(productDescription.value.trim())) {
+            alert("Plaese, enter a new product description..");
+            return;
         }
 
-        var data = product_input.value.trim();
+        var productQuantity = document.getElementById("edit-product-quantity");
+        if (productQuantity.value.trim() == "" || isNaN(productQuantity.value.trim())) {
+            alert("Plaese, enter product quantity..");
+            return;
+        }
 
-        send_data({
-            id: EDIT_ID,
-            product: data,
-            data_type: "edit_product"
-        });
+        var productCategory = document.getElementById("edit-product-category");
+        if (productCategory.value.trim() == "" || isNaN(productCategory.value.trim())) {
+            alert("Plaese, choose product category..");
+            return;
+        }
+
+        var productPrice = document.getElementById("edit-product-price");
+        if (productPrice.value.trim() == "" || isNaN(productPrice.value.trim())) {
+            alert("Plaese, enter product price..");
+            return;
+        }
+
+
+        var productImage = document.getElementById("edit-product-image");
+        if (productImage.files.length > 0) {
+            data.append('image', productImage.files[0]);
+        }
+
+        var productImage2 = document.getElementById("edit-product-image-2");
+        if (productImage2.files.length > 0) {
+            data.append('image2', productImage2.files[0]);
+        }
+
+        var productImage3 = document.getElementById("edit-product-image-3");
+        if (productImage3.files.length > 0) {
+            data.append('image3', productImage3.files[0]);
+        }
+
+        var productImage4 = document.getElementById("edit-product-image-4");
+        if (productImage4.files.length > 0) {
+            data.append('image4', productImage4.files[0]);
+        }
+
+
+        var productDescription = productDescription.value.trim();
+        var productQuantity = productQuantity.value.trim();
+        var productCategory = productCategory.value.trim();
+        var productPrice = productPrice.value.trim();
+
+
+        data.append('description', productDescription);
+        data.append('quantity', productQuantity);
+        data.append('category', productCategory);
+        data.append('price', productPrice);
+        data.append('data_type', "edit_product");
+        data.append('id', EDIT_ID);
+
+        send_data_files(data);
     };
 
     function send_data(data = {}) {
@@ -432,7 +483,7 @@
             }
         });
 
-        //console.log(data);
+        //console.log(formdata);
 
         ajax.open("POST", "<?= ROOT ?>ajax_product", true);
         ajax.send(formdata);
@@ -443,6 +494,7 @@
 
         if (result != "") {
             var obj = JSON.parse(result);
+            //console.log(obj);
 
             if (typeof obj.data_type != 'undefined') {
                 if (obj.data_type == 'add_new') {
