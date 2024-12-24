@@ -121,7 +121,7 @@ class Product
                     move_uploaded_file($img_row['tmp_name'], $destination);
                     $arr[$key] = $destination;
 
-                    $images_string = "," . $key . " = :" . $key;
+                    $images_string .= "," . $key . " = :" . $key;
                 } else {
                     $_SESSION['error'] .= "Image size must be less then 1 mb. <br>";
                 }
