@@ -73,21 +73,69 @@ class Product
         return false;
     }
 
-    public function edit($data, $files)
+    public function edit($data, $FILES)
     {
+        $db = Database::newInstance();
+
         $arr['id'] = $data->id;
         $arr['description'] = $data->description;
         $arr['quantity'] = $data->quantity;
         $arr['category'] = $data->category;
         $arr['price'] = $data->price;
 
-        $db = Database::newInstance();
+        $images_string = "";
 
-        $query = "UPDATE products 
-            SET description = :description, quantity = :quantity, category = :category, price = :price 
+        if (!preg_match('/^[a-zA-Z0-9 _-]+/', trim($arr['description']))) {
+            $_SESSION['error'] .= "Please, enter a valid description. <br>";
+        }
+
+        if (!is_numeric($arr['quantity'])) {
+            $_SESSION['error'] .= "Please, enter a valid quantity. <br>";
+        }
+
+        if (!is_numeric($arr['category'])) {
+            $_SESSION['error'] .= "Please, choose category from the list. <br>";
+        }
+
+        if (!is_numeric($arr['price'])) {
+            $_SESSION['error'] .= "Please, enter a valid price. <br>";
+        }
+
+
+        //check images
+        $allowed[] = "image/jpeg";
+        $allowed[] = "image/png";
+        $allowed[] = "image/gif";
+
+        $folder = 'uploads/';
+        $size = 1 * 1024 * 1024; //1 mb size
+
+        if (!file_exists($folder)) {
+            mkdir($folder, 0777, true);
+        }
+
+        foreach ($FILES as $key => $img_row) {
+            if ($img_row['error'] == 0 && in_array($img_row['type'], $allowed)) {
+                if ($img_row['size'] < $size) {
+                    $destination = $folder . $img_row['name'];
+                    move_uploaded_file($img_row['tmp_name'], $destination);
+                    $arr[$key] = $destination;
+
+                    $images_string = "," . $key . " = :" . $key;
+                } else {
+                    $_SESSION['error'] .= "Image size must be less then 1 mb. <br>";
+                }
+            }
+        }
+
+
+        if (!isset($_SESSION['error']) || $_SESSION['error'] == "") {
+            $query = "UPDATE products 
+            SET description = :description, quantity = :quantity, category = :category, price = :price $images_string
             WHERE id = :id LIMIT 1";
 
-        $db->write($query, $arr);
+            $db->write($query, $arr);
+        }
     }
 
     public function delete($id)

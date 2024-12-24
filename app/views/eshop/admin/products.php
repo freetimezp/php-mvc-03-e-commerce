@@ -221,7 +221,7 @@
 
 
                         <button type="button" class="btn btn-sm btn-secondary"
-                            onclick="show_edit_product(0, '', event)">Cancel
+                            onclick="show_edit_product()">Cancel
                         </button>
                         <button type="button" class="btn btn-sm btn-primary"
                             onclick="collect_edit_data(event)">Save
@@ -287,6 +287,7 @@
         if (e) {
             var a = e.currentTarget.getAttribute("info");
             var info = JSON.parse(a.replaceAll("'", '"'));
+
             //console.log(info);
             EDIT_ID = info.id;
 
