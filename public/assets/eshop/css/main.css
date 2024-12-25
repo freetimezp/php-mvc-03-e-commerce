@@ -2522,5 +2522,6 @@ h2.title {
 #similar-product .carousel-inner>.item>a>img {
   width: 90%;
   height: 150px;
+  object-fit: cover;
   overflow: hidden;
 }

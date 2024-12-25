@@ -192,28 +192,32 @@
                             <label class="col-sm-2 col-sm-2 control-label">Image:</label>
                             <div class="col-sm-10">
                                 <input name="edit-product-image" type="file" class="form-control"
-                                    id="edit-product-image" required>
+                                    id="edit-product-image"
+                                    onchange="display_image(this.files[0], this.name)" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Image2(optional):</label>
                             <div class="col-sm-10">
                                 <input name="product-image-2" type="file" class="form-control"
-                                    id="edit-product-image-2" required>
+                                    id="edit-product-image-2"
+                                    onchange="display_image(this.files[0], this.name)" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Image3(optional):</label>
                             <div class="col-sm-10">
                                 <input name="product-image-3" type="file" class="form-control"
-                                    id="edit-product-image-3" required>
+                                    id="edit-product-image-3"
+                                    onchange="display_image(this.files[0], this.name)" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Image4(optional):</label>
                             <div class="col-sm-10">
                                 <input name="product-image-4" type="file" class="form-control"
-                                    id="edit-product-image-4" required>
+                                    id="edit-product-image-4"
+                                    onchange="display_image(this.files[0], this.name)" required>
                             </div>
                         </div>
 
@@ -555,7 +559,25 @@
             id: id,
             current_state: state
         });
-    }
+    };
+
+    function display_image(file, name) {
+        var index = 0;
+
+        if (name == 'product-image-2') {
+            index = 1;
+        } else if (name == 'product-image-3') {
+            index = 2;
+        } else if (name == 'product-image-4') {
+            index = 3;
+        }
+
+        var images_holder = document.querySelector(".js-product-images");
+        var images = images_holder.querySelectorAll("img");
+
+        images[index].src = URL.createObjectURL(file);
+
+    };
 </script>
 
 <!-- ADMIN FOOTER -->
