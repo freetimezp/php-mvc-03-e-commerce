@@ -218,9 +218,11 @@
 								<div class="product-image-wrapper">
 									<div class="single-products">
 										<div class="productinfo text-center">
-											<div class="product-image-box">
-												<img src="<?= ROOT . $row->image ?>" alt="<?= $row->description ?>" class="product-image" />
-											</div>
+											<a href="<?= ROOT ?>product_details/<?= $row->id ?>">
+												<div class="product-image-box">
+													<img src="<?= ROOT . $row->image ?>" alt="<?= $row->description ?>" class="product-image" />
+												</div>
+											</a>
 											<h2>$<?= $row->price; ?></h2>
 											<p><?= ucfirst($row->description); ?></p>
 											<a href="#" class="btn btn-default add-to-cart">
