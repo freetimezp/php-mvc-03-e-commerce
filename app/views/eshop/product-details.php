@@ -158,6 +158,24 @@
 									<a href=""><img src="<?= ROOT . $row->image ?>" alt=""></a>
 								</div>
 
+								<?php if (!empty($row->image2)): ?>
+									<div class="item">
+										<a href=""><img src="<?= ROOT . $row->image2 ?>" alt=""></a>
+									</div>
+								<?php endif; ?>
+
+								<?php if (!empty($row->image3)): ?>
+									<div class="item">
+										<a href=""><img src="<?= ROOT . $row->image3 ?>" alt=""></a>
+									</div>
+								<?php endif; ?>
+
+								<?php if (!empty($row->image4)): ?>
+									<div class="item">
+										<a href=""><img src="<?= ROOT . $row->image4 ?>" alt=""></a>
+									</div>
+								<?php endif; ?>
+
 							</div>
 
 							<!-- Controls -->
