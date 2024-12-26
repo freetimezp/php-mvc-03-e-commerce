@@ -106,29 +106,40 @@
                             <label class="col-sm-2 col-sm-2 control-label">Image:</label>
                             <div class="col-sm-10">
                                 <input name="product-image" type="file" class="form-control"
-                                    id="product-image" required>
+                                    id="product-image" required
+                                    onchange="display_image(this.files[0], this.name, 'js-product-images-add')">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Image2(optional):</label>
                             <div class="col-sm-10">
                                 <input name="product-image-2" type="file" class="form-control"
-                                    id="product-image-2" required>
+                                    id="product-image-2" required
+                                    onchange="display_image(this.files[0], this.name, 'js-product-images-add')">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Image3(optional):</label>
                             <div class="col-sm-10">
                                 <input name="product-image-3" type="file" class="form-control"
-                                    id="product-image-3" required>
+                                    id="product-image-3" required
+                                    onchange="display_image(this.files[0], this.name, 'js-product-images-add')">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Image4(optional):</label>
                             <div class="col-sm-10">
                                 <input name="product-image-4" type="file" class="form-control"
-                                    id="product-image-4" required>
+                                    id="product-image-4" required
+                                    onchange="display_image(this.files[0], this.name, 'js-product-images-add')">
                             </div>
+                        </div>
+
+                        <div class="js-product-images-add edit_product_images">
+                            <img src="" alt="">
+                            <img src="" alt="">
+                            <img src="" alt="">
+                            <img src="" alt="">
                         </div>
 
                         <button type="button" class="btn btn-sm btn-secondary"
@@ -192,36 +203,36 @@
                             <label class="col-sm-2 col-sm-2 control-label">Image:</label>
                             <div class="col-sm-10">
                                 <input name="edit-product-image" type="file" class="form-control"
-                                    id="edit-product-image"
-                                    onchange="display_image(this.files[0], this.name)" required>
+                                    id="edit-product-image" required
+                                    onchange="display_image(this.files[0], this.name, 'js-product-images-edit')">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Image2(optional):</label>
                             <div class="col-sm-10">
                                 <input name="product-image-2" type="file" class="form-control"
-                                    id="edit-product-image-2"
-                                    onchange="display_image(this.files[0], this.name)" required>
+                                    id="edit-product-image-2" required
+                                    onchange="display_image(this.files[0], this.name, 'js-product-images-edit')">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Image3(optional):</label>
                             <div class="col-sm-10">
                                 <input name="product-image-3" type="file" class="form-control"
-                                    id="edit-product-image-3"
-                                    onchange="display_image(this.files[0], this.name)" required>
+                                    id="edit-product-image-3" required
+                                    onchange="display_image(this.files[0], this.name, 'js-product-images-edit')">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Image4(optional):</label>
                             <div class="col-sm-10">
                                 <input name="product-image-4" type="file" class="form-control"
-                                    id="edit-product-image-4"
-                                    onchange="display_image(this.files[0], this.name)" required>
+                                    id="edit-product-image-4" required
+                                    onchange="display_image(this.files[0], this.name, 'js-product-images-edit')">
                             </div>
                         </div>
 
-                        <div class="js-product-images edit_product_images"></div>
+                        <div class="js-product-images-edit edit_product_images"></div>
 
 
                         <button type="button" class="btn btn-sm btn-secondary"
@@ -561,7 +572,7 @@
         });
     };
 
-    function display_image(file, name) {
+    function display_image(file, name, element) {
         var index = 0;
 
         if (name == 'product-image-2') {
@@ -572,7 +583,7 @@
             index = 3;
         }
 
-        var images_holder = document.querySelector(".js-product-images");
+        var images_holder = document.querySelector("." + element);
         var images = images_holder.querySelectorAll("img");
 
         images[index].src = URL.createObjectURL(file);
