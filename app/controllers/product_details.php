@@ -2,11 +2,10 @@
 
 class Product_details extends Controller
 {
-    public function index($id)
+    public function index($slag)
     {
-        $id = (int)$id;
+        $slag = esc($slag);
         $data['page_title'] = "Product details";
-
 
         $user = $this->load_model('user');
         $user_data = $user->check_login();
@@ -16,12 +15,16 @@ class Product_details extends Controller
         }
 
         $DB = Database::newInstance();
-        $row = $DB->read("SELECT * FROM products WHERE id = :id LIMIT 1", ['id' => $id]);
+        $row = $DB->read("SELECT * FROM products WHERE slag = :slag LIMIT 1", ['slag' => $slag]);
         if (isset($row[0])) {
             $data['row'] = $row[0];
         }
 
         //show($data);
-        $this->view("product-details", $data);
+        if (isset($data['row'])) {
+            $this->view("product-details", $data);
+        }
+
+        $this->view("404", $data);
     }
 }

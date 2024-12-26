@@ -218,7 +218,7 @@
 								<div class="product-image-wrapper">
 									<div class="single-products">
 										<div class="productinfo text-center">
-											<a href="<?= ROOT ?>product_details/<?= $row->id ?>">
+											<a href="<?= ROOT ?>product_details/<?= $row->slag ?>">
 												<div class="product-image-box">
 													<img src="<?= ROOT . $row->image ?>" alt="<?= $row->description ?>" class="product-image" />
 												</div>
