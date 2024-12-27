@@ -12,12 +12,13 @@ class Ajax_product extends Controller
             $DB = Database::newInstance();
             $product = $this->load_model('product');
             $category = $this->load_model('category');
+            $image_class = $this->load_model('image');
 
             //show($data);
 
             if ($data->data_type == 'add_product') {
                 //add new product
-                $check = $product->create($data, $_FILES);
+                $check = $product->create($data, $_FILES, $image_class);
 
                 if ($_SESSION['error'] != "") {
                     $arr['message'] = $_SESSION['error'];

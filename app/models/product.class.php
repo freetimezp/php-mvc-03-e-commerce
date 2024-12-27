@@ -2,7 +2,7 @@
 
 class Product
 {
-    public function create($DATA, $FILES)
+    public function create($DATA, $FILES, $image_class = null)
     {
         $db = Database::newInstance();
 
@@ -62,9 +62,11 @@ class Product
         foreach ($FILES as $key => $img_row) {
             if ($img_row['error'] == 0 && in_array($img_row['type'], $allowed)) {
                 if ($img_row['size'] < $size) {
-                    $destination = $folder . $img_row['name'];
+                    $destination = $folder . $image_class->generate_filename(60) . ".jpg";
                     move_uploaded_file($img_row['tmp_name'], $destination);
                     $arr[$key] = $destination;
+
+                    $image_class->resize_image($destination, $destination, 1500, 1500);
                 } else {
                     $_SESSION['error'] .= "Image size must be less then 1 mb. <br>";
                 }
@@ -85,7 +87,7 @@ class Product
         return false;
     }
 
-    public function edit($data, $FILES)
+    public function edit($data, $FILES, $image_class = null)
     {
         $db = Database::newInstance();
 
@@ -129,10 +131,11 @@ class Product
         foreach ($FILES as $key => $img_row) {
             if ($img_row['error'] == 0 && in_array($img_row['type'], $allowed)) {
                 if ($img_row['size'] < $size) {
-                    $destination = $folder . $img_row['name'];
+                    $destination = $folder . $image_class->generate_filename(60) . ".jpg";
                     move_uploaded_file($img_row['tmp_name'], $destination);
                     $arr[$key] = $destination;
 
+                    $image_class->resize_image($destination, $destination, 1500, 1500);
                     $images_string .= "," . $key . " = :" . $key;
                 } else {
                     $_SESSION['error'] .= "Image size must be less then 1 mb. <br>";
