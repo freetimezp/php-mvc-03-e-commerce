@@ -32,6 +32,16 @@ class Product
             $_SESSION['error'] .= "Please, enter a valid price. <br>";
         }
 
+
+        //make sure slag is unique
+        $slag_arr = [];
+        $slag_arr['slag'] = $arr['slag'];
+        $query = "SELECT * FROM products WHERE slag = :slag LIMIT 1";
+        $check = $db->read($query, $slag_arr);
+        if ($check) {
+            $arr['slag'] .= "-" . rand(0, 99999); //add random namber if slag exist in database
+        };
+
         //check images
         $arr['image'] = "";
         $arr['image2'] = "";
