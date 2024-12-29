@@ -16,6 +16,7 @@ class Cart extends Controller
         }
 
         $DB = Database::newInstance();
+        $rows = false;
 
         $prod_ids = array();
         if (isset($_SESSION['CART'])) {
@@ -25,9 +26,19 @@ class Cart extends Controller
 
             $rows = $DB->read("SELECT * FROM products WHERE id IN ($ids_str) ORDER BY id DESC");
         }
-        //show($rows); 
 
-        $rows = $DB->read("SELECT * FROM products ORDER BY id DESC");
+        //show($rows);
+        if (is_array($rows)) {
+            foreach ($rows as $key => $row) {
+                foreach ($_SESSION['CART'] as $item) {
+                    if ($row->id == $item['id']) {
+                        $rows[$key]->cart_qty = $item['qty'];
+                        break;
+                    }
+                }
+            }
+        }
+        //show($rows);
 
         if ($rows) {
             foreach ($rows as $key => $row) {
