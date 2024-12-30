@@ -2,8 +2,12 @@
 
 class Add_to_cart extends Controller
 {
+    private $redirect_to = "";
+
     public function index($id = '')
     {
+        $this->set_redirect();
+
         $id = esc($id);
 
         $DB = Database::newInstance();
@@ -33,7 +37,83 @@ class Add_to_cart extends Controller
             }
         }
 
+        $this->redirect();
+    }
 
-        //header("Location: " . ROOT . "shop");
+
+    public function add_quantity($id = '')
+    {
+        $this->set_redirect();
+
+        $id = esc($id);
+
+        if (isset($_SESSION['CART'])) {
+            foreach ($_SESSION['CART'] as $key => $item) {
+                if ($item['id'] == $id) {
+                    $_SESSION['CART'][$key]['qty'] += 1;
+                    break;
+                }
+            }
+        }
+
+        $this->redirect();
+    }
+
+
+    public function subtract_quantity($id = '')
+    {
+        $this->set_redirect();
+
+        $id = esc($id);
+
+        if (isset($_SESSION['CART'])) {
+            foreach ($_SESSION['CART'] as $key => $item) {
+                if ($item['id'] == $id) {
+                    if ($_SESSION['CART'][$key]['qty'] <= 1) {
+                        $this->remove($id);
+                    } else {
+                        $_SESSION['CART'][$key]['qty'] -= 1;
+                    }
+                    break;
+                }
+            }
+        }
+
+        $this->redirect();
+    }
+
+
+    public function remove($id = '')
+    {
+        $this->set_redirect();
+
+        $id = esc($id);
+
+        if (isset($_SESSION['CART'])) {
+            foreach ($_SESSION['CART'] as $key => $item) {
+                if ($item['id'] == $id) {
+                    unset($_SESSION['CART'][$key]);
+                    $_SESSION['CART'] = array_values($_SESSION['CART']);
+                    break;
+                }
+            }
+        }
+    }
+
+
+    private function redirect()
+    {
+        header("Location: " . $this->redirect_to);
+        die;
+    }
+
+
+    private function set_redirect()
+    {
+        if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] != "") {
+            $this->redirect_to = $_SERVER['HTTP_REFERER'];
+        } else {
+            $this->redirect_to = ROOT . "shop";
+        }
     }
 }
