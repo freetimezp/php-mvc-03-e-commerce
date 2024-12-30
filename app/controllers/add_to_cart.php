@@ -98,6 +98,8 @@ class Add_to_cart extends Controller
                 }
             }
         }
+
+        $this->redirect();
     }
 
 

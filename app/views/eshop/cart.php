@@ -41,8 +41,11 @@
 											href="<?= ROOT ?>add_to_cart/add_quantity/<?= $row->id ?>">
 											+
 										</a>
+
 										<input class="cart_quantity_input" type="text" name="quantity"
-											value="<?= $row->cart_qty ?>" autocomplete="off" size="2">
+											value="<?= $row->cart_qty ?>" autocomplete="off" size="2"
+											oninput="edit_quantity(this.value, '<?= $row->id ?>')">
+
 										<a class="cart_quantity_down"
 											href="<?= ROOT ?>add_to_cart/subtract_quantity/<?= $row->id ?>">
 											-
@@ -148,5 +151,42 @@
 	</div>
 </section><!--/#do_action-->
 
+<script type="text/javascript">
+	function edit_quantity(quantity, id) {
+		if (isNaN(quantity)) return;
+
+		send_data({
+			quantity: quantity.trim(),
+			id: id.trim()
+		}, "edit_quantity");
+	};
+
+	function send_data(data = {}, data_type = "") {
+		const ajax = new XMLHttpRequest();
+
+		ajax.addEventListener("readystatechange", function() {
+			if (ajax.readyState == 4 && ajax.status == 200) {
+				handle_result(ajax.responseText);
+			}
+		});
+
+		ajax.open("POST", `<?= ROOT ?>ajax_cart/${data_type}/` + JSON.stringify(data), true);
+		ajax.send();
+	};
+
+	function handle_result(result) {
+		console.log(result);
+
+		if (result != "") {
+			var obj = JSON.parse(result);
+
+			if (typeof obj.data_type != 'undefined') {
+				if (obj.data_type == "edit_quantity") {
+					window.location.href = window.location.href;
+				}
+			}
+		}
+	};
+</script>
 
 <?php $this->view("footer", $data);  ?>
