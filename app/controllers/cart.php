@@ -38,11 +38,16 @@ class Cart extends Controller
                 }
             }
         }
+
         //show($rows);
+        $data['sub_total'] = 0;
 
         if ($rows) {
             foreach ($rows as $key => $row) {
                 $rows[$key]->image = $image_class->get_thumb_post($rows[$key]->image);
+                $mytotal = $row->price * $row->cart_qty;
+
+                $data['sub_total'] += $mytotal;
             }
         }
 
