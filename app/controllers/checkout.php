@@ -1,10 +1,10 @@
 <?php
 
-class Cart extends Controller
+class Checkout extends Controller
 {
     public function index()
     {
-        $data['page_title'] = "Cart";
+        $data['page_title'] = "Checkout";
 
         $user = $this->load_model('user');
         $user_data = $user->check_login();
@@ -55,6 +55,6 @@ class Cart extends Controller
         $data['rows'] = $rows;
 
         //show($data);
-        $this->view("cart", $data);
+        $this->view("checkout", $data);
     }
 }
