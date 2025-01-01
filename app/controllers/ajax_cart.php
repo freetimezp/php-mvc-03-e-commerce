@@ -24,4 +24,26 @@ class Ajax_cart extends Controller
 
         echo json_encode($obj);
     }
+
+
+    public function delete_item($data = '')
+    {
+        $obj = json_decode($data);
+
+        $id = esc($obj->id);
+
+        if (isset($_SESSION['CART'])) {
+            foreach ($_SESSION['CART'] as $key => $item) {
+                if ($item['id'] == $id) {
+                    unset($_SESSION['CART'][$key]);
+                    $_SESSION['CART'] = array_values($_SESSION['CART']);
+                    break;
+                }
+            }
+        }
+
+        $obj->data_type = "delete_item";
+
+        echo json_encode($obj);
+    }
 }

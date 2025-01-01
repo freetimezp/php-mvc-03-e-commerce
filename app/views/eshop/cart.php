@@ -57,6 +57,8 @@
 								</td>
 								<td class="cart_delete">
 									<a class="cart_quantity_delete"
+										delete_id="<?= $row->id ?>"
+										onclick="delete_item(this.getAttribute('delete_id'))"
 										href="<?= ROOT ?>add_to_cart/remove/<?= $row->id ?>">
 										<i class="fa fa-times"></i>
 									</a>
@@ -161,6 +163,12 @@
 		}, "edit_quantity");
 	};
 
+	function delete_item(id) {
+		send_data({
+			id: id.trim()
+		}, "delete_item");
+	};
+
 	function send_data(data = {}, data_type = "") {
 		const ajax = new XMLHttpRequest();
 
@@ -182,6 +190,8 @@
 
 			if (typeof obj.data_type != 'undefined') {
 				if (obj.data_type == "edit_quantity") {
+					window.location.href = window.location.href;
+				} else if (obj.data_type == "delete_item") {
 					window.location.href = window.location.href;
 				}
 			}
