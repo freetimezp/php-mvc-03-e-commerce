@@ -230,4 +230,44 @@ class User
         //show($db);
         $db->query($query);
     }
+
+
+    //create table order_details
+    public function create_table_order_details()
+    {
+        $query = "create table if not exists order_details(
+			id int primary key auto_increment,
+			order_id int not null,
+            qty int not null,
+			description varchar(255) not null,
+			amount double not null,
+			total double not null,
+			product_id int not null	
+		)";
+        $db = new Database();
+        //show($db);
+        $db->query($query);
+    }
+
+
+    //create table orders
+    public function create_table_orders()
+    {
+        $query = "create table if not exists orders(
+                id int primary key auto_increment,
+                order_id int not null,
+                user_id int not null,
+                delivery_address varchar(255) not null,
+                total double not null,
+                country varchar(20) not null,
+                state varchar(20) not null,
+                zip varchar(20) not null,
+                tax double not null,
+                shipping double not null,
+                date datetime not null
+            )";
+        $db = new Database();
+        //show($db);
+        $db->query($query);
+    }
 }
