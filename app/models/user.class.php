@@ -270,4 +270,33 @@ class User
         //show($db);
         $db->query($query);
     }
+
+
+    //create table countries
+    public function create_table_countries()
+    {
+        $query = "create table if not exists countries(
+			id int primary key auto_increment,
+			country varchar(20) not null,
+            disabled tinyint default 0		
+		)";
+        $db = new Database();
+        //show($db);
+        $db->query($query);
+    }
+
+
+    //create table states
+    public function create_table_states()
+    {
+        $query = "create table if not exists states(
+			id int primary key auto_increment,
+            parent int not null,
+			state varchar(20) not null,
+            disabled tinyint default 0		
+		)";
+        $db = new Database();
+        //show($db);
+        $db->query($query);
+    }
 }
