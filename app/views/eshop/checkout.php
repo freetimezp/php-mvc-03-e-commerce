@@ -30,36 +30,25 @@
 						<p>Bill To</p>
 						<div class="form-one">
 							<form>
-								<input type="text" placeholder="Address 1 *">
+								<input type="text" placeholder="Address 1 *" required>
 								<input type="text" placeholder="Address 2">
-								<input type="text" placeholder="Zip / Postal Code *">
+								<input type="text" placeholder="Zip / Postal Code *" required>
 							</form>
 						</div>
 						<div class="form-two">
-							<form>
-								<select>
+							<form method="POST">
+								<select name="country" class="js-country" oninput="get_states(this.value)">
 									<option>-- Country --</option>
-									<option>United States</option>
-									<option>Bangladesh</option>
-									<option>UK</option>
-									<option>India</option>
-									<option>Pakistan</option>
-									<option>Ucrane</option>
-									<option>Canada</option>
-									<option>Dubai</option>
+									<?php if (isset($countries)): ?>
+										<?php foreach ($countries as $item): ?>
+											<option value="<?= $item->id ?>"><?= $item->country ?></option>
+										<?php endforeach; ?>
+									<?php endif; ?>
 								</select>
-								<select>
-									<option>-- State / Province / Region --</option>
-									<option>United States</option>
-									<option>Bangladesh</option>
-									<option>UK</option>
-									<option>India</option>
-									<option>Pakistan</option>
-									<option>Ucrane</option>
-									<option>Canada</option>
-									<option>Dubai</option>
+								<select name="state" class="js-state" required>
+									<option>-- Choose staten --</option>
 								</select>
-								<input type="text" placeholder="Phone *">
+								<input type="text" placeholder="Phone *" required>
 								<input type="text" placeholder="Mobile Phone">
 							</form>
 						</div>
@@ -91,5 +80,47 @@
 	</div>
 </section> <!--/#cart_items-->
 
+<script type="text/javascript">
+	function get_states(id) {
+		send_data({
+			id: id.trim()
+		}, "get_states");
+	};
+
+	function send_data(data = {}, data_type = "") {
+		const ajax = new XMLHttpRequest();
+
+		ajax.addEventListener("readystatechange", function() {
+			if (ajax.readyState == 4 && ajax.status == 200) {
+				handle_result(ajax.responseText);
+			}
+		});
+
+		ajax.open("POST", `<?= ROOT ?>ajax_checkout/${data_type}/` + JSON.stringify(data), true);
+		ajax.send();
+	};
+
+	function handle_result(result) {
+		//console.log(result);
+
+		if (result != "") {
+			var obj = JSON.parse(result);
+
+			if (typeof obj.data_type != 'undefined') {
+				if (obj.data_type == "get_states") {
+					var select_input = document.querySelector(".js-state");
+					select_input.innerHTML = "<option>-- Choose staten --</option>";
+
+					for (var i = 0; i < obj.data.length; i++) {
+						select_input.innerHTML +=
+							`<option value="${obj.data[i].id}">
+							${obj.data[i].state}
+							</option>`;
+					}
+				}
+			}
+		}
+	};
+</script>
 
 <?php $this->view("footer", $data);  ?>
