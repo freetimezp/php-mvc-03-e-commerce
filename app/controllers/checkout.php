@@ -59,8 +59,8 @@ class Checkout extends Controller
         //show($data);
 
         //get countries
-        $country = $this->load_model('country');
-        $data['countries'] = $country->get_countries();
+        $countries = $this->load_model('countries');
+        $data['countries'] = $countries->get_countries();
 
         if (count($_POST) > 0) {
             //show($_POST);

@@ -1,6 +1,6 @@
 <?php
 
-class Order
+class Order extends Controller
 {
     public function save_order($POST, $rows, $user_url, $session_id)
     {
@@ -14,12 +14,16 @@ class Order
         }
 
         if (is_array($rows)) {
+            $countries = $this->load_model('countries');
+
             $data['user_url'] = $user_url;
             $data['session_id'] = $session_id;
             $data['delivery_address'] = $POST['address1'] . " " . $POST['address2'];
             $data['total'] = $total;
-            $data['country'] = $POST['country'];
-            $data['state'] = $POST['state'];
+            $country_obj = $countries->get_country($POST['country']);
+            $data['country'] = $country_obj->country;
+            $state_obj = $countries->get_state($POST['state']);
+            $data['state'] = $state_obj->state;
             $data['zip'] = $POST['postal_code'];
             $data['tax'] = 0;
             $data['shipping'] = 0;
