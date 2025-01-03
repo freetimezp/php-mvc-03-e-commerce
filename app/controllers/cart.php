@@ -51,7 +51,10 @@ class Cart extends Controller
             }
         }
 
-        rsort($rows);
+        if ($rows) {
+            rsort($rows);
+        }
+
         $data['rows'] = $rows;
 
         //show($data);

@@ -14,69 +14,82 @@
 			<h2>Review & Payment</h2>
 		</div>
 
-		<div class="register-req">
-			<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
-		</div><!--/register-req-->
+		<?php if (is_array($rows)): ?>
 
-		<div class="shopper-informations">
-			<div class="row">
-				<div class="col-sm-3">
-					<div class="shopper-info">
-						<p>Shopper Information</p>
-					</div>
-				</div>
-				<div class="col-sm-5 clearfix">
-					<div class="bill-to">
-						<p>Bill To</p>
-						<div class="form-one">
-							<form>
-								<input type="text" placeholder="Address 1 *" required>
-								<input type="text" placeholder="Address 2">
-								<input type="text" placeholder="Zip / Postal Code *" required>
-							</form>
+			<div class="register-req">
+				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
+			</div><!--/register-req-->
+
+			<div class="shopper-informations">
+				<div class="row">
+					<form method="POST">
+						<div class="col-sm-3">
+							<div class="shopper-info">
+								<p>Shopper Information</p>
+							</div>
 						</div>
-						<div class="form-two">
-							<form method="POST">
-								<select name="country" class="js-country" oninput="get_states(this.value)">
-									<option>-- Country --</option>
-									<?php if (isset($countries)): ?>
-										<?php foreach ($countries as $item): ?>
-											<option value="<?= $item->id ?>"><?= $item->country ?></option>
-										<?php endforeach; ?>
-									<?php endif; ?>
-								</select>
-								<select name="state" class="js-state" required>
-									<option>-- Choose staten --</option>
-								</select>
-								<input type="text" placeholder="Phone *" required>
-								<input type="text" placeholder="Mobile Phone">
-							</form>
+						<div class="col-sm-5 clearfix">
+							<div class="bill-to">
+								<p>Bill To</p>
+								<div class="form-one">
+									<input class="form-control" type="text" placeholder="Address 1 *" required
+										style="margin-bottom: 15px;" name="address1">
+									<input class="form-control" type="text" placeholder="Address 2"
+										style="margin-bottom: 15px;" name="address1">
+									<input class="form-control" type="text" placeholder="Zip / Postal Code *"
+										name="postal_code" required>
+								</div>
+								<div class="form-two">
+									<select name="country" class="js-country" oninput="get_states(this.value)"
+										style="margin-bottom: 15px;">
+										<option>-- Country --</option>
+										<?php if (isset($countries)): ?>
+											<?php foreach ($countries as $item): ?>
+												<option value="<?= $item->id ?>"><?= $item->country ?></option>
+											<?php endforeach; ?>
+										<?php endif; ?>
+									</select>
+									<select name="state" class="js-state" required
+										style="margin-bottom: 15px;">
+										<option>-- Choose staten --</option>
+									</select>
+									<input class="form-control" type="text" placeholder="Home Phone"
+										style="margin-bottom: 15px;" name="home_phone">
+									<input class="form-control" type="text" placeholder="Mobile Phone *"
+										name="mobile_phone" required>
+								</div>
+							</div>
 						</div>
-					</div>
+						<div class="col-sm-4">
+							<div class="order-message">
+								<p>Shipping Order</p>
+								<textarea name="message" placeholder="Notes about your order, Special Notes for Delivery"
+									style="max-height: 200px;" class="form-control"></textarea>
+							</div>
+						</div>
 				</div>
-				<div class="col-sm-4">
-					<div class="order-message">
-						<p>Shipping Order</p>
-						<textarea name="message" placeholder="Notes about your order, Special Notes for Delivery"
-							style="max-height: 200px;"></textarea>
-					</div>
+
+				<hr class="clear: both;" style="opacity: 0.6;">
+
+				<div class="pull-right">
+					<a href="<?= ROOT ?>shop">
+						<input type="button" class="btn btn-default" value="Back to Cart">
+					</a>
+
+					<input type="submit" class="btn btn-warning" value="Payment">
 				</div>
+
+				<br> <br> <br> <br>
+				</form>
 			</div>
-		</div>
-
-		<hr class="clear: both;" style="opacity: 0.6;">
-
-		<div class="pull-right">
-			<a href="<?= ROOT ?>cart">
-				<input type="button" class="btn btn-default" value="Back to Cart">
-			</a>
-
-			<a href="<?= ROOT ?>payment">
-				<input type="button" class="btn btn-warning" value="Payment">
-			</a>
-		</div>
-
-		<br> <br> <br> <br>
+		<?php else: ?>
+			<div>
+				<h1>Add some products to cart..</h1>
+				<a href="<?= ROOT ?>shop">
+					<input type="button" class="btn btn-default" value="Back to Cart">
+				</a>
+			</div>
+		<?php endif; ?>
 	</div>
 </section> <!--/#cart_items-->
 
