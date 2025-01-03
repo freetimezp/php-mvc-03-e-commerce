@@ -255,16 +255,18 @@ class User
     {
         $query = "create table if not exists orders(
                 id int primary key auto_increment,
-                order_id int not null,
-                user_id int not null,
+                user_url varchar(60) not null,
                 delivery_address varchar(255) not null,
-                total double not null,
+                total double default 0,
                 country varchar(20) not null,
                 state varchar(20) not null,
                 zip varchar(20) not null,
-                tax double not null,
-                shipping double not null,
-                date datetime not null
+                tax double default 0,
+                shipping double default 0,
+                date datetime not null,
+                session_id varchar(30) not null,
+                home_phone varchar(20) not null,
+                mobile_phone varchar(20) not null
             )";
         $db = new Database();
         //show($db);

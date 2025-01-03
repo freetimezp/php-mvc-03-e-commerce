@@ -35,7 +35,7 @@
 									<input class="form-control" type="text" placeholder="Address 1 *" required
 										style="margin-bottom: 15px;" name="address1">
 									<input class="form-control" type="text" placeholder="Address 2"
-										style="margin-bottom: 15px;" name="address1">
+										style="margin-bottom: 15px;" name="address2">
 									<input class="form-control" type="text" placeholder="Zip / Postal Code *"
 										name="postal_code" required>
 								</div>
