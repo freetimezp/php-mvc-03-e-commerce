@@ -195,6 +195,8 @@ class Product
 
                 $one_cat = $model->get_one($product_row->category);
 
+                //print_r($product_row->category . "<br>");
+
                 $result .= "<tr>";
                 $result .= '
                     <td><a href="basic_table.html"> ' . $product_row->id . '</a></td>

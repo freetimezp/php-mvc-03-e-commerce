@@ -1,5 +1,10 @@
 <?php $this->view("header", $data);  ?>
 
+<?php
+if (isset($errors) && count($errors) > 0) {
+	print_r($errors);
+}
+?>
 
 <section id="cart_items">
 	<div class="container">

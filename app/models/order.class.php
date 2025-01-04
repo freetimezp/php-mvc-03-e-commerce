@@ -2,8 +2,26 @@
 
 class Order extends Controller
 {
+    public $errors = array();
+
     public function save_order($POST, $rows, $user_url, $session_id)
     {
+
+        foreach ($POST as $key => $value) {
+            if ($key == "country") {
+                if ($value == "" || $value == "-- Country --") {
+                    $this->errors[] = "Please, choose a country from list..";
+                }
+            }
+
+            if ($key == "state") {
+                if ($value == "" || $value == "-- Choose state --") {
+                    $this->errors[] = "Please, choose a state from list..";
+                }
+            }
+        }
+
+        return;
         //show($POST);
         $db = Database::newInstance();
         $data = array();
@@ -13,7 +31,7 @@ class Order extends Controller
             $total += $row->cart_qty * $row->price;
         }
 
-        if (is_array($rows)) {
+        if (is_array($rows) && count($this->errors) == 0) {
             $countries = $this->load_model('countries');
 
             $data['user_url'] = $user_url;

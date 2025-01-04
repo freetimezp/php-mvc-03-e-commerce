@@ -8,9 +8,10 @@ class Ajax_product extends Controller
             $data = (object)$_POST;
         } else {
             $data = file_get_contents("php://input");
+            $data = json_decode($data);
         }
 
-
+        //print_r($data);
 
         if (is_object($data) && isset($data->data_type)) {
             $DB = Database::newInstance();
@@ -18,7 +19,7 @@ class Ajax_product extends Controller
             $category = $this->load_model('category');
             $image_class = $this->load_model('image');
 
-            //show($data);
+            //show($category);
 
             if ($data->data_type == 'add_product') {
                 //add new product
@@ -46,6 +47,7 @@ class Ajax_product extends Controller
                 }
             } else if ($data->data_type == 'delete_row') {
                 //delete product
+                //print_r("Delete row");
                 $product->delete($data->id);
 
                 $arr['message'] = "Your product was deleted!";
@@ -55,7 +57,7 @@ class Ajax_product extends Controller
                 $arr['data_type'] = "delete_row";
 
                 $products = $product->get_all();
-                $arr['data'] = $product->make_table($products);
+                $arr['data'] = $product->make_table($products, $category);
 
                 echo json_encode($arr);
             } else if ($data->data_type == 'disable_row') {
@@ -81,10 +83,16 @@ class Ajax_product extends Controller
                 //var_dump($data);
                 $product->edit($data, $_FILES);
 
-                $arr['message'] = "Your product was updated!";
+                if ($_SESSION['error'] != "") {
+                    $arr['message'] = $_SESSION['error'];
+                    $arr['message_type'] = 'error';
+                } else {
+                    $arr['message'] = "Your product was updated!";
+                    $arr['message_type'] = 'info';
+                }
+
                 $_SESSION['error'] = "";
 
-                $arr['message_type'] = 'info';
                 $arr['data_type'] = "edit_product";
 
                 $cats = $product->get_all();

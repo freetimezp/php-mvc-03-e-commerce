@@ -506,6 +506,7 @@
     };
 
     function handle_result(result) {
+        //console.log("Status OK: " + "Products");
         //console.log(result);
 
         if (result != "") {
@@ -534,10 +535,14 @@
                     table_body.innerHTML = obj.data;
                 } else if (obj.data_type == 'edit_product') {
                     //console.log(obj);
-                    show_edit_product(0, '', false);
+                    if (obj.message_type == 'info') {
+                        show_edit_product(0, '', false);
+                        var table_body = document.querySelector("#table_body");
+                        table_body.innerHTML = obj.data;
 
-                    var table_body = document.querySelector("#table_body");
-                    table_body.innerHTML = obj.data;
+                    } else {
+                        alert(obj.message);
+                    }
                 }
             }
         }

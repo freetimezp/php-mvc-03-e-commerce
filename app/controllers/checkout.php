@@ -77,6 +77,8 @@ class Checkout extends Controller
             $order = $this->load_model('order');
             $order->save_order($_POST, $rows, $user_url, $session_id);
 
+            $data['errors'] = $order->errors;
+
             //header("Location: " . ROOT . "thank_you");
             //die;
         }
