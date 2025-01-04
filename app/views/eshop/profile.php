@@ -1,6 +1,5 @@
 <?php $this->view("header", $data);  ?>
 
-
 <style>
     .pn {
         height: auto;
@@ -35,7 +34,8 @@
     }
 </style>
 
-<section id="main-content">
+
+<section id="main-content" style="margin-left: 0;">
     <section class="wrapper">
         <div style="min-height: 400px;">
             <div class="col-md-4 mb profile-block">
@@ -77,6 +77,40 @@
                     </div>
                 </div>
             </div>
+
+            <?php if (is_array($orders)): ?>
+                <div class="col-md-8" style="box-shadow: 0 0 20px #aaa; border: solid thin #eee;">
+                    <h3>Orders:</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Total</th>
+                                <th>Delivery Address</th>
+                                <th>City/State</th>
+                                <th>Mobile</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($orders as $order): ?>
+                                <tr>
+                                    <td><?= $order->id ?></td>
+                                    <td><?= date("jS M Y", strtotime($order->date)) ?></td>
+                                    <td>$<?= $order->total ?></td>
+                                    <td><?= $order->delivery_address ?></td>
+                                    <td><?= $order->country . "/" . $order->state ?></td>
+                                    <td><?= $order->mobile_phone ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php else: ?>
+                <div>
+                    Try to buy something...
+                </div>
+            <?php endif; ?>
         </div>
     </section>
 </section>

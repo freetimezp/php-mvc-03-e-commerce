@@ -21,7 +21,6 @@ class Order extends Controller
             }
         }
 
-        return;
         //show($POST);
         $db = Database::newInstance();
         $data = array();
@@ -81,5 +80,32 @@ class Order extends Controller
                 $result = $db->write($query, $data);
             }
         }
+    }
+
+
+    public function get_orders_by_user($user_url)
+    {
+        $orders = false;
+
+        $db = Database::newInstance();
+        $data['user_url'] = $user_url;
+
+        $query = "SELECT * FROM orders WHERE user_url = :user_url ORDER BY id DESC LIMIT 100";
+        $orders = $db->read($query, $data);
+
+        return $orders;
+    }
+
+
+    public function get_all_orders()
+    {
+        $orders = false;
+
+        $db = Database::newInstance();
+
+        $query = "SELECT * FROM orders ORDER BY id DESC LIMIT 100";
+        $orders = $db->read($query);
+
+        return $orders;
     }
 }
