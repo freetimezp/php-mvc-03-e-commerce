@@ -7,8 +7,8 @@ class Ajax_checkout extends Controller
         //print_r($id);
 
         $id = json_decode($id);
-        $country = $this->load_model('country');
-        $data = $country->get_states($id->id);
+        $countries = $this->load_model('countries');
+        $data = $countries->get_states($id->id);
 
         $info = (object)[]; //empty object
         $info->data = $data;

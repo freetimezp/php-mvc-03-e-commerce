@@ -123,7 +123,7 @@
 	};
 
 	function handle_result(result) {
-		console.log(result);
+		//console.log(result);
 
 		if (result != "") {
 			var obj = JSON.parse(result);

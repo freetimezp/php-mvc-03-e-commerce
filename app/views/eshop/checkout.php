@@ -51,7 +51,7 @@
 									</select>
 									<select name="state" class="js-state" required
 										style="margin-bottom: 15px;">
-										<option>-- Choose staten --</option>
+										<option>-- Choose state --</option>
 									</select>
 									<input class="form-control" type="text" placeholder="Home Phone"
 										style="margin-bottom: 15px;" name="home_phone">
@@ -95,6 +95,8 @@
 
 <script type="text/javascript">
 	function get_states(id) {
+		//console.log(id);
+
 		send_data({
 			id: id.trim()
 		}, "get_states");
@@ -105,6 +107,7 @@
 
 		ajax.addEventListener("readystatechange", function() {
 			if (ajax.readyState == 4 && ajax.status == 200) {
+				//console.log('Status OK');
 				handle_result(ajax.responseText);
 			}
 		});
@@ -122,7 +125,7 @@
 			if (typeof obj.data_type != 'undefined') {
 				if (obj.data_type == "get_states") {
 					var select_input = document.querySelector(".js-state");
-					select_input.innerHTML = "<option>-- Choose staten --</option>";
+					select_input.innerHTML = "<option>-- Choose state --</option>";
 
 					for (var i = 0; i < obj.data.length; i++) {
 						select_input.innerHTML +=
