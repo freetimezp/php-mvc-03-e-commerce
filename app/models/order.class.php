@@ -108,4 +108,18 @@ class Order extends Controller
 
         return $orders;
     }
+
+
+    public function get_order_details($id)
+    {
+        $details = false;
+        $data['id'] = addslashes($id);
+
+        $db = Database::newInstance();
+
+        $query = "SELECT * FROM order_details WHERE order_id = :id";
+        $details = $db->read($query, $data);
+
+        return $details;
+    }
 }

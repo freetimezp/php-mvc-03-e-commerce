@@ -16,13 +16,26 @@ class Profile extends Controller
         }
 
         $orders = $order->get_orders_by_user($user_data->url_address);
-        //show($orders);
 
         if (is_array($orders)) {
+
+            foreach ($orders as $key => $row) {
+                # code...
+                $details = $order->get_order_details($row->id);
+                if ($details) {
+                    $totals = array_column($details, 'total');
+                    $grand_total = array_sum($totals);
+
+                    $orders[$key]->details = $details;
+                    $orders[$key]->grand_total = $grand_total;
+                }
+            }
+
+            //show($orders);
             $data['orders'] = $orders;
         }
 
-        //show($data);
+
         $this->view("profile", $data);
     }
 }

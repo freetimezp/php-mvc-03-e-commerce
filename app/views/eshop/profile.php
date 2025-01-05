@@ -54,6 +54,10 @@
         top: 10px;
         right: 10px;
         cursor: pointer;
+        background-color: #888;
+        color: #fff;
+        padding: 1px 2px;
+        border-radius: 4px;
     }
 </style>
 
@@ -129,7 +133,34 @@
                                         <i class="fa fa-arrow-down"></i>
                                         <div class="js-order-details details hide">
                                             <span>close</span>
-                                            details <?= $order->id ?>
+                                            <?php if (isset($order->details) && is_array($order->details)): ?>
+                                                <h5>Order #<a style="color: blue;"><?= $order->id ?></a> details:</h5>
+                                                <table class="table" style="margin-top: 10px;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Qty</th>
+                                                            <th>Description</th>
+                                                            <th>Amount</th>
+                                                            <th>Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php foreach ($order->details as $detail): ?>
+                                                            <tr>
+                                                                <td><?= $detail->qty ?></td>
+                                                                <td><?= $detail->description ?></td>
+                                                                <td>$<?= $detail->amount ?></td>
+                                                                <td>$<?= $detail->total ?></td>
+                                                            </tr>
+                                                        <?php endforeach; ?>
+                                                    </tbody>
+                                                </table>
+                                                <h5>Grand Total: $ <?= $order->grand_total ?> </h5>
+                                            <?php else: ?>
+                                                <div>
+                                                    No details for this order..
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                     </td>
                                 </tr>
@@ -149,19 +180,28 @@
 <script>
     function show_details(e) {
         var row = e.target.parentNode;
+        //console.log(row);
         var details = row.querySelector(".js-order-details");
+        //console.log(details);
         var closeBtn = details?.querySelector('span');
 
-        if (details) {
-            if (details.classList.contains('hide')) {
-                details.classList.remove("hide");
-            } else {
-                details.classList.add("hide");
+        //get all rows
+        var all = document.querySelectorAll(".js-order-details");
+        if (all.length > 0) {
+            for (let i = 0; i < all.length; i++) {
+                all[i].classList.add("hide");
             }
         }
 
-        if (closeBtn) {
+        //show order details box
+        if (details) {
+            if (details.classList.contains('hide')) {
+                details.classList.remove("hide");
+            }
+        }
 
+
+        if (closeBtn) {
             closeBtn.addEventListener('click', () => {
                 if (!details.classList.contains('hide')) {
                     details.classList.add("hide");
