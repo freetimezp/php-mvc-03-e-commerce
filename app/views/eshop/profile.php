@@ -32,6 +32,29 @@
         color: #000;
         font-size: 16px;
     }
+
+    .details {
+        background-color: #eee;
+        box-shadow: 0px 0px 10px #aaa;
+        width: 100%;
+        position: absolute;
+        min-height: 100px;
+        top: 100%;
+        left: 0;
+        padding: 10px;
+        z-index: 10;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .details span {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
 </style>
 
 
@@ -90,17 +113,25 @@
                                 <th>Delivery Address</th>
                                 <th>City/State</th>
                                 <th>Mobile</th>
+                                <th>...</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody onclick="show_details(event)">
                             <?php foreach ($orders as $order): ?>
-                                <tr>
+                                <tr style="position: relative;">
                                     <td><?= $order->id ?></td>
                                     <td><?= date("jS M Y", strtotime($order->date)) ?></td>
                                     <td>$<?= $order->total ?></td>
                                     <td><?= $order->delivery_address ?></td>
                                     <td><?= $order->country . "/" . $order->state ?></td>
                                     <td><?= $order->mobile_phone ?></td>
+                                    <td>
+                                        <i class="fa fa-arrow-down"></i>
+                                        <div class="js-order-details details hide">
+                                            <span>close</span>
+                                            details <?= $order->id ?>
+                                        </div>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -115,6 +146,30 @@
     </section>
 </section>
 
+<script>
+    function show_details(e) {
+        var row = e.target.parentNode;
+        var details = row.querySelector(".js-order-details");
+        var closeBtn = details?.querySelector('span');
 
+        if (details) {
+            if (details.classList.contains('hide')) {
+                details.classList.remove("hide");
+            } else {
+                details.classList.add("hide");
+            }
+        }
+
+        if (closeBtn) {
+
+            closeBtn.addEventListener('click', () => {
+                if (!details.classList.contains('hide')) {
+                    details.classList.add("hide");
+                }
+            });
+        }
+
+    }
+</script>
 
 <?php $this->view("footer", $data);  ?>
