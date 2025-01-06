@@ -109,7 +109,22 @@ class User
         $_SESSION['error'] = $this->error;
     }
 
-    public function get_user($url) {}
+    public function get_user($url)
+    {
+        $db = Database::newInstance();
+
+        $arr = false;
+        $arr['url'] = addslashes($url);
+
+        $query = "SELECT * FROM users WHERE url_address = :url LIMIT 1";
+        $result = $db->read($query, $arr);
+
+        if (is_array($result)) {
+            return $result[0];
+        }
+
+        return false;
+    }
 
     private function random_string($length)
     {
@@ -125,7 +140,7 @@ class User
 
     public function check_login($redirect = false, $allowed = [])
     {
-        $db = Database::getInstance();
+        $db = Database::newInstance();
         if (count($allowed) > 0) {
             //show("here admin");
 

@@ -75,4 +75,48 @@ class Admin extends Controller
         //show($data);
         $this->view("admin/products", $data);
     }
+
+
+    public function orders()
+    {
+        $data = false;
+        $data['page_title'] = "Admin - Orders";
+
+        $user = $this->load_model('user');
+        $order = $this->load_model('order');
+
+        $user_data = $user->check_login(true, ['admin']);
+
+        if (!empty($user_data)) {
+            $data['user_data'] = $user_data;
+        }
+
+        $orders = $order->get_all_orders();
+
+        if (is_array($orders)) {
+
+            foreach ($orders as $key => $row) {
+                # code...
+                $details = $order->get_order_details($row->id);
+                $orders[$key]->grand_total = 0;
+
+                if ($details) {
+                    $totals = array_column($details, 'total');
+                    $grand_total = array_sum($totals);
+
+                    $orders[$key]->details = $details;
+                    $orders[$key]->grand_total = $grand_total;
+
+                    $user_row = $user->get_user($row->user_url);
+                    $orders[$key]->user = $user_row;
+                }
+            }
+
+            //show($orders);
+            $data['orders'] = $orders;
+        }
+
+
+        $this->view("admin/orders", $data);
+    }
 }
