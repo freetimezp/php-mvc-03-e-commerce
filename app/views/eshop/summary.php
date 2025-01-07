@@ -67,30 +67,17 @@ if (isset($errors) && count($errors) > 0) {
 								</div>
 								<div class="form-two">
 									<select name="country" class="js-country" oninput="get_states(this.value)"
-										style="margin-bottom: 15px;">
-										<?php
-										if ($country == "") {
-											echo "<option>-- Country --</option>";
-										} else {
-											echo "<option>$country</option>";
-										}
-										?>
-
+										style="margin-bottom: 15px;" value="<?= $country ?>">
+										<option>-- Country --</option>
 										<?php if (isset($countries)): ?>
 											<?php foreach ($countries as $item): ?>
-												<option value="<?= $item->country ?>"><?= $item->country ?></option>
+												<option value="<?= $item->id ?>"><?= $item->country ?></option>
 											<?php endforeach; ?>
 										<?php endif; ?>
 									</select>
 									<select name="state" class="js-state" required
 										style="margin-bottom: 15px;" value="<?= $state ?>">
-										<?php
-										if ($state == "") {
-											echo "<option>-- Choose state --</option>";
-										} else {
-											echo "<option>$state</option>";
-										}
-										?>
+										<option>-- Choose state --</option>
 									</select>
 									<input class="form-control" type="text" placeholder="Home Phone"
 										style="margin-bottom: 15px;" name="home_phone" value="<?= $home_phone ?>">
@@ -111,8 +98,8 @@ if (isset($errors) && count($errors) > 0) {
 				<hr class="clear: both;" style="opacity: 0.6;">
 
 				<div class="pull-right">
-					<a href="<?= ROOT ?>shop">
-						<input type="button" class="btn btn-default" value="Back to Cart">
+					<a href="<?= ROOT ?>checkout">
+						<input type="button" class="btn btn-default" value="Back to Checkout">
 					</a>
 
 					<input type="submit" class="btn btn-warning" value="Continue">
@@ -127,8 +114,8 @@ if (isset($errors) && count($errors) > 0) {
 		<?php else: ?>
 			<div>
 				<h1>Add some products to cart..</h1>
-				<a href="<?= ROOT ?>shop">
-					<input type="button" class="btn btn-default" value="Back to Cart">
+				<a href="<?= ROOT ?>checkout">
+					<input type="button" class="btn btn-default" value="Back to Checkout">
 				</a>
 			</div>
 		<?php endif; ?>
@@ -136,11 +123,11 @@ if (isset($errors) && count($errors) > 0) {
 </section> <!--/#cart_items-->
 
 <script type="text/javascript">
-	function get_states(country) {
-		//console.log(country);
+	function get_states(id) {
+		//console.log(id);
 
 		send_data({
-			id: country.trim()
+			id: id.trim()
 		}, "get_states");
 	};
 
@@ -154,12 +141,8 @@ if (isset($errors) && count($errors) > 0) {
 			}
 		});
 
-		var info = {};
-		info.data_type = data_type;
-		info.data = data;
-
-		ajax.open("POST", "<?= ROOT ?>ajax_checkout", true);
-		ajax.send(JSON.stringify(info));
+		ajax.open("POST", `<?= ROOT ?>ajax_checkout/${data_type}/` + JSON.stringify(data), true);
+		ajax.send();
 	};
 
 	function handle_result(result) {
@@ -175,7 +158,7 @@ if (isset($errors) && count($errors) > 0) {
 
 					for (var i = 0; i < obj.data.length; i++) {
 						select_input.innerHTML +=
-							`<option value="${obj.data[i].state}">
+							`<option value="${obj.data[i].id}">
 							${obj.data[i].state}
 							</option>`;
 					}

@@ -109,32 +109,36 @@
 
                                         <h5>Customer: <?= $order->user->name ?></h5>
 
-                                        <table class="table">
-                                            <tr>
-                                                <th>Country</th>
-                                                <td><?= $order->country ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>State</th>
-                                                <td><?= $order->state ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Delivery Address</th>
-                                                <td><?= $order->delivery_address ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Home Phone</th>
-                                                <td><?= $order->home_phone ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Mobile Phone</th>
-                                                <td><?= $order->mobile_phone ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Date</th>
-                                                <td><?= date("j M Y", strtotime($order->date)) ?></td>
-                                            </tr>
-                                        </table>
+                                        <div style="display:flex;">
+                                            <table class="table" style="flex: 1; margin: 4px;">
+                                                <tr>
+                                                    <th>Country</th>
+                                                    <td><?= $order->country ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>State</th>
+                                                    <td><?= $order->state ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Delivery Address</th>
+                                                    <td><?= $order->delivery_address ?></td>
+                                                </tr>
+                                            </table>
+                                            <table class="table" style="flex: 1; margin: 4px;">
+                                                <tr>
+                                                    <th>Home Phone</th>
+                                                    <td><?= $order->home_phone ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Mobile Phone</th>
+                                                    <td><?= $order->mobile_phone ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <td><?= date("j M Y", strtotime($order->date)) ?></td>
+                                                </tr>
+                                            </table>
+                                        </div>
 
                                         <hr>
                                         <h5>Order Summary</h5>

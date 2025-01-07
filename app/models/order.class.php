@@ -4,8 +4,9 @@ class Order extends Controller
 {
     public $errors = array();
 
-    public function save_order($POST, $rows, $user_url, $session_id)
+    public function validate($POST)
     {
+        $this->errors = [];
 
         foreach ($POST as $key => $value) {
             if ($key == "country") {
@@ -20,6 +21,10 @@ class Order extends Controller
                 }
             }
         }
+    }
+
+    public function save_order($POST, $rows, $user_url, $session_id)
+    {
 
         //show($POST);
         $db = Database::newInstance();
@@ -37,10 +42,10 @@ class Order extends Controller
             $data['session_id'] = $session_id;
             $data['delivery_address'] = $POST['address1'] . " " . $POST['address2'];
             $data['total'] = $total;
-            $country_obj = $countries->get_country($POST['country']);
-            $data['country'] = $country_obj->country;
-            $state_obj = $countries->get_state($POST['state']);
-            $data['state'] = $state_obj->state;
+            //$country_obj = $countries->get_country($POST['country']);
+            $data['country'] = $POST['country'];
+            //$state_obj = $countries->get_state($POST['state']);
+            $data['state'] = $POST['state'];
             $data['zip'] = $POST['postal_code'];
             $data['tax'] = 0;
             $data['shipping'] = 0;
