@@ -25,92 +25,104 @@ if (isset($errors) && count($errors) > 0) {
 			<h2>Review & Payment</h2>
 		</div>
 
-		<?php if (is_array($rows)): ?>
+		<?php if (is_array($orders)): ?>
 
 			<div class="register-req">
-				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
-			</div><!--/register-req-->
-
-			<?php
-			$address1 = "";
-			$address2 = "";
-			$postal_code = "";
-			$home_phone = "";
-			$mobile_phone = "";
-			$message = "";
-			$country = "";
-			$state = "";
-
-			if (isset($POST_DATA)) {
-				extract($POST_DATA); //we can use input names for showing
-			}
-			?>
-
-			<div class="shopper-informations">
-				<div class="row">
-					<form method="POST">
-						<div class="col-sm-3">
-							<div class="shopper-info">
-								<p>Shopper Information</p>
-							</div>
-						</div>
-						<div class="col-sm-5 clearfix">
-							<div class="bill-to">
-								<p>Bill To</p>
-								<div class="form-one">
-									<input class="form-control" type="text" placeholder="Address 1 *" required
-										style="margin-bottom: 15px;" name="address1" value="<?= $address1 ?>">
-									<input class="form-control" type="text" placeholder="Address 2"
-										style="margin-bottom: 15px;" name="address2" value="<?= $address2 ?>">
-									<input class="form-control" type="text" placeholder="Zip / Postal Code *"
-										name="postal_code" required value="<?= $postal_code ?>">
-								</div>
-								<div class="form-two">
-									<select name="country" class="js-country" oninput="get_states(this.value)"
-										style="margin-bottom: 15px;" value="<?= $country ?>">
-										<option>-- Country --</option>
-										<?php if (isset($countries)): ?>
-											<?php foreach ($countries as $item): ?>
-												<option value="<?= $item->id ?>"><?= $item->country ?></option>
-											<?php endforeach; ?>
-										<?php endif; ?>
-									</select>
-									<select name="state" class="js-state" required
-										style="margin-bottom: 15px;" value="<?= $state ?>">
-										<option>-- Choose state --</option>
-									</select>
-									<input class="form-control" type="text" placeholder="Home Phone"
-										style="margin-bottom: 15px;" name="home_phone" value="<?= $home_phone ?>">
-									<input class="form-control" type="text" placeholder="Mobile Phone *"
-										name="mobile_phone" required value="<?= $mobile_phone ?>">
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-4">
-							<div class="order-message">
-								<p>Shipping Order</p>
-								<textarea name="message" placeholder="Notes about your order, Special Notes for Delivery"
-									style="max-height: 200px;" class="form-control"><?= $message ?></textarea>
-							</div>
-						</div>
-				</div>
-
-				<hr class="clear: both;" style="opacity: 0.6;">
-
-				<div class="pull-right">
-					<a href="<?= ROOT ?>checkout">
-						<input type="button" class="btn btn-default" value="Back to Checkout">
-					</a>
-
-					<input type="submit" class="btn btn-warning" value="Continue">
-					<!--<input type="submit" class="btn btn-warning" value="Payment">-->
-				</div>
-
-				<br> <br> <br> <br>
-				</form>
+				<p>Summary..</p>
 			</div>
 
+			<div class="row mt">
+				<div class="col-md-12">
 
+					<?php foreach ($orders as $order): ?>
+						<?php
+						$order = (object)$order;
+						?>
+
+						<div class="js-order-details details">
+							<div style="display:flex; gap: 10px;">
+								<table class="table" style="flex: 1; margin: 4px;">
+									<tr>
+										<th>Country</th>
+										<td><?= $order->country ?></td>
+									</tr>
+									<tr>
+										<th>State</th>
+										<td><?= $order->state ?></td>
+									</tr>
+									<tr>
+										<th>Delivery Address 1</th>
+										<td><?= $order->address1 ?></td>
+									</tr>
+									<tr>
+										<th>Delivery Address 2</th>
+										<td><?= $order->address2 ?></td>
+									</tr>
+								</table>
+								<table class="table" style="flex: 1; margin: 4px;">
+									<tr>
+										<th>Zip/Postal Code</th>
+										<td><?= $order->postal_code ?></td>
+									</tr>
+									<tr>
+										<th>Home Phone</th>
+										<td><?= $order->home_phone ?></td>
+									</tr>
+									<tr>
+										<th>Mobile Phone</th>
+										<td><?= $order->mobile_phone ?></td>
+									</tr>
+									<tr>
+										<th>Date</th>
+										<td><?= date("Y-m-d H:i:s") ?></td>
+									</tr>
+								</table>
+							</div>
+							<div style="padding: 10px; text-align: center; font-size: 20px; background-color: #e7e0e0;">
+								Message: <?= $order->message ?>
+							</div>
+
+							<hr>
+							<h5>Order Summary</h5>
+							<table class="table" style="margin-top: 10px;">
+								<thead>
+									<tr>
+										<th>Description</th>
+										<th>Qty</th>
+										<th>Price</th>
+										<th>Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php foreach ($order_details as $detail): ?>
+										<tr>
+											<td><?= $detail->description ?></td>
+											<td><?= $detail->cart_qty ?></td>
+											<td>$<?= $detail->price ?></td>
+											<td>$<?= $detail->cart_qty * $detail->price ?></td>
+										</tr>
+									<?php endforeach; ?>
+								</tbody>
+							</table>
+							<h5 style="float: right;">Grand Total: $ <?= $sub_total ?> </h5>
+						</div>
+
+						<hr style="clear: both; opacity: 0.2;">
+
+						<div class="pull-right" style="margin-bottom: 20px;">
+							<a href="<?= ROOT ?>checkout">
+								<input type="button" class="btn btn-default" value="Back to Checkout">
+							</a>
+
+							<form method="POST" style="display: inline-block;">
+								<input type="submit" class="btn btn-warning" value="Pay">
+							</form>
+						</div>
+					<?php endforeach; ?>
+
+					<hr style="clear: both; opacity: 0.2;">
+				</div><!-- /col-md-12 -->
+			</div><!-- /row -->
 		<?php else: ?>
 			<div>
 				<h1>Add some products to cart..</h1>

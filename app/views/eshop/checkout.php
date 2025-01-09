@@ -28,7 +28,7 @@ if (isset($errors) && count($errors) > 0) {
 		<?php if (is_array($rows)): ?>
 
 			<div class="register-req">
-				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
+				<p>Please check fields in form..</p>
 			</div><!--/register-req-->
 
 			<?php
@@ -111,12 +111,11 @@ if (isset($errors) && count($errors) > 0) {
 				<hr class="clear: both;" style="opacity: 0.6;">
 
 				<div class="pull-right">
-					<a href="<?= ROOT ?>shop">
+					<a href="<?= ROOT ?>cart">
 						<input type="button" class="btn btn-default" value="Back to Cart">
 					</a>
 
 					<input type="submit" class="btn btn-warning" value="Continue">
-					<!--<input type="submit" class="btn btn-warning" value="Payment">-->
 				</div>
 
 				<br> <br> <br> <br>
@@ -128,7 +127,7 @@ if (isset($errors) && count($errors) > 0) {
 			<div>
 				<h1>Add some products to cart..</h1>
 				<a href="<?= ROOT ?>shop">
-					<input type="button" class="btn btn-default" value="Back to Cart">
+					<input type="button" class="btn btn-default" value="Back to Shop">
 				</a>
 			</div>
 		<?php endif; ?>

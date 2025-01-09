@@ -97,6 +97,45 @@ class Checkout extends Controller
             $data['user_data'] = $user_data;
         }
 
+        $DB = Database::newInstance();
+        $rows = false;
+
+        $prod_ids = array();
+        if (isset($_SESSION['CART'])) {
+            $prod_ids = array_column($_SESSION['CART'], 'id');
+            //covert to string
+            $ids_str = "'" . implode("','", $prod_ids) . "'";
+
+            $rows = $DB->read("SELECT * FROM products WHERE id IN ($ids_str) ORDER BY id DESC");
+        }
+
+        //show($rows);
+        if (is_array($rows)) {
+            foreach ($rows as $key => $row) {
+                foreach ($_SESSION['CART'] as $item) {
+                    if ($row->id == $item['id']) {
+                        $rows[$key]->cart_qty = $item['qty'];
+                        break;
+                    }
+                }
+            }
+        }
+
+        //show($rows);
+        $data['sub_total'] = 0;
+
+        if ($rows) {
+            foreach ($rows as $key => $row) {
+                $mytotal = $row->price * $row->cart_qty;
+                $data['sub_total'] += $mytotal;
+            }
+        }
+
+        $data['order_details'] = $rows;
+        $data['orders'][] = $_SESSION['POST_DATA'];
+        //show($data['user_data']);
+
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['POST_DATA'])) {
             $session_id = session_id();
 
