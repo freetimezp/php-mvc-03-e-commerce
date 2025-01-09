@@ -148,8 +148,29 @@ class Checkout extends Controller
             $order->save_order($_SESSION['POST_DATA'], $rows, $user_url, $session_id);
 
             $data['errors'] = $order->errors;
+
+            unset($_SESSION['POST_DATA']);
+            unset($_SESSION['CART']);
+
+            header("Location: " . ROOT . "checkout/thank_you");
+            die;
         }
 
         $this->view("summary", $data);
+    }
+
+
+    public function thank_you()
+    {
+        $data['page_title'] = "Thank You";
+
+        $user = $this->load_model('user');
+        $user_data = $user->check_login();
+
+        if (!empty($user_data)) {
+            $data['user_data'] = $user_data;
+        }
+
+        $this->view("checkout.thank_you", $data);
     }
 }

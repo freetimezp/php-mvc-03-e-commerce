@@ -10,14 +10,32 @@ class Order extends Controller
 
         foreach ($POST as $key => $value) {
             if ($key == "country") {
-                if ($value == "" || $value == "-- Country --") {
+                if (empty($value) || $value == "-- Country --") {
                     $this->errors[] = "Please, choose a country from list..";
                 }
             }
 
             if ($key == "state") {
-                if ($value == "" || $value == "-- Choose state --") {
+                if (empty($value) || $value == "-- Choose state --") {
                     $this->errors[] = "Please, choose a state from list..";
+                }
+            }
+
+            if ($key == "address1") {
+                if (empty($value)) {
+                    $this->errors[] = "Please, enter a valid address 1.";
+                }
+            }
+
+            if ($key == "postal_code") {
+                if (empty($value)) {
+                    $this->errors[] = "Please, enter a valid postal or zip code.";
+                }
+            }
+
+            if ($key == "mobile_phone") {
+                if (empty($value)) {
+                    $this->errors[] = "Please, enter a valid mobile phone.";
                 }
             }
         }
