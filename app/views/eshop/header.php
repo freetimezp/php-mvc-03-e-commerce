@@ -75,29 +75,6 @@
                         <div class="logo pull-left">
                             <a href="<?= ROOT ?>"><img src="<?= ASSETS . THEME ?>images/home/logo.png" alt="" /></a>
                         </div>
-                        <div class="btn-group pull-right">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                    USA
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Canada</a></li>
-                                    <li><a href="#">UK</a></li>
-                                </ul>
-                            </div>
-
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                    DOLLAR
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Canadian Dollar</a></li>
-                                    <li><a href="#">Pound</a></li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
@@ -136,24 +113,27 @@
                         </div>
                         <div class="mainmenu pull-left">
                             <ul class="nav navbar-nav collapse navbar-collapse">
-                                <li><a href="<?= ROOT ?>" class="active">Home</a></li>
-                                <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="shop">Products</a></li>
-                                        <li><a href="<?= ROOT ?>product-details">Product Details</a></li>
-                                        <li><a href="<?= ROOT ?>checkout">Checkout</a></li>
-                                        <li><a href="<?= ROOT ?>cart">Cart</a></li>
-                                        <li><a href="<?= ROOT ?>login">Login</a></li>
-                                    </ul>
+                                <li>
+                                    <a href="<?= ROOT ?>" class="<?= $page_title == 'Home' ? 'active' : ''; ?>">
+                                        Home
+                                    </a>
                                 </li>
-                                <li class="dropdown"><a href="<?= ROOT ?>">Blog<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="<?= ROOT ?>blog">Blog List</a></li>
-                                        <li><a href="<?= ROOT ?>blog-single">Blog Single</a></li>
-                                    </ul>
+                                <li class="dropdown">
+                                    <a href="<?= ROOT ?>shop" class="<?= $page_title == 'Shop' ? 'active' : ''; ?>">
+                                        Shop
+                                    </a>
                                 </li>
-                                <li><a href="<?= ROOT ?>404">404</a></li>
-                                <li><a href="<?= ROOT ?>contact-us">Contact</a></li>
+                                <li class="dropdown">
+                                    <a href="<?= ROOT ?>blog" class="<?= $page_title == 'Blog' ? 'active' : ''; ?>">
+                                        Blog
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= ROOT ?>contact-us"
+                                        class="<?= $page_title == 'Contact Us' ? 'active' : ''; ?>">
+                                        Contact
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
