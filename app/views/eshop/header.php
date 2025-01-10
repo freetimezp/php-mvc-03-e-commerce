@@ -137,11 +137,16 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="search_box pull-right">
-                            <input type="text" placeholder="Search" />
+
+                    <?php if (isset($show_search)): ?>
+                        <div class="col-sm-3">
+                            <form method="get">
+                                <div class="search_box pull-right">
+                                    <input name="find" type="text" placeholder="Search" />
+                                </div>
+                            </form>
                         </div>
-                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div><!--/header-bottom-->
