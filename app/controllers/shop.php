@@ -41,6 +41,13 @@ class Shop extends Controller
             }
         }
 
+        //get all categories
+        $category = $this->load_model('category');
+        $categories = $category->get_all();
+        if ($categories) {
+            $data['categories'] = $categories;
+        }
+
         $data['rows'] = $rows;
         $data['show_search'] = $show_search;
 
