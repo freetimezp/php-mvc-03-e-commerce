@@ -54,4 +54,50 @@ class Shop extends Controller
         //show($data);
         $this->view("shop", $data);
     }
+
+
+    public function category($cat_name = '')
+    {
+        $DB = Database::newInstance();
+
+        $user = $this->load_model('user');
+        $image_class = $this->load_model('image');
+        $Category = $this->load_model('category');
+
+        $user_data = $user->check_login();
+        if (!empty($user_data)) {
+            $data['user_data'] = $user_data;
+        }
+
+        $arr = false;
+        $rows = false;
+        $cat_id = null;
+        $check = $Category->get_one_by_name($cat_name);
+        if (is_object($check)) {
+            $cat_id = $check->id;
+            $arr['cat_id'] = $cat_id;
+        }
+
+        $rows = $DB->read("SELECT * FROM products WHERE category = :cat_id ORDER BY id DESC", $arr);
+
+
+        if ($rows) {
+            foreach ($rows as $key => $row) {
+                $rows[$key]->image = $image_class->get_thumb_post($rows[$key]->image);
+            }
+        }
+
+        //get all categories
+        $categories = $Category->get_all();
+        if ($categories) {
+            $data['categories'] = $categories;
+        }
+
+        $data['page_title'] = "Shop";
+        $data['rows'] = $rows;
+        $data['show_search'] = true;
+
+
+        $this->view("shop", $data);
+    }
 }

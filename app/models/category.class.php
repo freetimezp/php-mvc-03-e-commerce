@@ -60,6 +60,16 @@ class Category
         return $data[0];
     }
 
+    public function get_one_by_name($name)
+    {
+        $name = addslashes($name);
+        $db = Database::newInstance();
+
+        $data = $db->read("SELECT * FROM categories WHERE category LIKE :name LIMIT 1", ['name' => $name]);
+
+        return $data[0];
+    }
+
     public function make_table($cats)
     {
         //print_r($cats);

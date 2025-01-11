@@ -15,7 +15,13 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordian" href="#<?= $cat->category ?>">
+                                <a
+                                    <?= in_array($cat->id, $parents) ? 'data-toggle="collapse"' : ''; ?>
+                                    data-parent="#accordian"
+                                    href="<?=
+                                            in_array($cat->id, $parents)
+                                                ? '#' . $cat->category
+                                                : ROOT . 'shop/category/' . $cat->category; ?>">
                                     <?= $cat->category ?>
 
                                     <?php if (in_array($cat->id, $parents)): ?>
@@ -30,10 +36,15 @@
                             <div id="<?= $cat->category ?>" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <ul>
+                                        <li>
+                                            <a href="<?= ROOT . 'shop/category/' . $cat->category; ?>">
+                                                All
+                                            </a>
+                                        </li>
                                         <?php foreach ($categories as $sub_cat): ?>
                                             <?php if ($sub_cat->parent == $cat->id): ?>
                                                 <li>
-                                                    <a href="#">
+                                                    <a href="<?= ROOT . 'shop/category/' . $sub_cat->category; ?>">
                                                         <?= $sub_cat->category ?>
                                                     </a>
                                                 </li>
