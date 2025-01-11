@@ -16,7 +16,7 @@
 				<div class="features_items"><!--features_items-->
 					<h2 class="title text-center">Features Items</h2>
 
-					<?php if (isset($rows) && is_array($rows)): ?>
+					<?php if (isset($rows) && is_array($rows) && !empty($rows)): ?>
 						<?php foreach ($rows as $row): ?>
 							<?php $this->view("products-inc", $row);  ?>
 						<?php endforeach; ?>
@@ -26,7 +26,7 @@
 
 				</div><!--features_items-->
 
-				<?php if (isset($rows) && is_array($rows)): ?>
+				<?php if (isset($rows) && is_array($rows) && !empty($rows)): ?>
 					<ul class="pagination">
 						<li class="active"><a href="">1</a></li>
 						<li><a href="">2</a></li>

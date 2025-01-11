@@ -70,27 +70,47 @@ class Shop extends Controller
         }
 
         $arr = false;
-        $rows = false;
-        $cat_id = null;
-        $check = $Category->get_one_by_name($cat_name);
-        if (is_object($check)) {
-            $cat_id = $check->id;
-            $arr['cat_id'] = $cat_id;
-        }
-
-        $rows = $DB->read("SELECT * FROM products WHERE category = :cat_id ORDER BY id DESC", $arr);
-
-
-        if ($rows) {
-            foreach ($rows as $key => $row) {
-                $rows[$key]->image = $image_class->get_thumb_post($rows[$key]->image);
-            }
-        }
+        $rows = array();
+        $cat_arr_children = false;
 
         //get all categories
         $categories = $Category->get_all();
         if ($categories) {
             $data['categories'] = $categories;
+        }
+
+        $cat_id = null;
+        $check = $Category->get_one_by_name($cat_name);
+        //show($check);
+        if (is_object($check)) {
+            $cat_id = $check->id;
+            $arr['cat_id'] = $cat_id;
+
+            foreach ($categories as $row) {
+                if ($row->parent == $check->id) {
+                    $cat_arr_children[] = $row->id;
+                }
+            }
+        }
+
+        //get products by category
+        if (empty($cat_arr_children)) {
+            $rows = $DB->read("SELECT * FROM products WHERE category = :cat_id ORDER BY id DESC", $arr);
+        } else {
+            foreach ($cat_arr_children as $key => $row) {
+                $arr['cat_id'] = $row;
+                $rows2 = $DB->read("SELECT * FROM products WHERE category = :cat_id ORDER BY id DESC", $arr);
+                if (is_array($rows2)) {
+                    $rows = array_merge($rows, $rows2);
+                }
+            }
+        }
+        //show($rows);
+
+        if ($rows) {
+            foreach ($rows as $key => $row) {
+                $rows[$key]->image = $image_class->get_thumb_post($rows[$key]->image);
+            }
         }
 
         $data['page_title'] = "Shop";
