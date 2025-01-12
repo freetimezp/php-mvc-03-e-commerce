@@ -150,7 +150,26 @@ class Admin extends Controller
             }
         }
 
-
         $this->view("admin/users", $data);
+    }
+
+
+    public function settings($type)
+    {
+        $data = false;
+        $data['page_title'] =  "Social links | Contacts";
+
+        $user = $this->load_model('user');
+        $settings = $this->load_model('settings');
+
+        $user_data = $user->check_login(true, ['admin']);
+
+        if (!empty($user_data)) {
+            $data['user_data'] = $user_data;
+        }
+
+        $data['settings'] = $settings->get_all();
+
+        $this->view("admin/socials", $data);
     }
 }

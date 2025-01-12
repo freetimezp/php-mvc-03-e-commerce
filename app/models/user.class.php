@@ -353,4 +353,18 @@ class User
         //show($db);
         $db->query($query);
     }
+
+
+    //create table settings
+    public function create_table_settings()
+    {
+        $query = "create table if not exists settings(
+			id int primary key auto_increment,
+			setting varchar(30) null,
+            value varchar(2048) null		
+		)";
+        $db = new Database();
+        //show($db);
+        $db->query($query);
+    }
 }

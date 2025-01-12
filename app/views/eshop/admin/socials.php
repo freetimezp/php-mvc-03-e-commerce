@@ -5,6 +5,7 @@
 <!-- ADMIN SIDEBAR -->
 <?php $this->view("admin/sidebar", $data);  ?>
 
+
 <style>
     .pn {
         height: auto;
@@ -71,40 +72,37 @@
 <div class="row mt">
     <div class="col-md-12">
         <div class="content-panel">
-            <table class="table table-striped table-advance table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>User</th>
-                        <th>Email</th>
-                        <th>Created At</th>
-                        <th>Orders count</th>
-                        <th>...</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (isset($users) && is_array($users)): ?>
-                        <?php foreach ($users as $user): ?>
-                            <tr style="position: relative;">
-                                <td><?= $user->id ?></td>
-                                <td>
-                                    <a href="<?= ROOT ?>profile/<?= $user->url_address ?>">
-                                        <?= ucfirst($user->name) ?>
-                                    </a>
-                                </td>
-                                <td><?= $user->email ?></td>
-                                <td><?= date("jS M Y", strtotime($user->date)) ?></td>
-                                <td><?= $user->orders_count ?></td>
-                                <td></td>
+            <form method="post">
+                <table class="table table-striped table-advance table-hover">
+                    <thead>
+                        <tr>
+                            <th>Setting</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (isset($settings) && is_array($settings)): ?>
+                            <?php foreach ($settings as $row): ?>
+                                <tr>
+                                    <td><?= ucwords(str_replace("_", " ",  $row->setting)) ?></td>
+                                    <td>
+                                        <input type="text" class="form-control" value="<?= $row->value ?>"
+                                            placeholder="Type value">
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
 
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+                <input type="submit" value="Save Settings" class="btn btn-primary"
+                    style="margin: 20px;">
+            </form>
+
         </div><!-- /content-panel -->
     </div><!-- /col-md-12 -->
 </div><!-- /row -->
+
 
 
 <!-- ADMIN FOOTER -->

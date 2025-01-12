@@ -52,6 +52,7 @@
                 </a>
                 <ul class="sub">
                     <li><a href="<?= ROOT ?>admin/settings/slider_images">Slider Images</a></li>
+                    <li><a href="<?= ROOT ?>admin/settings/socials">Social / Contacts</a></li>
                 </ul>
             </li>
 
