@@ -86,7 +86,9 @@
                                 <tr>
                                     <td><?= ucwords(str_replace("_", " ",  $row->setting)) ?></td>
                                     <td>
-                                        <input type="text" class="form-control" value="<?= $row->value ?>"
+                                        <input type="text" class="form-control"
+                                            name="<?= $row->setting ?>"
+                                            value="<?= $row->value ?>"
                                             placeholder="Type value">
                                     </td>
                                 </tr>

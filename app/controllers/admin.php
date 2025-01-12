@@ -168,6 +168,15 @@ class Admin extends Controller
             $data['user_data'] = $user_data;
         }
 
+
+        if (count($_POST) > 0) {
+            $errors = $settings->save($_POST);
+
+            header("Location: " . ROOT . "admin/settings/socials");
+            die;
+        }
+
+
         $data['settings'] = $settings->get_all();
 
         $this->view("admin/socials", $data);
