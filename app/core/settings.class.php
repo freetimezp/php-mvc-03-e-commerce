@@ -24,7 +24,11 @@ class Settings
             $settings = self::get_all_settings_as_object();
         }
 
-        return $settings->$name;
+        if (isset($settings->$name)) {
+            return $settings->$name;
+        }
+
+        return "";
     }
 
     //use static for get constant data? we can display them on each page
@@ -55,7 +59,17 @@ class Settings
 
         foreach ($POST as $key => $value) {
             $arr['setting'] = $key;
-            $arr['value'] = $value;
+
+            if (strstr($key, "_link")) {
+                show(123);
+                if (trim($value) != "" && !strstr($value, "https://")) {
+                    $value = "https://" . $value;
+                }
+                $arr['value'] = $value;
+            } else {
+                $arr['value'] = $value;
+            }
+
             $query = "UPDATE settings SET value = :value WHERE setting = :setting LIMIT 1";
 
             $db->write($query, $arr);

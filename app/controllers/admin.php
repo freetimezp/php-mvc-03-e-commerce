@@ -160,6 +160,7 @@ class Admin extends Controller
         $data['page_title'] =  "Social links | Contacts";
 
         $user = $this->load_model('user');
+        $Settings = new Settings();
 
         $user_data = $user->check_login(true, ['admin']);
 
@@ -169,14 +170,14 @@ class Admin extends Controller
 
 
         if (count($_POST) > 0) {
-            $errors = $this->save_settings($_POST);
+            $errors = $Settings->save_settings($_POST);
 
             header("Location: " . ROOT . "admin/settings/socials");
             die;
         }
 
 
-        $data['settings'] = $this->get_all_settings();
+        $data['settings'] = $Settings->get_all_settings();
 
         $this->view("admin/socials", $data);
     }
