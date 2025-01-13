@@ -9,6 +9,8 @@ class Home extends Controller
         $find = "";
         $show_search = true;
 
+        $DB = Database::newInstance();
+
         if (isset($_GET['find'])) {
             $search = true;
             $find = addslashes($_GET['find']);
@@ -25,7 +27,6 @@ class Home extends Controller
             $data['user_data'] = $user_data;
         }
 
-        $DB = Database::newInstance();
 
         $rows = false;
         if ($search && !empty($find)) {
