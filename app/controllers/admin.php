@@ -184,6 +184,31 @@ class Admin extends Controller
             }
 
             $data['settings'] = $Settings->get_all_settings();
+        } else if ($type == 'slider_images') {
+            $data['action'] = "show";
+            $data['id'] = null;
+
+            if (isset($_GET['action']) && $_GET['action'] == 'add') {
+                $data['action'] = 'add';
+
+                //new row was posted
+                if (count($_POST) > 0) {
+                    show($_POST);
+
+                    //header("Location: " . ROOT . "admin/settings/slider_images");
+                    //die;
+                }
+            } else if (isset($_GET['action']) && $_GET['action'] == 'edit') {
+                $data['action'] = 'edit';
+
+                if (isset($_GET['id'])) {
+                    $data['id'] = $_GET['id'];
+                }
+            } else if (isset($_GET['action']) && $_GET['action'] == 'delete') {
+                $data['action'] = 'delete';
+            } else if (isset($_GET['action']) && $_GET['action'] == 'delete_comfirmed') {
+                $data['action'] = 'delete';
+            }
         }
 
         $this->view("admin/settings", $data);

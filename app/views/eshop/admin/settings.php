@@ -100,21 +100,56 @@
                         <input type="submit" value="Save Settings" class="btn btn-primary pull-right"
                             style="margin: 20px;">
                     <?php elseif ($page_title == 'slider_images'): ?>
-                        <thead>
-                            <th>Header Text 1 </th>
-                            <th>Header Text 2 </th>
-                            <th>Main Message</th>
-                            <th>Product link</th>
-                            <th>Product Image</th>
-                            <th>Disabled</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
 
-                        </tbody>
+                        <?php if ($action == 'show'): ?>
+                            <thead>
+                                <th>Header Text 1 </th>
+                                <th>Header Text 2 </th>
+                                <th>Main Message</th>
+                                <th>Product link</th>
+                                <th>Product Image</th>
+                                <th>Disabled</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
 
-                        <input type="submit" value="Save Settings" class="btn btn-primary pull-right"
-                            style="margin: 20px;">
+                            </tbody>
+
+                            <a href="<?= ROOT ?>admin/settings/slider_images?action=add">
+                                <input type="button" value="Add Row" class="btn btn-primary pull-right"
+                                    style="margin: 20px;">
+                            </a>
+                        <?php else: ?>
+                            <h3>Add new row</h3>
+
+                            <div class="form-group">
+                                <label for="header_text_1">Header 1</label>
+                                <input type="text" name="header_text_1" class="form-control"
+                                    placeholder="Header text 1" id="header_text_1">
+                            </div>
+                            <div class="form-group">
+                                <label for="header_text_2">Header 2</label>
+                                <input type="text" name="header_text_2" class="form-control"
+                                    placeholder="Header text 2" id="header_text_2">
+                            </div>
+                            <div class="form-group">
+                                <label for="message_text">Main Message</label>
+                                <textarea name="message_text" id="message_text" class="form-control"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="content_link">Content Link</label>
+                                <input type="text" name="content_link" class="form-control"
+                                    placeholder="Content Link" id="content_link">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message_text">Slider Image</label>
+                                <input type="file" name="image" class="form-control">
+                            </div>
+
+                            <input type="submit" value="Add new" class="btn btn-primary pull-right">
+                        <?php endif; ?>
+
                     <?php endif; ?>
 
                 </table>
