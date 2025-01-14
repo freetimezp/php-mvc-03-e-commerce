@@ -367,4 +367,23 @@ class User
         //show($db);
         $db->query($query);
     }
+
+
+    //create table slider_images
+    public function create_table_slider_images()
+    {
+        $query = "create table if not exists slider_images(
+			id int primary key auto_increment,
+			header1_text varchar(30) not null,
+            header2_text varchar(40) not null,		
+            text varchar(200) not null,		
+            link varchar(200) not null,		
+            image varchar(500) not null,		
+            image2 varchar(500) not null,		
+            disabled tinyint default 0		
+		)";
+        $db = new Database();
+        //show($db);
+        $db->query($query);
+    }
 }

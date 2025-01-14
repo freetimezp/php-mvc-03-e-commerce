@@ -5,6 +5,8 @@ class Admin extends Controller
     public function index()
     {
         $data['page_title'] = "Admin";
+        $data['current_page'] =  "dashboard";
+
 
         $user = $this->load_model('user');
         $user_data = $user->check_login(true, ['admin']);
@@ -21,6 +23,7 @@ class Admin extends Controller
     public function categories()
     {
         $data['page_title'] = "Admin";
+        $data['current_page'] =  "categories";
 
         $user = $this->load_model('user');
         $user_data = $user->check_login(true, ['admin']);
@@ -52,6 +55,7 @@ class Admin extends Controller
     public function products()
     {
         $data['page_title'] = "Admin";
+        $data['current_page'] =  "products";
 
         $user = $this->load_model('user');
         $user_data = $user->check_login(true, ['admin']);
@@ -81,6 +85,7 @@ class Admin extends Controller
     {
         $data = false;
         $data['page_title'] = "Admin - Orders";
+        $data['current_page'] =  "orders";
 
         $user = $this->load_model('user');
         $order = $this->load_model('order');
@@ -125,6 +130,7 @@ class Admin extends Controller
     {
         $data = false;
         $data['page_title'] =  ucfirst($type) . " list";
+        $data['current_page'] =  "users";
 
         $user = $this->load_model('user');
         $order = $this->load_model('order');
@@ -154,10 +160,11 @@ class Admin extends Controller
     }
 
 
-    public function settings($type)
+    public function settings($type = '')
     {
         $data = false;
-        $data['page_title'] =  "Social links | Contacts";
+        $data['page_title'] =  $type;
+        $data['current_page'] =  "settings";
 
         $user = $this->load_model('user');
         $Settings = new Settings();
@@ -168,17 +175,17 @@ class Admin extends Controller
             $data['user_data'] = $user_data;
         }
 
+        if ($type == 'socials') {
+            if (count($_POST) > 0) {
+                $errors = $Settings->save_settings($_POST);
 
-        if (count($_POST) > 0) {
-            $errors = $Settings->save_settings($_POST);
+                header("Location: " . ROOT . "admin/settings/socials");
+                die;
+            }
 
-            header("Location: " . ROOT . "admin/settings/socials");
-            die;
+            $data['settings'] = $Settings->get_all_settings();
         }
 
-
-        $data['settings'] = $Settings->get_all_settings();
-
-        $this->view("admin/socials", $data);
+        $this->view("admin/settings", $data);
     }
 }

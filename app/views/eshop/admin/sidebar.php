@@ -18,35 +18,40 @@
             </h5>
 
             <li class="sub-menu">
-                <a href="javascript:;">
+                <a href="<?= ROOT ?>admin"
+                    class="<?= (isset($current_page) && $current_page == 'dashboard') ? 'active' : ''; ?>">
                     <i class="fa fa-dashboard"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
 
             <li class="sub-menu">
-                <a href="<?= ROOT ?>admin/products">
+                <a href="<?= ROOT ?>admin/products"
+                    class="<?= (isset($current_page) && $current_page == 'products') ? 'active' : ''; ?>">
                     <i class="fa fa-barcode"></i>
                     <span>Products</span>
                 </a>
             </li>
 
             <li class="sub-menu">
-                <a href="<?= ROOT ?>admin/categories">
+                <a href="<?= ROOT ?>admin/categories"
+                    class="<?= (isset($current_page) && $current_page == 'categories') ? 'active' : ''; ?>">
                     <i class="fa fa-list-alt"></i>
                     <span>Categories</span>
                 </a>
             </li>
 
             <li class="sub-menu">
-                <a href="<?= ROOT ?>admin/orders">
+                <a href="<?= ROOT ?>admin/orders"
+                    class="<?= (isset($current_page) && $current_page == 'orders') ? 'active' : ''; ?>">
                     <i class="fa fa-reorder"></i>
                     <span>Orders</span>
                 </a>
             </li>
 
             <li class="sub-menu">
-                <a href="<?= ROOT ?>admin/settings">
+                <a href="<?= ROOT ?>admin/settings"
+                    class="<?= (isset($current_page) && $current_page == 'settings') ? 'active' : ''; ?>">
                     <i class="fa fa-cogs"></i>
                     <span>Settings</span>
                 </a>
@@ -57,7 +62,8 @@
             </li>
 
             <li class="sub-menu">
-                <a href="<?= ROOT ?>admin/users">
+                <a href="<?= ROOT ?>admin/users"
+                    class="<?= (isset($current_page) && $current_page == 'users') ? 'active' : ''; ?>">
                     <i class="fa fa-user"></i>
                     <span>Users</span>
                 </a>
