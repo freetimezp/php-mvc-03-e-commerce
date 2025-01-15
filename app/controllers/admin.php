@@ -193,10 +193,17 @@ class Admin extends Controller
 
                 //new row was posted
                 if (count($_POST) > 0) {
-                    show($_POST);
+                    //show($_POST);
+                    //show($_FILES);
 
-                    //header("Location: " . ROOT . "admin/settings/slider_images");
-                    //die;
+                    $Slider = $this->load_model('slider');
+                    $Image = $this->load_model('image');
+
+                    $data['errors'] = $Slider->create($_POST, $_FILES, $Image);
+                    $data['POST'] = $_POST;
+
+                    header("Location: " . ROOT . "admin/settings/slider_images");
+                    die;
                 }
             } else if (isset($_GET['action']) && $_GET['action'] == 'edit') {
                 $data['action'] = 'edit';

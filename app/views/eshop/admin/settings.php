@@ -72,7 +72,7 @@
 <div class="row mt">
     <div class="col-md-12">
         <div class="content-panel">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <table class="table table-striped table-advance table-hover">
                     <?php if ($page_title == 'socials'): ?>
                         <thead>
@@ -119,27 +119,33 @@
                                 <input type="button" value="Add Row" class="btn btn-primary pull-right"
                                     style="margin: 20px;">
                             </a>
-                        <?php else: ?>
+                        <?php elseif ($action == 'add'): ?>
                             <h3>Add new row</h3>
 
                             <div class="form-group">
                                 <label for="header_text_1">Header 1</label>
                                 <input type="text" name="header_text_1" class="form-control"
-                                    placeholder="Header text 1" id="header_text_1">
+                                    placeholder="Header text 1" id="header_text_1"
+                                    value="<?= isset($POST['header_text_1']) ? $POST['header_text_1'] : ''; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="header_text_2">Header 2</label>
                                 <input type="text" name="header_text_2" class="form-control"
-                                    placeholder="Header text 2" id="header_text_2">
+                                    placeholder="Header text 2" id="header_text_2"
+                                    value="<?= isset($POST['header_text_2']) ? $POST['header_text_2'] : ''; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="message_text">Main Message</label>
-                                <textarea name="message_text" id="message_text" class="form-control"></textarea>
+                                <textarea name="message_text" id="message_text" class="form-control"
+                                    style="text-align: left;">
+                                    <?= isset($POST['message_text']) ? trim($POST['message_text']) : ''; ?>
+                                </textarea>
                             </div>
                             <div class="form-group">
                                 <label for="content_link">Content Link</label>
                                 <input type="text" name="content_link" class="form-control"
-                                    placeholder="Content Link" id="content_link">
+                                    placeholder="... https://www.yoursite.com" id="content_link"
+                                    value="<?= isset($POST['content_link']) ? $POST['content_link'] : ''; ?>">
                             </div>
 
                             <div class="form-group">
@@ -151,10 +157,7 @@
                         <?php endif; ?>
 
                     <?php endif; ?>
-
                 </table>
-
-
             </form>
 
         </div><!-- /content-panel -->
