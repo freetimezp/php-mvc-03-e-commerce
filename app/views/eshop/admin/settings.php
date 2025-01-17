@@ -112,7 +112,21 @@
                                 <th>Action</th>
                             </thead>
                             <tbody>
+                                <?php if (isset($rows) && is_array($rows)): ?>
+                                    <?php foreach ($rows as $row): ?>
+                                        <tr>
+                                            <td><?= $row->header_text_1 ?></td>
+                                            <td><?= $row->header_text_2 ?></td>
+                                            <td><?= $row->text ?></td>
+                                            <td><?= $row->link ?></td>
+                                            <td>
+                                                <img style="width: 200px;" src="<?= ROOT . $row->image ?>" alt="">
+                                            </td>
+                                            <td><?= $row->disabled ? "Yes" : "No" ?></td>
 
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </tbody>
 
                             <a href="<?= ROOT ?>admin/settings/slider_images?action=add">

@@ -76,4 +76,15 @@ class Slider
 
         return $this->error;
     }
+
+
+    public function get_all()
+    {
+        $db = Database::newInstance();
+
+        $query = "SELECT * FROM slider_images WHERE disabled = 0";
+        $result = $db->read($query);
+
+        return $result;
+    }
 }

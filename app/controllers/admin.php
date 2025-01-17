@@ -188,6 +188,13 @@ class Admin extends Controller
             $data['action'] = "show";
             $data['id'] = null;
 
+            $Slider = $this->load_model('slider');
+            $Image = $this->load_model('image');
+
+            //read all slider images
+            $data['rows'] = $Slider->get_all();
+            //show($data);
+
             if (isset($_GET['action']) && $_GET['action'] == 'add') {
                 $data['action'] = 'add';
 
@@ -195,9 +202,6 @@ class Admin extends Controller
                 if (count($_POST) > 0) {
                     //show($_POST);
                     //show($_FILES);
-
-                    $Slider = $this->load_model('slider');
-                    $Image = $this->load_model('image');
 
                     $data['errors'] = $Slider->create($_POST, $_FILES, $Image);
                     $data['POST'] = $_POST;
