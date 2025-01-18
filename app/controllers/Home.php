@@ -49,6 +49,20 @@ class Home extends Controller
             $data['categories'] = $categories;
         }
 
+        //get all slider items
+        $slider = $this->load_model('slider');
+        $slider_rows = $slider->get_all();
+        if ($slider_rows) {
+            foreach ($slider_rows as $key => $row) {
+                $slider_rows[$key]->image = $image_class->get_thumb_post($slider_rows[$key]->image, 484, 441);
+            }
+
+            $data['slider_rows'] = $slider_rows;
+        }
+
+
+
+
 
         $data['rows'] = $rows;
         $data['show_search'] = $show_search;
