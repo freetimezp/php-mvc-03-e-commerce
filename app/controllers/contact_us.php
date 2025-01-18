@@ -1,6 +1,6 @@
 <?php
 
-class Blog extends Controller
+class Contact_us extends Controller
 {
     public function index()
     {
@@ -16,7 +16,7 @@ class Blog extends Controller
             $find = addslashes($_GET['find']);
         }
 
-        $data['page_title'] = "Blog";
+        $data['page_title'] = "Contact US";
 
         $user = $this->load_model('user');
         $user_data = $user->check_login();
@@ -68,6 +68,6 @@ class Blog extends Controller
         $data['show_search'] = $show_search;
 
         //show($data);
-        $this->view("blog", $data);
+        $this->view("contact-us", $data);
     }
 }

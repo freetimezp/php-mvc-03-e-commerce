@@ -11,6 +11,7 @@ class App
         $url = $this->parseURL();
         //show($url);
 
+        $url[0] = str_replace("-", "_", $url[0]);
         //check if file controller exist
         if (file_exists("../app/controllers/" . strtolower($url[0]) . ".php")) {
             $this->controller = strtolower($url[0]);
