@@ -11,21 +11,37 @@
 			<div class="col-sm-8">
 				<div class="contact-form">
 					<h2 class="title text-center">Get In Touch</h2>
-					<div class="status alert alert-success" style="display: none"></div>
+
+					<?php if (is_array($errors) && count($errors) > 0): ?>
+						<?php foreach ($errors as $error): ?>
+							<div class="status alert alert-danger">
+								<?= $error ?>
+							</div>
+						<?php endforeach; ?>
+					<?php endif; ?>
+
+					<?php if (isset($_GET['success'])): ?>
+						<div class="status alert alert-success">Message sent successfully</div>
+					<?php endif; ?>
+
 					<form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
 						<div class="form-group col-md-6">
-							<input type="text" name="name" class="form-control" required="required" placeholder="Name">
+							<input type="text" name="name" class="form-control" required="required" placeholder="Name"
+								value="<?= isset($POST['name']) ? $POST['name'] : "" ?>">
 						</div>
 						<div class="form-group col-md-6">
-							<input type="email" name="email" class="form-control" required="required" placeholder="Email">
+							<input type="email" name="email" class="form-control" required="required" placeholder="Email"
+								value="<?= isset($POST['email']) ? $POST['email'] : "" ?>">
 						</div>
 						<div class="form-group col-md-12">
-							<input type="text" name="subject" class="form-control" required="required" placeholder="Subject">
+							<input type="text" name="subject" class="form-control" required="required" placeholder="Subject"
+								value="<?= isset($POST['subject']) ? $POST['subject'] : "" ?>">
 						</div>
-						<div class="form-group col-md-12">
-							<textarea name="message" id="message" required="required" class="form-control" rows="8" placeholder="Your Message Here"></textarea>
+						<div class="form-group col-md-12" style="text-align: left !important; overflow:auto;">
+							<textarea name="message" id="message" class="form-control" rows="8"
+								placeholder="Your Message Here" style="text-align: left;"><?= isset($POST['message']) ? trim($POST['message']) : "" ?></textarea>
 						</div>
-						<div class="form-group col-md-12">
+						<div class=" form-group col-md-12">
 							<input type="submit" name="submit" class="btn btn-primary pull-right" value="Submit">
 						</div>
 					</form>
@@ -35,12 +51,7 @@
 				<div class="contact-info">
 					<h2 class="title text-center">Contact Info</h2>
 					<address>
-						<p>E-Shopper Inc.</p>
-						<p>935 W. Webster Ave New Streets Chicago, IL 60614, NY</p>
-						<p>Newyork USA</p>
-						<p>Mobile: +2346 17 38 93</p>
-						<p>Fax: 1-714-252-0026</p>
-						<p>Email: info@e-shopper.com</p>
+						<?= nl2br(htmlentities(Settings::contact_info())) ?>
 					</address>
 					<div class="social-networks">
 						<h2 class="title text-center">Social Networking</h2>

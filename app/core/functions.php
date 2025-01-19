@@ -19,3 +19,9 @@ function esc($data)
 {
     return addslashes($data);
 }
+
+function redirect($link)
+{
+    header("Location: " . ROOT . $link);
+    die;
+}

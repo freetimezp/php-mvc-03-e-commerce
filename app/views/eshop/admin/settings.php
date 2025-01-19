@@ -87,10 +87,17 @@
                                     <tr>
                                         <td><?= ucwords(str_replace("_", " ",  $row->setting)) ?></td>
                                         <td>
-                                            <input type="text" class="form-control"
-                                                name="<?= $row->setting ?>"
-                                                value="<?= $row->value ?>"
-                                                placeholder="Type value">
+                                            <?php if ($row->type == "" || $row->type == "text"): ?>
+                                                <input type="text" class="form-control"
+                                                    name="<?= $row->setting ?>"
+                                                    value="<?= $row->value ?>"
+                                                    placeholder="Type value">
+                                            <?php elseif ($row->type == "textarea"): ?>
+                                                <textarea type="text" class="form-control"
+                                                    name="<?= $row->setting ?>">
+                                                    <?= $row->value ?>
+                                                </textarea>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
