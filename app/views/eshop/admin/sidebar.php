@@ -50,6 +50,14 @@
             </li>
 
             <li class="sub-menu">
+                <a href="<?= ROOT ?>admin/messages"
+                    class="<?= (isset($current_page) && $current_page == 'messages') ? 'active' : ''; ?>">
+                    <i class="fa fa-messages">Q</i>
+                    <span>Messages</span>
+                </a>
+            </li>
+
+            <li class="sub-menu">
                 <a href="<?= ROOT ?>admin/settings"
                     class="<?= (isset($current_page) && $current_page == 'settings') ? 'active' : ''; ?>">
                     <i class="fa fa-cogs"></i>

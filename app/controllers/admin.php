@@ -160,6 +160,29 @@ class Admin extends Controller
     }
 
 
+    public function messages($type = '')
+    {
+        $data = false;
+        $data['page_title'] =  "Contact Messages";
+        $data['current_page'] =  "messages";
+
+        $User = $this->load_model('user');
+        $Message = $this->load_model('message');
+
+        $user_data = $User->check_login(true, ['admin']);
+        if (!empty($user_data)) {
+            $data['user_data'] = $user_data;
+        }
+
+        $messages = $Message->get_all();
+        if (is_array($messages)) {
+            $data['messages'] = $messages;
+        }
+
+        $this->view("admin/messages", $data);
+    }
+
+
     public function settings($type = '')
     {
         $data = false;

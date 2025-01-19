@@ -51,4 +51,14 @@ class Message
 
         $db->write($query);
     }
+
+
+    public function get_all()
+    {
+        $arr = array();
+        $db = Database::newInstance();
+        $query = "SELECT * FROM contact_us ORDER BY id ASC";
+
+        return $db->read($query, $arr);
+    }
 }
