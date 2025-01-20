@@ -169,15 +169,35 @@ class Admin extends Controller
         $User = $this->load_model('user');
         $Message = $this->load_model('message');
 
+        $mode = "read";
+
+        if (isset($_GET['delete'])) {
+            $mode = "delete";
+        } else if (isset($_GET['delete_confirmed'])) {
+            $mode = "delete_confirmed";
+            $id = $_GET['delete_confirmed'];
+            $messages = $Message->delete($id);
+        }
+
         $user_data = $User->check_login(true, ['admin']);
         if (!empty($user_data)) {
             $data['user_data'] = $user_data;
         }
 
-        $messages = $Message->get_all();
-        if (is_array($messages)) {
+        if ($mode == 'delete') {
+            $id = $_GET['delete'];
+
+            $messages = $Message->get_one($id);
             $data['messages'] = $messages;
+        } else {
+            $messages = $Message->get_all();
+
+            if (is_array($messages)) {
+                $data['messages'] = $messages;
+            }
         }
+
+        $data['mode'] = $mode;
 
         $this->view("admin/messages", $data);
     }

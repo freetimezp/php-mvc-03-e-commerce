@@ -52,7 +52,6 @@ class Message
         $db->write($query);
     }
 
-
     public function get_all()
     {
         $arr = array();
@@ -60,5 +59,15 @@ class Message
         $query = "SELECT * FROM contact_us ORDER BY id ASC";
 
         return $db->read($query, $arr);
+    }
+
+    public function get_one($id)
+    {
+        $id = (int)$id;
+        $db = Database::newInstance();
+
+        $data = $db->read("SELECT * FROM contact_us WHERE id = '$id' LIMIT 1");
+
+        return $data[0];
     }
 }

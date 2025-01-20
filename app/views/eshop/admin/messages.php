@@ -72,33 +72,69 @@
     <div class="col-md-12">
         <div class="content-panel">
             <table class="table table-striped table-advance table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Subject</th>
-                        <th>Message</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+                <?php if ($mode != 'delete_confirmed'): ?>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                <?php endif; ?>
                 <tbody>
-                    <?php if (isset($messages) && is_array($messages)): ?>
-                        <?php foreach ($messages as $message): ?>
-                            <tr style="position: relative;">
-                                <td><?= $message->id ?></td>
-                                <td><?= ucfirst($message->name) ?></td>
-                                <td><?= $message->email ?></td>
-                                <td><?= $message->subject ?></td>
-                                <td><?= $message->message ?></td>
-                                <td><?= date("d M Y", strtotime($message->date)) ?></td>
-                                <td style="cursor: pointer;">
-                                    delete <i class="fa fa-trash-o" style="color: red;"></i>
-                                </td>
+                    <?php if ($mode == 'read'): ?>
+                        <?php if (isset($messages) && is_array($messages)): ?>
+                            <?php foreach ($messages as $message): ?>
+                                <tr style="position: relative;">
+                                    <td><?= $message->id ?></td>
+                                    <td><?= ucfirst($message->name) ?></td>
+                                    <td><?= $message->email ?></td>
+                                    <td><?= $message->subject ?></td>
+                                    <td><?= $message->message ?></td>
+                                    <td><?= date("d M Y", strtotime($message->date)) ?></td>
+                                    <td style="cursor: pointer;">
+                                        <a href="<?= ROOT ?>admin/messages?delete=<?= $message->id ?>">
+                                            delete <i class="fa fa-trash-o" style="color: red;"></i>
+                                        </a>
+                                    </td>
 
-                            </tr>
-                        <?php endforeach; ?>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>No messages yet..</tr>
+                        <?php endif; ?>
+                    <?php elseif ($mode == 'delete_confirmed'): ?>
+                        <div class="status alert alert-success">
+                            <h3>Message was successfully deleted</h3>
+
+                            <a href="<?= ROOT ?>admin/messages">
+                                <input type="button" class="btn btn-sm btn-primary"
+                                    value="Back to messages" />
+                            </a>
+                        </div>
+
+                    <?php elseif ($mode == 'delete' && is_object($messages)): ?>
+                        <div class="status alert alert-danger">
+                            Are you sure you want to delete this message?
+                        </div>
+                        <tr style="position: relative;">
+                            <td><?= $messages->id ?></td>
+                            <td><?= ucfirst($messages->name) ?></td>
+                            <td><?= $messages->email ?></td>
+                            <td><?= $messages->subject ?></td>
+                            <td><?= $messages->message ?></td>
+                            <td><?= date("d M Y", strtotime($messages->date)) ?></td>
+                            <td>
+                                <a href="<?= ROOT ?>admin/messages?delete_confirmed=<?= $messages->id ?>">
+                                    <input type="button" class="btn btn-sm btn-danger" value="delete" style="color: #fff;" />
+                                </a>
+                            </td>
+                        </tr>
+
                     <?php endif; ?>
                 </tbody>
             </table>
