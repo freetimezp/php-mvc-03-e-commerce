@@ -72,21 +72,24 @@
     <div class="col-md-12">
         <div class="content-panel">
             <table class="table table-striped table-advance table-hover">
-                <?php if ($mode != 'delete_confirmed'): ?>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Author</th>
-                            <th>Title</th>
-                            <th>Post</th>
-                            <th>Image</th>
-                            <th>Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                <?php endif; ?>
                 <tbody>
                     <?php if ($mode == 'read'): ?>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Author</th>
+                                <th>Title</th>
+                                <th>Post</th>
+                                <th>Image</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <a href="<?= ROOT ?>admin/blogs?add_new=true">
+                            <input type="button" class="btn btn-primary pull-right" value="Add new post"
+                                style="margin: 15px;">
+                        </a>
+
                         <?php if (isset($messages) && is_array($messages)): ?>
                             <?php foreach ($messages as $message): ?>
                                 <tr style="position: relative;">
@@ -111,6 +114,27 @@
                                 <td>No posts yet..</td>
                             </tr>
                         <?php endif; ?>
+                    <?php elseif ($mode == 'add_new'): ?>
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="row" style="padding: 40px;">
+                                <div style="margin-bottom: 20px;">
+                                    <label for="title">Post Title:</label>
+                                    <input type="text" id="title" name="title" placeholder="Title" class="form-control">
+                                </div>
+
+                                <div style="margin-bottom: 20px;">
+                                    <label for="post">Post message:</label>
+                                    <textarea type="text" id="post" name="post" class="form-control">Post message</textarea>
+                                </div>
+
+                                <div style="margin-bottom: 20px;">
+                                    <label for="image">Post Image:</label>
+                                    <input type="file" id="image" name="image" class="form-control">
+                                </div>
+
+                                <input type="submit" value="Post" class="btn btn-primary pull-right">
+                            </div>
+                        </form>
                     <?php elseif ($mode == 'delete_confirmed'): ?>
                         <div class="status alert alert-success">
                             <h3>Message was successfully deleted</h3>
@@ -120,11 +144,21 @@
                                     value="Back to messages" />
                             </a>
                         </div>
-
                     <?php elseif ($mode == 'delete' && is_object($messages)): ?>
                         <div class="status alert alert-danger">
                             Are you sure you want to delete this message?
                         </div>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Author</th>
+                                <th>Title</th>
+                                <th>Post</th>
+                                <th>Image</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
                         <tr style="position: relative;">
                             <td><?= $messages->id ?></td>
                             <td><?= ucfirst($messages->name) ?></td>

@@ -214,18 +214,32 @@ class Admin extends Controller
 
         $mode = "read";
 
+        $user_data = $User->check_login(true, ['admin']);
+        if (!empty($user_data)) {
+            $data['user_data'] = $user_data;
+        }
+
+        if (isset($_GET['add_new'])) {
+            $mode = "add_new";
+        }
+
         if (isset($_GET['delete'])) {
             $mode = "delete";
-        } else if (isset($_GET['delete_confirmed'])) {
+        }
+
+        if (isset($_GET['delete_confirmed'])) {
             $mode = "delete_confirmed";
             $id = $_GET['delete_confirmed'];
             $blogs = $Message->delete($id);
         }
 
-        $user_data = $User->check_login(true, ['admin']);
-        if (!empty($user_data)) {
-            $data['user_data'] = $user_data;
+
+        //if something was posted
+        if (count($_POST) > 0) {
+            show($_POST);
+            show($_FILES);
         }
+
 
         if ($mode == 'delete') {
             $id = $_GET['delete'];
