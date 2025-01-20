@@ -50,9 +50,17 @@
             </li>
 
             <li class="sub-menu">
+                <a href="<?= ROOT ?>admin/blogs"
+                    class="<?= (isset($current_page) && $current_page == 'blogs') ? 'active' : ''; ?>">
+                    <i class="bi bi-book"></i>
+                    <span>Blogs</span>
+                </a>
+            </li>
+
+            <li class="sub-menu">
                 <a href="<?= ROOT ?>admin/messages"
                     class="<?= (isset($current_page) && $current_page == 'messages') ? 'active' : ''; ?>">
-                    <i class="fa fa-messages">Q</i>
+                    <i class="bi bi-chat-dots"></i>
                     <span>Messages</span>
                 </a>
             </li>

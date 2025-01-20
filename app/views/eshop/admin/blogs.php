@@ -76,10 +76,10 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Subject</th>
-                            <th>Message</th>
+                            <th>Author</th>
+                            <th>Title</th>
+                            <th>Post</th>
+                            <th>Image</th>
                             <th>Date</th>
                             <th>Actions</th>
                         </tr>
@@ -92,9 +92,11 @@
                                 <tr style="position: relative;">
                                     <td><?= $message->id ?></td>
                                     <td><?= ucfirst($message->name) ?></td>
-                                    <td><?= $message->email ?></td>
-                                    <td><?= $message->subject ?></td>
-                                    <td><?= $message->message ?></td>
+                                    <td><?= $message->title ?></td>
+                                    <td><?= $message->post ?></td>
+                                    <td>
+                                        <img src="<?= $message->message ?>" alt="">
+                                    </td>
                                     <td><?= date("d M Y", strtotime($message->date)) ?></td>
                                     <td style="cursor: pointer;">
                                         <a href="<?= ROOT ?>admin/messages?delete=<?= $message->id ?>">
@@ -106,7 +108,7 @@
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td>No messages yet..</td>
+                                <td>No posts yet..</td>
                             </tr>
                         <?php endif; ?>
                     <?php elseif ($mode == 'delete_confirmed'): ?>

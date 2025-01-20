@@ -386,4 +386,38 @@ class User
         //show($db);
         $db->query($query);
     }
+
+
+    //create table contact_us
+    public function create_table_contact_us()
+    {
+        $query = "create table if not exists contact_us(
+        id int primary key auto_increment,
+        name varchar(50) not null,
+        email varchar(100) not null,		
+        subject varchar(100) not null,
+        message varchar(100) not null,
+        date datetine not null
+    )";
+        $db = new Database();
+        //show($db);
+        $db->query($query);
+    }
+
+    //create table blogs
+    public function create_table_blogs()
+    {
+        $query = "create table if not exists blogs(
+			id int primary key auto_increment,
+			url_address varchar(60) not null,
+			user_url varchar(60) not null,
+            title varchar(60) not null,		
+            post text not null,
+            image varchar(500) not null,
+            date datetine not null
+		)";
+        $db = new Database();
+        //show($db);
+        $db->query($query);
+    }
 }
