@@ -210,7 +210,6 @@ class Admin extends Controller
         $data['current_page'] =  "blogs";
 
         $User = $this->load_model('user');
-        $Message = $this->load_model('message');
         $Post = $this->load_model('post');
         $image_class = $this->load_model('image');
 
@@ -224,7 +223,6 @@ class Admin extends Controller
         if (isset($_GET['add_new'])) {
             $mode = "add_new";
         }
-
 
         //if something was posted
         if (count($_POST) > 0) {
@@ -247,19 +245,28 @@ class Admin extends Controller
         if (isset($_GET['delete_confirmed'])) {
             $mode = "delete_confirmed";
             $id = $_GET['delete_confirmed'];
-            $blogs = $Message->delete($id);
+            $posts = $Post->delete($id);
         }
 
         if ($mode == 'delete') {
             $id = $_GET['delete'];
 
-            $blogs = $Message->get_one($id);
-            $data['blogs'] = $blogs;
+            $posts = $Post->get_one($id);
+            $data['blogs'] = $posts;
         } else {
-            $blogs = $Message->get_all();
+            $posts = $Post->get_all();
 
-            if (is_array($blogs)) {
-                $data['blogs'] = $blogs;
+            if (is_array($posts)) {
+
+                foreach ($posts as $key => $row) {
+                    if (!empty($posts[$key]->image)) {
+                        $posts[$key]->image = $image_class->get_thumb_post($posts[$key]->image);
+                    }
+
+                    $posts[$key]->author_data = $User->get_user($row->user_url);
+                }
+
+                $data['blogs'] = $posts;
             }
         }
 

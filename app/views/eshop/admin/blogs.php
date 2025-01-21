@@ -90,20 +90,31 @@
                                 style="margin: 15px;">
                         </a>
 
-                        <?php if (isset($messages) && is_array($messages)): ?>
-                            <?php foreach ($messages as $message): ?>
+                        <?php if (isset($blogs) && is_array($blogs)): ?>
+                            <?php foreach ($blogs as $blog): ?>
                                 <tr style="position: relative;">
-                                    <td><?= $message->id ?></td>
-                                    <td><?= ucfirst($message->name) ?></td>
-                                    <td><?= $message->title ?></td>
-                                    <td><?= $message->post ?></td>
+                                    <td><?= $blog->id ?></td>
                                     <td>
-                                        <img src="<?= $message->message ?>" alt="">
+                                        <a href="<?= ROOT ?>profile/<?= $blog->user_url ?>">
+                                            <?= ucfirst($blog->author_data->name) ?>
+                                        </a>
                                     </td>
-                                    <td><?= date("d M Y", strtotime($message->date)) ?></td>
-                                    <td style="cursor: pointer;">
-                                        <a href="<?= ROOT ?>admin/messages?delete=<?= $message->id ?>">
-                                            delete <i class="fa fa-trash-o" style="color: red;"></i>
+                                    <td><?= $blog->title ?></td>
+                                    <td><?= $blog->post ?></td>
+                                    <td>
+                                        <?php if (!empty($blog->image)): ?>
+                                            <img src="<?= ROOT . $blog->image ?>" alt="" style="width: 200px;">
+                                        <?php else: ?>
+                                            No image
+                                        <?php endif; ?>
+                                    </td>
+                                    <td><?= date("d M Y", strtotime($blog->date)) ?></td>
+                                    <td style="cursor: pointer; display: flex; gap: 10px;">
+                                        <a href="<?= ROOT ?>admin/blogs?edit=<?= $blog->url_address ?>">
+                                            <i class="fa fa-pencil" style="color: green; font-size: 24px;"></i>
+                                        </a>
+                                        <a href="<?= ROOT ?>admin/blogs?delete=<?= $blog->url_address ?>">
+                                            <i class="fa fa-trash-o" style="color: red; font-size: 24px;"></i>
                                         </a>
                                     </td>
 

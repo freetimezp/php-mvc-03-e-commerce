@@ -73,4 +73,33 @@ class Post
 
         return false;
     }
+
+    public function delete($url_address)
+    {
+        $db = Database::newInstance();
+        $arr['url_address'] = $url_address;
+
+        $query = "DELETE FROM blogs WHERE url_address = :url_address LIMIT 1";
+
+        $db->write($query, $arr);
+    }
+
+    public function get_all()
+    {
+        $arr = array();
+        $db = Database::newInstance();
+        $query = "SELECT * FROM blogs ORDER BY id ASC";
+
+        return $db->read($query, $arr);
+    }
+
+    public function get_one($url_address)
+    {
+        $db = Database::newInstance();
+        $arr['url_address'] = $url_address;
+
+        $data = $db->read("SELECT * FROM blogs WHERE url_address = :url_address LIMIT 1", $arr);
+
+        return $data[0];
+    }
 }
