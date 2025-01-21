@@ -14,7 +14,7 @@ class Product
         $arr['price'] = $DATA->price;
         $arr['date'] = date("Y-m-d H:i:s");
         $arr['user_url'] = $_SESSION['user_url'];
-        $arr['slag'] = $this->str_to_url($DATA->description);
+        $arr['slag'] = str_to_url($DATA->description);
 
         if (!preg_match('/^[a-zA-Z0-9 _-]+/', trim($arr['description']))) {
             $_SESSION['error'] .= "Please, enter a valid description. <br>";
@@ -226,17 +226,5 @@ class Product
         }
 
         return $result;
-    }
-
-
-    public function str_to_url($url)
-    {
-        $url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
-        $url = trim($url, '-');
-        $url = iconv("utf-8", "us-ascii//TRANSLIT", $url);
-        $url = strtolower($url);
-        $url = preg_replace('~[^-a-z0-9_]+~', '', $url);
-
-        return $url;
     }
 }

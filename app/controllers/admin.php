@@ -211,6 +211,8 @@ class Admin extends Controller
 
         $User = $this->load_model('user');
         $Message = $this->load_model('message');
+        $Post = $this->load_model('post');
+        $image_class = $this->load_model('image');
 
         $mode = "read";
 
@@ -223,6 +225,21 @@ class Admin extends Controller
             $mode = "add_new";
         }
 
+
+        //if something was posted
+        if (count($_POST) > 0) {
+            //show($_POST);
+            //show($_FILES);
+            $Post->create($_POST, $_FILES, $image_class);
+
+            if (isset($_SESSION['error']) && $_SESSION['error'] != "") {
+                $data['errors'] = $_SESSION['error'];
+                $data['POST'] = $_POST;
+            } else {
+                redirect("admin/blogs");
+            }
+        }
+
         if (isset($_GET['delete'])) {
             $mode = "delete";
         }
@@ -232,14 +249,6 @@ class Admin extends Controller
             $id = $_GET['delete_confirmed'];
             $blogs = $Message->delete($id);
         }
-
-
-        //if something was posted
-        if (count($_POST) > 0) {
-            show($_POST);
-            show($_FILES);
-        }
-
 
         if ($mode == 'delete') {
             $id = $_GET['delete'];

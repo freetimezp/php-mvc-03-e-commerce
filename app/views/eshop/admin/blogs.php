@@ -115,16 +115,26 @@
                             </tr>
                         <?php endif; ?>
                     <?php elseif ($mode == 'add_new'): ?>
+
+                        <?php if (isset($errors)): ?>
+                            <div class="status alert alert-danger">
+                                <?= $errors ?>
+                            </div>
+                        <?php endif; ?>
+
                         <form method="post" enctype="multipart/form-data">
                             <div class="row" style="padding: 40px;">
                                 <div style="margin-bottom: 20px;">
                                     <label for="title">Post Title:</label>
-                                    <input type="text" id="title" name="title" placeholder="Title" class="form-control">
+                                    <input type="text" id="title" name="title" placeholder="Title" class="form-control"
+                                        value="<?= isset($POST['title']) ? $POST['title'] : "" ?>">
                                 </div>
 
                                 <div style="margin-bottom: 20px;">
                                     <label for="post">Post message:</label>
-                                    <textarea type="text" id="post" name="post" class="form-control">Post message</textarea>
+                                    <textarea type="text" id="post" name="post" class="form-control">
+                                        <?= isset($POST['post']) ? $POST['post'] : "" ?>
+                                    </textarea>
                                 </div>
 
                                 <div style="margin-bottom: 20px;">
