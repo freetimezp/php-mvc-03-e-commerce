@@ -210,21 +210,27 @@
 
                     <?php elseif ($mode == 'delete_confirmed'): ?>
                         <div class="status alert alert-success">
-                            <h3>Message was successfully deleted</h3>
+                            <h3>Post was successfully deleted</h3>
 
-                            <a href="<?= ROOT ?>admin/messages">
+                            <a href="<?= ROOT ?>admin/blogs">
                                 <input type="button" class="btn btn-sm btn-primary"
-                                    value="Back to messages" />
+                                    value="Back to blogs" />
                             </a>
                         </div>
-                    <?php elseif ($mode == 'delete' && is_object($messages)): ?>
+                    <?php elseif ($mode == 'delete' && is_object($blog)): ?>
+                        <?php if (isset($errors)): ?>
+                            <div class="status alert alert-danger">
+                                <?= $errors ?>
+                            </div>
+                        <?php endif; ?>
+
                         <div class="status alert alert-danger">
-                            Are you sure you want to delete this message?
+                            Are you sure you want to delete this post?
                         </div>
+
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Author</th>
                                 <th>Title</th>
                                 <th>Post</th>
                                 <th>Image</th>
@@ -232,19 +238,26 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tr style="position: relative;">
-                            <td><?= $messages->id ?></td>
-                            <td><?= ucfirst($messages->name) ?></td>
-                            <td><?= $messages->email ?></td>
-                            <td><?= $messages->subject ?></td>
-                            <td><?= $messages->message ?></td>
-                            <td><?= date("d M Y", strtotime($messages->date)) ?></td>
-                            <td>
-                                <a href="<?= ROOT ?>admin/messages?delete_confirmed=<?= $messages->id ?>">
-                                    <input type="button" class="btn btn-sm btn-danger" value="delete" style="color: #fff;" />
-                                </a>
-                            </td>
-                        </tr>
+
+                        <?php if (isset($blog)): ?>
+                            <tr style="position: relative;">
+                                <td><?= $blog->id ?></td>
+                                <td><?= ucfirst($blog->title) ?></td>
+                                <td><?= $blog->post ?></td>
+                                <td>
+                                    <img src="<?= ROOT . $blog->image ?>" alt="" style="width: 200px;">
+                                </td>
+                                <td><?= date("J M Y", strtotime($blog->date)) ?></td>
+                                <td>
+                                    <a href="<?= ROOT ?>admin/blogs">
+                                        <input type="button" value="back" class="btn btn-sm btn-warning">
+                                    </a>
+                                    <a href="<?= ROOT ?>admin/blogs?delete_confirmed=<?= $blog->url_address ?>">
+                                        <input type="button" class="btn btn-sm btn-danger" value="delete" style="color: #fff;" />
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
 
                     <?php endif; ?>
                 </tbody>

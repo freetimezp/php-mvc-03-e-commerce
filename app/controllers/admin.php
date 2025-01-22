@@ -262,13 +262,21 @@ class Admin extends Controller
 
             $post = $Post->get_one($id);
             $data['blog'] = $post;
-            //show($data);
         }
         if ($mode == 'delete') {
             $id = $_GET['delete'];
 
-            $posts = $Post->get_one($id);
-            $data['blogs'] = $posts;
+            $post = $Post->get_one($id);
+
+            if ($post) {
+                if (!empty($post->image)) {
+                    $post->image = $image_class->get_thumb_post($post->image);
+                }
+
+                $post->author_data = $User->get_user($post->user_url);
+            }
+
+            $data['blog'] = $post;
         } else {
             $posts = $Post->get_all();
 
