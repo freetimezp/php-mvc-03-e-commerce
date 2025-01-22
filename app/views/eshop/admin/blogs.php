@@ -156,6 +156,58 @@
                                 <input type="submit" value="Post" class="btn btn-primary pull-right">
                             </div>
                         </form>
+                    <?php elseif ($mode == 'edit'): ?>
+
+                        <?php if (isset($errors)): ?>
+                            <div class="status alert alert-danger">
+                                <?= $errors ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <h3 style="margin: 20px;">Edit Blog Post</h3>
+
+                        <?php if (isset($blog)): ?>
+                            <form method="post" enctype="multipart/form-data">
+                                <div class="row" style="padding: 40px;">
+                                    <div style="margin-bottom: 20px;">
+                                        <label for="title">Post Title:</label>
+                                        <input type="text" id="title" name="title" placeholder="Title" class="form-control"
+                                            value="<?= isset($blog->title) ? $blog->title : "" ?>">
+                                    </div>
+
+                                    <div style="margin-bottom: 20px;">
+                                        <label for="post">Post message:</label>
+                                        <textarea type="text" id="post" name="post" class="form-control"><?= isset($blog->post) ? $blog->post : "" ?></textarea>
+                                    </div>
+
+                                    <div style="margin-bottom: 20px;">
+                                        <label for="image">Post Image:</label>
+                                        <input type="file" id="image" name="image" class="form-control">
+                                    </div>
+
+                                    <input type="hidden" name="url_address" value="<?= $blog->url_address ?>">
+
+
+                                    <?php if (isset($blog->image)): ?>
+                                        <img src="<?= ROOT . $blog->image ?>" alt="" style="width: 400px;">
+                                    <?php endif; ?>
+
+                                </div>
+
+                                <div style="display: flex; gap: 20px; padding: 20px;">
+                                    <a href="<?= ROOT ?>admin/blogs">
+                                        <input type="button" value="Cancel" class="btn btn-warning">
+                                    </a>
+                                    <input type="submit" value="Save Post" class="btn btn-primary">
+                                </div>
+                            </form>
+                        <?php else: ?>
+                            <p class="status alert alert-danger">No post were found..</p>
+                            <a href="<?= ROOT ?>admin/blogs" style="display: flex; gap: 20px; padding: 20px;">
+                                <input type=" submit" value="Cancel" class="btn btn-warning">
+                            </a>
+                        <?php endif; ?>
+
                     <?php elseif ($mode == 'delete_confirmed'): ?>
                         <div class="status alert alert-success">
                             <h3>Message was successfully deleted</h3>

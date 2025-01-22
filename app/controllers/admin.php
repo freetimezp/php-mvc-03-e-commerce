@@ -224,11 +224,17 @@ class Admin extends Controller
             $mode = "add_new";
         }
 
+        if (isset($_GET['edit'])) {
+            $mode = "edit";
+        }
+
         //if something was posted
         if (count($_POST) > 0) {
-            //show($_POST);
-            //show($_FILES);
-            $Post->create($_POST, $_FILES, $image_class);
+            if ($mode == 'edit') {
+                $Post->edit($_POST, $_FILES, $image_class);
+            } else {
+                $Post->create($_POST, $_FILES, $image_class);
+            }
 
             if (isset($_SESSION['error']) && $_SESSION['error'] != "") {
                 $data['errors'] = $_SESSION['error'];
@@ -237,6 +243,8 @@ class Admin extends Controller
                 redirect("admin/blogs");
             }
         }
+
+
 
         if (isset($_GET['delete'])) {
             $mode = "delete";
@@ -248,6 +256,14 @@ class Admin extends Controller
             $posts = $Post->delete($id);
         }
 
+
+        if ($mode == 'edit') {
+            $id = $_GET['edit'];
+
+            $post = $Post->get_one($id);
+            $data['blog'] = $post;
+            //show($data);
+        }
         if ($mode == 'delete') {
             $id = $_GET['delete'];
 
