@@ -140,7 +140,7 @@
                                 </li>
                                 <li>
                                     <a href="<?= ROOT ?>contact-us"
-                                        class="<?= $page_title == 'Contact Us' ? 'active' : ''; ?>">
+                                        class="<?= $page_title == 'Contact US' ? 'active' : ''; ?>">
                                         Contact
                                     </a>
                                 </li>

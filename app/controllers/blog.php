@@ -30,15 +30,15 @@ class Blog extends Controller
 
         $rows = false;
         if ($search && !empty($find)) {
-            $arr['description'] = "%" . $find . "%";
-            $rows = $DB->read("SELECT * FROM products WHERE description LIKE :description ORDER BY id DESC", $arr);
+            $arr['title'] = "%" . $find . "%";
+            $rows = $DB->read("SELECT * FROM blogs WHERE title LIKE :title ORDER BY id DESC", $arr);
         } else {
-            $rows = $DB->read("SELECT * FROM products ORDER BY id DESC");
+            $rows = $DB->read("SELECT * FROM blogs ORDER BY id DESC");
         }
 
         if ($rows) {
             foreach ($rows as $key => $row) {
-                $rows[$key]->image = $image_class->get_thumb_post($rows[$key]->image);
+                $rows[$key]->image = $image_class->get_thumb_blog_post($rows[$key]->image);
             }
         }
 
@@ -48,20 +48,6 @@ class Blog extends Controller
         if ($categories) {
             $data['categories'] = $categories;
         }
-
-        //get all slider items
-        $slider = $this->load_model('slider');
-        $slider_rows = $slider->get_all();
-        if ($slider_rows) {
-            foreach ($slider_rows as $key => $row) {
-                $slider_rows[$key]->image = $image_class->get_thumb_post($slider_rows[$key]->image, 484, 441);
-            }
-
-            $data['slider_rows'] = $slider_rows;
-        }
-
-
-
 
 
         $data['rows'] = $rows;
