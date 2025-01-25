@@ -1,13 +1,14 @@
 <?php
 
-class Blog extends Controller
+class Post extends Controller
 {
-    public function index()
+    public function index($url_address = '')
     {
         //check if we use search
         $search = false;
         $find = "";
         $show_search = true;
+        $arr = array();
 
         $DB = Database::newInstance();
 
@@ -16,7 +17,7 @@ class Blog extends Controller
             $find = addslashes($_GET['find']);
         }
 
-        $data['page_title'] = "Blog";
+        $data['page_title'] = "Single Post";
 
         $user = $this->load_model('user');
         $user_data = $user->check_login();
@@ -27,20 +28,19 @@ class Blog extends Controller
             $data['user_data'] = $user_data;
         }
 
-
         $rows = false;
         if ($search && !empty($find)) {
             $arr['title'] = "%" . $find . "%";
             $rows = $DB->read("SELECT * FROM blogs WHERE title LIKE :title ORDER BY id DESC", $arr);
         } else {
-            $rows = $DB->read("SELECT * FROM blogs ORDER BY id DESC");
+            $arr['url_address'] = $url_address;
+            $rows = $DB->read("SELECT * FROM blogs WHERE url_address = :url_address LIMIT 1", $arr);
         }
 
         if ($rows) {
-            foreach ($rows as $key => $row) {
-                $rows[$key]->image = $image_class->get_thumb_blog_post($rows[$key]->image);
-                $rows[$key]->author_data = $user->get_user($rows[$key]->user_url);
-            }
+            $data['page_title'] = " - " . $rows[0]->title;
+            //$rows[0]->image = $image_class->get_thumb_blog_post($rows[0]->image);
+            $rows[0]->author_data = $user->get_user($rows[0]->user_url);
         }
 
         //get all categories
@@ -50,11 +50,10 @@ class Blog extends Controller
             $data['categories'] = $categories;
         }
 
-
-        $data['rows'] = $rows;
+        $data['row'] = $rows[0];
         $data['show_search'] = $show_search;
 
         //show($data);
-        $this->view("blog", $data);
+        $this->view("single_post", $data);
     }
 }

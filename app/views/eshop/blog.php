@@ -13,10 +13,13 @@
 						<?php foreach ($rows as $key => $row): ?>
 							<!-- single blog post start -->
 							<div class="single-blog-post">
-								<h3><?= ucfirst($row->title) ?></h3>
+								<h3><?= ucfirst(htmlspecialchars($row->title)) ?></h3>
 								<div class="post-meta">
 									<ul>
-										<li><i class="fa fa-user"></i> Mac Doe</li>
+										<li>
+											<i class="fa fa-user"></i>
+											<?= ucfirst(htmlspecialchars($row->author_data->name)) ?>
+										</li>
 										<li><i class="fa fa-clock-o"></i> <?= date("H:i a", strtotime($row->date)) ?></li>
 										<li><i class="fa fa-calendar"></i> <?= date("M jS, Y", strtotime($row->date)) ?></li>
 									</ul>
@@ -28,15 +31,15 @@
 										<i class="fa fa-star-half-o"></i>
 									</span>
 								</div>
-								<a href="">
+								<a href="<?= ROOT ?>post/<?= $row->url_address ?>">
 									<img src="<?= ROOT . $row->image ?>" alt="">
 								</a>
-								<p>
-									<?= $row->post ?>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-									eiusmod tempor incididunt ut labore et dolore magna aliqua.
+								<p style="text-align: justify;">
+									<?= nl2br(htmlspecialchars(substr($row->post, 0, 200))) ?>...
 								</p>
-								<a class="btn btn-primary" href="">Read More</a>
+								<a class="btn btn-primary" href="<?= ROOT ?>post/<?= $row->url_address ?>">
+									Read More
+								</a>
 							</div>
 							<!-- single blog post end -->
 						<?php endforeach; ?>
