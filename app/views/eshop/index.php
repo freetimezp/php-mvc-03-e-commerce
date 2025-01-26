@@ -312,85 +312,27 @@
 					<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
 						<div class="carousel-inner">
 							<div class="item active">
-								<div class="col-sm-4">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= ASSETS . THEME ?>images/home/recommend1.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= ASSETS . THEME ?>images/home/recommend2.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= ASSETS . THEME ?>images/home/recommend3.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
+								<?php if (isset($slider_rows1) && is_array($slider_rows1)): ?>
+									<?php foreach ($slider_rows1 as $row): ?>
+										<?php $this->view("products-inc", $row);  ?>
+									<?php endforeach; ?>
+								<?php endif; ?>
 							</div>
+
 							<div class="item">
-								<div class="col-sm-4">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= ASSETS . THEME ?>images/home/recommend1.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
+								<?php if (isset($slider_rows2) && is_array($slider_rows2)): ?>
+									<?php foreach ($slider_rows2 as $row): ?>
+										<?php $this->view("products-inc", $row);  ?>
+									<?php endforeach; ?>
+								<?php endif; ?>
+							</div>
 
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= ASSETS . THEME ?>images/home/recommend2.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="product-image-wrapper">
-										<div class="single-products">
-											<div class="productinfo text-center">
-												<img src="<?= ASSETS . THEME ?>images/home/recommend3.jpg" alt="" />
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-											</div>
-
-										</div>
-									</div>
-								</div>
+							<div class="item">
+								<?php if (isset($slider_rows3) && is_array($slider_rows3)): ?>
+									<?php foreach ($slider_rows3 as $row): ?>
+										<?php $this->view("products-inc", $row);  ?>
+									<?php endforeach; ?>
+								<?php endif; ?>
 							</div>
 						</div>
 						<a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">

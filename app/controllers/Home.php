@@ -61,7 +61,32 @@ class Home extends Controller
         }
 
 
+        //get posts for bottom slider 1
+        $slider_rows1 = $DB->read("SELECT * FROM products WHERE rand() LIMIT 3");
+        if ($slider_rows1) {
+            foreach ($slider_rows1 as $key => $row) {
+                $slider_rows1[$key]->image = $image_class->get_thumb_post($slider_rows1[$key]->image);
+            }
+        }
+        $data['slider_rows1'] = $slider_rows1;
 
+        //get posts for bottom slider 2
+        $slider_rows2 = $DB->read("SELECT * FROM products WHERE rand() LIMIT 3");
+        if ($slider_rows2) {
+            foreach ($slider_rows2 as $key => $row) {
+                $slider_rows2[$key]->image = $image_class->get_thumb_post($slider_rows2[$key]->image);
+            }
+        }
+        $data['slider_rows2'] = $slider_rows2;
+
+        //get posts for bottom slider 3
+        $slider_rows3 = $DB->read("SELECT * FROM products WHERE rand() LIMIT 3");
+        if ($slider_rows3) {
+            foreach ($slider_rows3 as $key => $row) {
+                $slider_rows3[$key]->image = $image_class->get_thumb_post($slider_rows3[$key]->image);
+            }
+        }
+        $data['slider_rows3'] = $slider_rows3;
 
 
         $data['rows'] = $rows;
