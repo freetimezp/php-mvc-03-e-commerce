@@ -76,7 +76,8 @@ class Home extends Controller
         }
 
 
-
+        //get products for lower segment 
+        $data['segment_data'] = $this->get_segment_data($DB, $data['categories']);
 
 
 
@@ -85,5 +86,31 @@ class Home extends Controller
 
         //show($data);
         $this->view("index", $data);
+    }
+
+    private function get_segment_data($DB, $categories)
+    {
+        $mycats = array();
+        $arr = array();
+        $result = array();
+        $num = 0;
+
+        foreach ($categories as $cat) {
+            $arr['id'] = $cat->id;
+            $rows = $DB->read("SELECT * FROM products WHERE category = :id", $arr);
+
+            if (is_array($rows)) {
+                $cat->category = str_replace(" ", "_", $cat->category);
+                $cat->category = preg_replace("/\W+/", "", $cat->category); //if not a word than replace
+                $result[$cat->category] = $rows;
+
+                $num++;
+                if ($num > 5) break;
+
+                $mycats[] = $cat;
+            }
+        }
+
+        return $result;
     }
 }

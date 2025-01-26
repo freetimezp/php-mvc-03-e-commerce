@@ -254,7 +254,10 @@ class User
     {
         $query = "create table if not exists categories(
 			id int primary key auto_increment,
-			category varchar(30) not null		
+			category varchar(30) not null,
+			disabled tinyint default 0,
+            parent int not null,
+            views int default 0
 		)";
         $db = new Database();
         //show($db);
