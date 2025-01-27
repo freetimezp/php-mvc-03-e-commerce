@@ -77,7 +77,7 @@ class Home extends Controller
 
 
         //get products for lower segment 
-        $data['segment_data'] = $this->get_segment_data($DB, $data['categories']);
+        $data['segment_data'] = $this->get_segment_data($DB, $data['categories'], $image_class);
 
 
 
@@ -88,7 +88,7 @@ class Home extends Controller
         $this->view("index", $data);
     }
 
-    private function get_segment_data($DB, $categories)
+    private function get_segment_data($DB, $categories, $image_class)
     {
         $mycats = array();
         $arr = array();
@@ -97,12 +97,19 @@ class Home extends Controller
 
         foreach ($categories as $cat) {
             $arr['id'] = $cat->id;
-            $rows = $DB->read("SELECT * FROM products WHERE category = :id", $arr);
+            $rows = $DB->read("SELECT * FROM products WHERE category = :id ORDER BY rand() LIMIT 5", $arr);
 
             if (is_array($rows)) {
                 $cat->category = str_replace(" ", "_", $cat->category);
                 $cat->category = preg_replace("/\W+/", "", $cat->category); //if not a word than replace
+
+                //crop images
+                foreach ($rows as $key => $row) {
+                    $rows[$key]->image = $image_class->get_thumb_post($rows[$key]->image, 600, 350);
+                }
+
                 $result[$cat->category] = $rows;
+
 
                 $num++;
                 if ($num > 5) break;
