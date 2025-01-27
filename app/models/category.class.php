@@ -67,6 +67,10 @@ class Category
 
         $data = $db->read("SELECT * FROM categories WHERE category LIKE :name LIMIT 1", ['name' => $name]);
 
+        if (is_array($data)) {
+            $db->write("UPDATE categories SET views = views + 1 WHERE id = :id LIMIT 1", ['id' => $data[0]->id]);
+        }
+
         return $data[0];
     }
 
