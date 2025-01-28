@@ -18,20 +18,26 @@
 
 					<?php if (isset($rows) && is_array($rows) && !empty($rows)): ?>
 						<?php foreach ($rows as $row): ?>
-							<?php $this->view("products-inc", $row);  ?>
+							<?php $this->view("products.inc", $row);  ?>
 						<?php endforeach; ?>
 					<?php else: ?>
 						<h3 style='text-align: center;'>No items were found by this Category</h3>
+
+						<a href="<?= ROOT ?>shop">
+							<input type="button" value="Back" class="btn btn-warning">
+						</a>
 					<?php endif; ?>
 
 				</div><!--features_items-->
 
 				<?php if (isset($rows) && is_array($rows) && !empty($rows)): ?>
 					<ul class="pagination">
-						<li class="active"><a href="">1</a></li>
-						<li><a href="">2</a></li>
-						<li><a href="">3</a></li>
+						<li><a href="<?= $page_links->prev ?>">PREV</a></li>
+						<li class="<?= ($page_links->current == 1) ? 'active' : '' ?>"><a href="">1</a></li>
+						<li class="<?= ($page_links->current == 2) ? 'active' : '' ?>"><a href="">2</a></li>
+						<li class="<?= ($page_links->current == 3) ? 'active' : '' ?>"><a href="">3</a></li>
 						<li><a href="">&raquo;</a></li>
+						<li><a href="<?= $page_links->next ?>">NEXT</a></li>
 					</ul>
 				<?php endif; ?>
 
