@@ -155,7 +155,7 @@ class Post
     {
         $arr = array();
         $db = Database::newInstance();
-        $query = "SELECT * FROM blogs ORDER BY id ASC";
+        $query = "SELECT * FROM blogs ORDER BY id ASC ";
 
         return $db->read($query, $arr);
     }

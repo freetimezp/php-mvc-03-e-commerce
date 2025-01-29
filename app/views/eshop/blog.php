@@ -43,15 +43,15 @@
 							</div>
 							<!-- single blog post end -->
 						<?php endforeach; ?>
+					<?php else: ?>
+						<div style="margin: 80px 20px;">
+							<h3 style='text-align: center;'>No items here</h3>
+						</div>
 					<?php endif; ?>
 
-					<div class="pagination-area">
-						<ul class="pagination">
-							<li><a href="" class="active">1</a></li>
-							<li><a href="">2</a></li>
-							<li><a href="">3</a></li>
-							<li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
-						</ul>
+					<!-- Pagination -->
+					<div style="margin: 40px 20px;">
+						<?= Page::show_pagination_links() ?>
 					</div>
 				</div>
 			</div>

@@ -4,6 +4,10 @@ class Home extends Controller
 {
     public function index()
     {
+        //pagination
+        $limit = 6;
+        $offset = Page::get_offset($limit);
+
         //check if we use search
         $search = false;
         $find = "";
@@ -31,9 +35,9 @@ class Home extends Controller
         $rows = false;
         if ($search && !empty($find)) {
             $arr['description'] = "%" . $find . "%";
-            $rows = $DB->read("SELECT * FROM products WHERE description LIKE :description ORDER BY id DESC", $arr);
+            $rows = $DB->read("SELECT * FROM products WHERE description LIKE :description LIMIT $limit OFFSET $offset", $arr);
         } else {
-            $rows = $DB->read("SELECT * FROM products ORDER BY id DESC");
+            $rows = $DB->read("SELECT * FROM products LIMIT $limit OFFSET $offset");
         }
 
         if ($rows) {

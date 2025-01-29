@@ -11,11 +11,18 @@
 				<div class="features_items"><!--features_items-->
 					<h2 class="title text-center">Features Items</h2>
 
-					<?php if (isset($rows)): ?>
+					<?php if (isset($rows) && is_array($rows) > 0): ?>
 						<?php foreach ($rows as $row): ?>
 							<?php $this->view("products.inc", $row);  ?>
 						<?php endforeach; ?>
+					<?php else: ?>
+						<div style="margin: 40px 20px;">
+							<h3 style='text-align: center;'>No items here</h3>
+						</div>
 					<?php endif; ?>
+
+					<!-- Pagination -->
+					<?= Page::show_pagination_links() ?>
 				</div><!--features_items-->
 
 				<?php if (isset($segment_data) && is_array($segment_data)): ?>

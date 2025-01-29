@@ -6,9 +6,7 @@ class Shop extends Controller
     {
         //pagination
         $limit = 6;
-        $page_number = isset($_GET['pg']) ? (int)$_GET['pg'] : 1;
-        $page_number = $page_number < 1 ? 1 : $page_number;
-        $offset = ($page_number - 1) * $limit;
+        $offset = Page::get_offset($limit);
 
         //check if we use search
         $search = false;
@@ -68,7 +66,6 @@ class Shop extends Controller
     {
         //pagination
         $limit = 6;
-
         $offset = Page::get_offset($limit);
 
         $DB = Database::newInstance();

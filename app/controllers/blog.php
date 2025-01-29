@@ -4,6 +4,10 @@ class Blog extends Controller
 {
     public function index()
     {
+        //pagination
+        $limit = 2;
+        $offset = Page::get_offset($limit);
+
         //check if we use search
         $search = false;
         $find = "";
@@ -31,9 +35,9 @@ class Blog extends Controller
         $rows = false;
         if ($search && !empty($find)) {
             $arr['title'] = "%" . $find . "%";
-            $rows = $DB->read("SELECT * FROM blogs WHERE title LIKE :title ORDER BY id DESC", $arr);
+            $rows = $DB->read("SELECT * FROM blogs WHERE title LIKE :title LIMIT $limit OFFSET $offset", $arr);
         } else {
-            $rows = $DB->read("SELECT * FROM blogs ORDER BY id DESC");
+            $rows = $DB->read("SELECT * FROM blogs ORDER BY id DESC LIMIT $limit OFFSET $offset");
         }
 
         if ($rows) {
