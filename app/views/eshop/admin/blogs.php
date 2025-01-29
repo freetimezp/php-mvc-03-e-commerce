@@ -99,8 +99,8 @@
                                             <?= ucfirst($blog->author_data->name) ?>
                                         </a>
                                     </td>
-                                    <td><?= $blog->title ?></td>
-                                    <td><?= $blog->post ?></td>
+                                    <td><?= htmlspecialchars($blog->title) ?></td>
+                                    <td><?= nl2br(htmlspecialchars(substr($blog->post, 0, 500))) ?>...</td>
                                     <td>
                                         <?php if (!empty($blog->image)): ?>
                                             <img src="<?= ROOT . $blog->image ?>" alt="" style="width: 200px;">
@@ -117,7 +117,6 @@
                                             <i class="fa fa-trash-o" style="color: red; font-size: 24px;"></i>
                                         </a>
                                     </td>
-
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
@@ -125,6 +124,7 @@
                                 <td>No posts yet..</td>
                             </tr>
                         <?php endif; ?>
+
                     <?php elseif ($mode == 'add_new'): ?>
 
                         <?php if (isset($errors)): ?>
@@ -262,6 +262,10 @@
                     <?php endif; ?>
                 </tbody>
             </table>
+
+            <?php if ($mode == 'read'): ?>
+                <?= Page::show_pagination_links(); ?>
+            <?php endif; ?>
         </div><!-- /content-panel -->
     </div><!-- /col-md-12 -->
 </div><!-- /row -->

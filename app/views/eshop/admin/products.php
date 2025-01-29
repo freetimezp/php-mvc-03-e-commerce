@@ -265,18 +265,16 @@
                     ): ?>
                         <?= $data['table_rows']; ?>
                     <?php else: ?>
-                        <td><a href="basic_table.html#">Example row</a></td>
-                        <td>
-                            <button class="btn btn-primary btn-xs">
-                                <i class="fa fa-pencil"></i>
-                            </button>
-                            <button class="btn btn-danger btn-xs">
-                                <i class="fa fa-trash-o "></i>
-                            </button>
-                        </td>
+                        <tr>
+                            <td>No products here</td>
+                        </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
+
+            <div>
+                <?= Page::show_pagination_links() ?>
+            </div>
         </div><!-- /content-panel -->
     </div><!-- /col-md-12 -->
 </div><!-- /row -->

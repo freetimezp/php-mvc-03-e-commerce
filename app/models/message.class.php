@@ -55,8 +55,11 @@ class Message
     public function get_all()
     {
         $arr = array();
+        $limit = 5;
+        $offset = Page::get_offset($limit);
         $db = Database::newInstance();
-        $query = "SELECT * FROM contact_us ORDER BY id ASC";
+
+        $query = "SELECT * FROM contact_us ORDER BY id ASC LIMIT $limit OFFSET $offset";
 
         return $db->read($query, $arr);
     }

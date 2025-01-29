@@ -146,20 +146,16 @@
                     ): ?>
                         <?= $data['table_rows']; ?>
                     <?php else: ?>
-                        <td><a href="basic_table.html#">Example row</a></td>
-                        <td><a href="basic_table.html#">Parent</a></td>
-                        <td><span class="label label-info label-mini">Enabled</span></td>
-                        <td>
-                            <button class="btn btn-primary btn-xs">
-                                <i class="fa fa-pencil"></i>
-                            </button>
-                            <button class="btn btn-danger btn-xs">
-                                <i class="fa fa-trash-o "></i>
-                            </button>
-                        </td>
+                        <tr>
+                            <td>no categories here</td>
+                        </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
+
+            <div>
+                <?= Page::show_pagination_links() ?>
+            </div>
         </div><!-- /content-panel -->
     </div><!-- /col-md-12 -->
 </div><!-- /row -->

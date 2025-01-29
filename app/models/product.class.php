@@ -164,9 +164,11 @@ class Product
 
     public function get_all()
     {
+        $limit = 5;
+        $offset = Page::get_offset($limit);
         $db = Database::newInstance();
 
-        return $db->read("SELECT * FROM products ORDER BY id DESC");
+        return $db->read("SELECT * FROM products ORDER BY id DESC LIMIT $limit OFFSET $offset");
     }
 
     public function make_table($products, $model = null)

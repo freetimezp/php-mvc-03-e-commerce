@@ -45,9 +45,11 @@ class Category
 
     public function get_all()
     {
+        $limit = 10;
+        $offset = Page::get_offset($limit);
         $db = Database::newInstance();
 
-        return $db->read("SELECT * FROM categories ORDER BY id DESC");
+        return $db->read("SELECT * FROM categories ORDER BY id DESC LIMIT $limit OFFSET $offset");
     }
 
     public function get_one($id)

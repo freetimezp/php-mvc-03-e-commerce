@@ -26,6 +26,7 @@ class Admin extends Controller
         $data['current_page'] =  "categories";
 
         $user = $this->load_model('user');
+        $category = $this->load_model("category");
         $user_data = $user->check_login(true, ['admin']);
 
         if (!empty($user_data)) {
@@ -33,10 +34,9 @@ class Admin extends Controller
         }
 
         $db = Database::newInstance();
-        $categories = $db->read("SELECT * FROM categories ORDER BY id DESC");
+        $categories = $category->get_all();
         $categories_enabled = $db->read("SELECT * FROM categories WHERE disabled = 0 ORDER BY id DESC");
 
-        $category = $this->load_model("category");
         $table_rows = $category->make_table($categories);
 
         if (!empty($categories)) {
@@ -58,6 +58,9 @@ class Admin extends Controller
         $data['current_page'] =  "products";
 
         $user = $this->load_model('user');
+        $product = $this->load_model("product");
+        $category = $this->load_model("category");
+
         $user_data = $user->check_login(true, ['admin']);
 
         if (!empty($user_data)) {
@@ -65,12 +68,10 @@ class Admin extends Controller
         }
 
         $db = Database::newInstance();
-        $products = $db->read("SELECT * FROM products ORDER BY id DESC");
+        $products = $product->get_all();
         $categories = $db->read("SELECT * FROM categories WHERE disabled = 0 ORDER BY id DESC");
 
 
-        $product = $this->load_model("product");
-        $category = $this->load_model("category");
         $table_rows = $product->make_table($products, $category);
 
         $data['table_rows'] = $table_rows;

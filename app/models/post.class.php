@@ -154,8 +154,11 @@ class Post
     public function get_all()
     {
         $arr = array();
+        $limit = 2;
+        $offset = Page::get_offset($limit);
         $db = Database::newInstance();
-        $query = "SELECT * FROM blogs ORDER BY id ASC ";
+
+        $query = "SELECT * FROM blogs ORDER BY id ASC LIMIT $limit OFFSET $offset";
 
         return $db->read($query, $arr);
     }

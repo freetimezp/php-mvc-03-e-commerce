@@ -140,6 +140,12 @@
                     <?php endif; ?>
                 </tbody>
             </table>
+
+            <?php if ($mode == 'read'): ?>
+                <div>
+                    <?= Page::show_pagination_links() ?>
+                </div>
+            <?php endif; ?>
         </div><!-- /content-panel -->
     </div><!-- /col-md-12 -->
 </div><!-- /row -->
