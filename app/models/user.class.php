@@ -272,6 +272,7 @@ class User
 			user_url varchar(60) not null,
 			description varchar(250) not null,
 			category int not null,
+			brand int null,
 			price double not null,
 			quantity int not null,
 			image varchar(500) null,
@@ -419,6 +420,21 @@ class User
             image varchar(500) not null,
             date datetine not null
 		)";
+        $db = new Database();
+        //show($db);
+        $db->query($query);
+    }
+
+
+    //create table brands
+    public function create_table_brands()
+    {
+        $query = "create table if not exists brands(
+                id int primary key auto_increment,
+                brand varchar(30) not null,
+                disabled tinyint default 0,
+                views int default 0
+            )";
         $db = new Database();
         //show($db);
         $db->query($query);

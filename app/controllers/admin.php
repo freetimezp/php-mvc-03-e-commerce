@@ -70,12 +70,14 @@ class Admin extends Controller
         $db = Database::newInstance();
         $products = $product->get_all();
         $categories = $db->read("SELECT * FROM categories WHERE disabled = 0 ORDER BY id DESC");
+        $brands = $db->read("SELECT * FROM brands WHERE disabled = 0 ORDER BY id DESC");
 
 
         $table_rows = $product->make_table($products, $category);
 
         $data['table_rows'] = $table_rows;
         $data['categories'] = $categories;
+        $data['brands'] = $brands;
 
         //show($data);
         $this->view("admin/products", $data);

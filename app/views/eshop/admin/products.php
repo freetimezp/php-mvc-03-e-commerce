@@ -9,7 +9,7 @@
     .add_new,
     .edit_product {
         width: 700px;
-        height: 500px;
+        height: 600px;
         background-color: #cecccc;
         position: absolute;
         padding: 6px;
@@ -93,6 +93,24 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="form-group d-flex">
+                            <label class="col-sm-2 col-sm-2 control-label">Brand:</label>
+                            <div class="col-sm-4">
+                                <select name="product-brand" id="product-brand" class="form-control">
+                                    <option>Choose:</option>
+                                    <?php if (isset($brands)): ?>
+                                        <?php foreach ($brands as $brand_row): ?>
+                                            <option value="<?= $brand_row->id ?>">
+                                                <?= $brand_row->brand ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <br style="clear: both;"><br>
 
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Price:</label>
@@ -363,6 +381,12 @@
             return;
         }
 
+        var productBrand = document.getElementById("product-brand");
+        if (productBrand.value.trim() == "" || isNaN(productBrand.value.trim())) {
+            alert("Plaese, choose product brand..");
+            return;
+        }
+
         var productPrice = document.getElementById("product-price");
         if (productPrice.value.trim() == "" || isNaN(productPrice.value.trim())) {
             alert("Plaese, enter product price..");
@@ -395,12 +419,14 @@
         var productDescription = productDescription.value.trim();
         var productQuantity = productQuantity.value.trim();
         var productCategory = productCategory.value.trim();
+        var productBrand = productBrand.value.trim();
         var productPrice = productPrice.value.trim();
 
 
         data.append('description', productDescription);
         data.append('quantity', productQuantity);
         data.append('category', productCategory);
+        data.append('brand', productBrand);
         data.append('price', productPrice);
         data.append('image', productImage.files[0]);
         data.append('data_type', "add_product");
@@ -505,7 +531,7 @@
 
     function handle_result(result) {
         //console.log("Status OK: " + "Products");
-        //console.log(result);
+        console.log(result);
 
         if (result != "") {
             var obj = JSON.parse(result);
