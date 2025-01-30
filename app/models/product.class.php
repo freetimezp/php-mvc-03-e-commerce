@@ -172,8 +172,13 @@ class Product
         $limit = 5;
         $offset = Page::get_offset($limit);
         $db = Database::newInstance();
+        $query = "SELECT products.*, brands.brand as brand_name 
+            FROM products JOIN brands 
+            ON products.brand = brands.id 
+            ORDER BY products.id DESC 
+            LIMIT $limit OFFSET $offset";
 
-        return $db->read("SELECT * FROM products ORDER BY id DESC LIMIT $limit OFFSET $offset");
+        return $db->read($query);
     }
 
     public function make_table($products, $model = null)
@@ -190,6 +195,7 @@ class Product
                 $info['id'] = $product_row->id;
                 $info['description'] = $product_row->description;
                 $info['category'] = $product_row->category;
+                $info['brand_name'] = $product_row->brand_name;
                 $info['quantity'] = $product_row->quantity;
                 $info['price'] = $product_row->price;
                 $info['image'] = $product_row->image;
@@ -213,6 +219,7 @@ class Product
                     </a></td>
                     <td><a href="basic_table.html"> ' . $product_row->quantity . '</a></td>
                     <td><a href="basic_table.html"> ' . $one_cat->category . '</a></td>
+                    <td><a href="basic_table.html"> ' . $product_row->brand_name . '</a></td>
                     <td><a href="basic_table.html"> ' . $product_row->price . '$ </a></td>
                     <td><a href="basic_table.html"> ' . date("jS M, Y", strtotime($product_row->date)) . '</a></td>
 

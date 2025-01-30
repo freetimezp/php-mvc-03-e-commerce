@@ -271,6 +271,7 @@
                         <th>Image</th>
                         <th>Quantity</th>
                         <th>Category</th>
+                        <th>Brand</th>
                         <th>Price</th>
                         <th>Date</th>
                         <th><i class=" fa fa-edit"></i> Actions</th>
