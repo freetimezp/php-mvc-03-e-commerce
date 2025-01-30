@@ -47,6 +47,74 @@
 <div class="row mt">
     <div class="col-md-12">
         <div class="content-panel">
+            <!-- search start -->
+            <form method="GET">
+                <table class="search-table table table-striped table-condensed">
+                    <tr>
+                        <th>Description</th>
+                        <td colspan="3">
+                            <input type="text" placeholder="Type text for search.." class="form-control"
+                                name="description">
+                        </td>
+
+                        <th>Category</th>
+                        <td>
+                            <select class="form-control" name="category">
+                                <option value="">--Choose--</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Brands</th>
+                        <td>
+                            <label for="abrand">
+                                <input id="abrand" type="checkbox" class="form-checkbox-input"
+                                    name="brand-0">
+                                A Brand |
+                            </label>
+                            <label for="bbrand">
+                                <input id="bbrand" type="checkbox" class="form-checkbox-input"
+                                    name="brand-1">
+                                B Brand
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Price</th>
+                        <td>
+                            <label for="">Min</label>
+                            <input type="number" step="0.01" class="form-control" value="0"
+                                name="price">
+                            <label for="">Max</label>
+                            <input type="number" step="0.01" class="form-control" value="0"
+                                name="price">
+                        </td>
+
+                        <th>Quantity</th>
+                        <td>
+                            <label for="">Min</label>
+                            <input type="number" step="0.01" class="form-control" value="0"
+                                name="quantity">
+
+                            <label for="">Max</label>
+                            <input type="number" step="0.01" class="form-control" value="0"
+                                name="quantity">
+                        </td>
+
+                        <th>Year</th>
+                        <td>
+                            <select class="form-control" name="year">
+                                <option value="">--Choose--</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <!-- search end -->
+
+            <hr style="opacity: 0.2;">
+
             <table class="table table-striped table-advance table-hover">
                 <h4>
                     Product |
