@@ -209,6 +209,25 @@
                             </div>
                         </div>
 
+                        <div class="form-group d-flex">
+                            <label class="col-sm-2 col-sm-2 control-label">Brand:</label>
+                            <div class="col-sm-4">
+                                <select name="product-brand" id="edit-product-brand" class="form-control">
+                                    <option>Choose:</option>
+                                    <?php if (isset($brands)): ?>
+                                        <?php foreach ($brands as $brand_row): ?>
+                                            <option value="<?= $brand_row->id ?>">
+                                                <?= $brand_row->brand ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <br style="clear: both;"><br>
+
+
                         <div class="form-group">
                             <label class="col-sm-2 col-sm-2 control-label">Price:</label>
                             <div class="col-sm-10">
@@ -331,6 +350,12 @@
             let edit_product_category = document.querySelector("#edit-product-category");
             if (edit_product_category) {
                 edit_product_category.value = info.category;
+            }
+
+            let edit_product_brand = document.querySelector("#edit-product-brand");
+            if (edit_product_brand) {
+                //console.log(info);
+                edit_product_brand.value = info.brand;
             }
 
             let edit_product_quantity = document.querySelector("#edit-product-quantity");
@@ -456,6 +481,12 @@
             return;
         }
 
+        var productBrand = document.getElementById("edit-product-brand");
+        if (productBrand.value.trim() == "" || isNaN(productBrand.value.trim())) {
+            alert("Plaese, choose product brand..");
+            return;
+        }
+
         var productPrice = document.getElementById("edit-product-price");
         if (productPrice.value.trim() == "" || isNaN(productPrice.value.trim())) {
             alert("Plaese, enter product price..");
@@ -487,12 +518,14 @@
         var productDescription = productDescription.value.trim();
         var productQuantity = productQuantity.value.trim();
         var productCategory = productCategory.value.trim();
+        var productBrand = productBrand.value.trim();
         var productPrice = productPrice.value.trim();
 
 
         data.append('description', productDescription);
         data.append('quantity', productQuantity);
         data.append('category', productCategory);
+        data.append('brand', productBrand);
         data.append('price', productPrice);
         data.append('data_type', "edit_product");
         data.append('id', EDIT_ID);
@@ -532,7 +565,7 @@
 
     function handle_result(result) {
         //console.log("Status OK: " + "Products");
-        console.log(result);
+        //console.log(result);
 
         if (result != "") {
             var obj = JSON.parse(result);
@@ -541,14 +574,14 @@
             if (typeof obj.data_type != 'undefined') {
                 if (obj.data_type == 'add_new') {
                     if (obj.message_type == 'info') {
-                        alert(obj.message);
+                        //alert(obj.message);
                         show_add_new();
 
                         var table_body = document.querySelector("#table_body");
                         table_body.innerHTML = obj.data;
 
                     } else {
-                        alert(obj.message);
+                        //alert(obj.message);
                     }
                 } else if (obj.data_type == 'delete_row') {
                     //console.log(obj);
@@ -566,7 +599,7 @@
                         table_body.innerHTML = obj.data;
 
                     } else {
-                        alert(obj.message);
+                        //alert(obj.message);
                     }
                 }
             }

@@ -100,6 +100,7 @@ class Product
         $arr['description'] = $data->description;
         $arr['quantity'] = $data->quantity;
         $arr['category'] = $data->category;
+        $arr['brand'] = $data->brand;
         $arr['price'] = $data->price;
 
         $images_string = "";
@@ -114,6 +115,10 @@ class Product
 
         if (!is_numeric($arr['category'])) {
             $_SESSION['error'] .= "Please, choose category from the list. <br>";
+        }
+
+        if (!is_numeric($arr['brand'])) {
+            $_SESSION['error'] .= "Please, choose brand from the list. <br>";
         }
 
         if (!is_numeric($arr['price'])) {
@@ -151,7 +156,7 @@ class Product
 
         if (!isset($_SESSION['error']) || $_SESSION['error'] == "") {
             $query = "UPDATE products 
-            SET description = :description, quantity = :quantity, category = :category, price = :price $images_string
+            SET description = :description, quantity = :quantity, category = :category, brand = :brand, price = :price $images_string
             WHERE id = :id LIMIT 1";
 
             $db->write($query, $arr);
@@ -195,7 +200,7 @@ class Product
                 $info['id'] = $product_row->id;
                 $info['description'] = $product_row->description;
                 $info['category'] = $product_row->category;
-                $info['brand_name'] = $product_row->brand_name;
+                $info['brand'] = $product_row->brand_name;
                 $info['quantity'] = $product_row->quantity;
                 $info['price'] = $product_row->price;
                 $info['image'] = $product_row->image;
