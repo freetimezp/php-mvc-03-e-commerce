@@ -54,6 +54,12 @@ class Admin extends Controller
 
     public function products()
     {
+        $search = false;
+        if (isset($_GET['search'])) {
+            show($_GET);
+            $search = true;
+        }
+
         $data['page_title'] = "Admin";
         $data['current_page'] =  "products";
 

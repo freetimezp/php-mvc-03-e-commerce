@@ -40,6 +40,21 @@
         height: 150px;
         margin: 20px 10px;
     }
+
+    .search-table th {
+        background-color: #eee;
+    }
+
+    .search-table label {
+        padding: 4px;
+        margin-right: 10px;
+        background-color: #eee;
+        border-radius: 12px;
+    }
+
+    .search-table label input {
+        margin-right: 5px;
+    }
 </style>
 
 <h3>Products</h3>
@@ -48,8 +63,9 @@
     <div class="col-md-12">
         <div class="content-panel">
             <!-- search start -->
+            <h4>Search</h4>
             <form method="GET">
-                <table class="search-table table table-striped table-condensed">
+                <table class="search-table table">
                     <tr>
                         <th>Description</th>
                         <td colspan="3">
@@ -61,22 +77,14 @@
                         <td>
                             <select class="form-control" name="category">
                                 <option value="">--Choose--</option>
+                                <?php Search::get_categories() ?>
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <th>Brands</th>
-                        <td>
-                            <label for="abrand">
-                                <input id="abrand" type="checkbox" class="form-checkbox-input"
-                                    name="brand-0">
-                                A Brand |
-                            </label>
-                            <label for="bbrand">
-                                <input id="bbrand" type="checkbox" class="form-checkbox-input"
-                                    name="brand-1">
-                                B Brand
-                            </label>
+                        <td colspan="6">
+                            <?php Search::get_brands() ?>
                         </td>
                     </tr>
 
@@ -85,28 +93,35 @@
                         <td>
                             <label for="">Min</label>
                             <input type="number" step="0.01" class="form-control" value="0"
-                                name="price">
+                                name="min-price">
                             <label for="">Max</label>
                             <input type="number" step="0.01" class="form-control" value="0"
-                                name="price">
+                                name="max-price">
                         </td>
 
                         <th>Quantity</th>
                         <td>
                             <label for="">Min</label>
                             <input type="number" step="0.01" class="form-control" value="0"
-                                name="quantity">
+                                name="min-qty">
 
                             <label for="">Max</label>
                             <input type="number" step="0.01" class="form-control" value="0"
-                                name="quantity">
+                                name="max-qty">
                         </td>
 
                         <th>Year</th>
                         <td>
                             <select class="form-control" name="year">
                                 <option value="">--Choose--</option>
+                                <?php Search::get_years() ?>
                             </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4">
+                            <input type="submit" value="Search" class="btn btn-success" name="search">
                         </td>
                     </tr>
                 </table>
