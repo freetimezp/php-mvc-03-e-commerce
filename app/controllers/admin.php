@@ -80,6 +80,8 @@ class Admin extends Controller
             $offset = Page::get_offset($limit);
 
             $params = array();
+            $brands = array();
+
             if (isset($_GET['description']) && trim($_GET['description']) != "") {
                 $params['description'] = $_GET['description'];
             }
@@ -88,29 +90,51 @@ class Admin extends Controller
                 $params['category'] = $_GET['category'];
             }
 
+
+            foreach ($_GET as $key => $value) {
+                if (strstr($key, "brand-")) {
+                    $brands[] = $value;
+                }
+            }
+            if (count($brands) > 0) {
+                $params['brands'] = implode("','", $brands);
+            }
+
+
             $query = "SELECT prod.*, brands.brand as brand_name, cat.category as category_name  
                 FROM products as prod 
                 JOIN brands ON brands.id = prod.brand
                 JOIN categories as cat ON cat.id = prod.category ";
 
+
+
             if (count($params) > 0) {
                 $query .= " WHERE ";
             }
 
+            //search by description
             if (isset($params['description'])) {
                 $description = $params['description'];
                 $query .= "prod.description LIKE '%$description%' AND ";
             }
 
+            //search by category
             if (isset($params['category'])) {
                 $category = $params['category'];
                 $query .= "cat.id LIKE '$category' AND ";
             }
 
+            //search by brands
+            if (isset($params['brands'])) {
+                $query .= "brands.id IN ('" . $params['brands'] . "') AND ";
+            }
+
+
             $query = trim($query);
             $query = trim($query, "AND");
             $query .= " ORDER BY prod.id DESC LIMIT $limit OFFSET $offset";
 
+            show($query);
             $products = $db->read($query);
         } else {
             $limit = 5;
