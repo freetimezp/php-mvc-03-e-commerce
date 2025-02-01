@@ -74,7 +74,39 @@ class Admin extends Controller
         }
 
         $db = Database::newInstance();
-        $products = $product->get_all();
+
+        if ($search) {
+            $limit = 5;
+            $offset = Page::get_offset($limit);
+
+            $description = isset($_GET['description']) ? $_GET['description'] : '';
+
+            $query = "SELECT prod.*, brands.brand as brand_name, cat.category as category_name  
+                FROM products as prod 
+                JOIN brands ON brands.id = prod.brand
+                JOIN categories as cat ON cat.id = prod.category ";
+
+            if ($description != '') {
+                $query .= "WHERE prod.description LIKE '%$description%'";
+            }
+
+            $query .= " ORDER BY prod.id DESC LIMIT $limit OFFSET $offset";
+
+            $products = $db->read($query);
+        } else {
+            $limit = 5;
+            $offset = Page::get_offset($limit);
+
+            $query = "SELECT prod.*, brands.brand as brand_name, cat.category as category_name 
+                FROM products as prod 
+                JOIN brands ON prod.brand = brands.id 
+                JOIN categories as cat ON cat.id = prod.category
+                ORDER BY prod.id DESC 
+                LIMIT $limit OFFSET $offset";
+
+            $products = $db->read($query);
+        }
+
         $categories = $db->read("SELECT * FROM categories WHERE disabled = 0 ORDER BY id DESC");
         $brands = $db->read("SELECT * FROM brands WHERE disabled = 0 ORDER BY id DESC");
 

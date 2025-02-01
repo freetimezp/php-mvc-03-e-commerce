@@ -211,9 +211,7 @@ class Product
                 $info = json_encode($info);
                 $info = str_replace('"', "'", $info); // for correct json reading in js
 
-                $one_cat = $model->get_one($product_row->category);
-
-                //print_r($product_row->category . "<br>");
+                //$one_cat = $model->get_one($product_row->category);
 
                 $result .= "<tr>";
                 $result .= '
@@ -223,7 +221,7 @@ class Product
                         <img src= "' . ROOT . $product_row->image . '" style="width: 200px;" />
                     </a></td>
                     <td><a href="basic_table.html"> ' . $product_row->quantity . '</a></td>
-                    <td><a href="basic_table.html"> ' . $one_cat->category . '</a></td>
+                    <td><a href="basic_table.html"> ' . $product_row->category_name . '</a></td>
                     <td><a href="basic_table.html"> ' . $product_row->brand_name . '</a></td>
                     <td><a href="basic_table.html"> ' . $product_row->price . '$ </a></td>
                     <td><a href="basic_table.html"> ' . date("jS M, Y", strtotime($product_row->date)) . '</a></td>
