@@ -76,7 +76,7 @@
                         <th>Category</th>
                         <td>
                             <select class="form-control" name="category">
-                                <option value="">--Choose--</option>
+                                <option value="--Choose--">--Choose--</option>
                                 <?php Search::get_categories('category') ?>
                             </select>
                         </td>
@@ -113,7 +113,7 @@
                         <th>Year</th>
                         <td>
                             <select class="form-control" name="year">
-                                <option value="">--Choose--</option>
+                                <option value="--Choose--">--Choose--</option>
                                 <?php Search::get_years('year') ?>
                             </select>
                         </td>

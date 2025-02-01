@@ -79,17 +79,36 @@ class Admin extends Controller
             $limit = 5;
             $offset = Page::get_offset($limit);
 
-            $description = isset($_GET['description']) ? $_GET['description'] : '';
+            $params = array();
+            if (isset($_GET['description']) && trim($_GET['description']) != "") {
+                $params['description'] = $_GET['description'];
+            }
+
+            if (isset($_GET['category']) && trim($_GET['category']) != "--Choose--") {
+                $params['category'] = $_GET['category'];
+            }
 
             $query = "SELECT prod.*, brands.brand as brand_name, cat.category as category_name  
                 FROM products as prod 
                 JOIN brands ON brands.id = prod.brand
                 JOIN categories as cat ON cat.id = prod.category ";
 
-            if ($description != '') {
-                $query .= "WHERE prod.description LIKE '%$description%'";
+            if (count($params) > 0) {
+                $query .= " WHERE ";
             }
 
+            if (isset($params['description'])) {
+                $description = $params['description'];
+                $query .= "prod.description LIKE '%$description%' AND ";
+            }
+
+            if (isset($params['category'])) {
+                $category = $params['category'];
+                $query .= "cat.id LIKE '$category' AND ";
+            }
+
+            $query = trim($query);
+            $query = trim($query, "AND");
             $query .= " ORDER BY prod.id DESC LIMIT $limit OFFSET $offset";
 
             $products = $db->read($query);
