@@ -18,6 +18,12 @@ class Shop extends Controller
             $find = addslashes($_GET['find']);
         }
 
+        if (isset($_GET['search'])) {
+            //show($_GET);
+            $search = true;
+        }
+
+
         $data['page_title'] = "Shop";
 
         $user = $this->load_model('user');
@@ -32,10 +38,16 @@ class Shop extends Controller
         $DB = Database::newInstance();
 
         $rows = false;
-        if ($search && !empty($find)) {
-            $arr['description'] = "%" . $find . "%";
-            $query = "SELECT * FROM products WHERE description LIKE :description LIMIT $limit OFFSET $offset ORDER BY id DESC";
-            $rows = $DB->read($query, $arr);
+        if ($search) {
+            if (isset($_GET['find'])) {
+                $arr['description'] = "%" . $find . "%";
+                $query = "SELECT * FROM products WHERE description LIKE :description LIMIT $limit OFFSET $offset ORDER BY id DESC";
+                $rows = $DB->read($query, $arr);
+            } else {
+                //advanced search
+                $query = Search::make_query($_GET, $limit, $offset);
+                $rows = $DB->read($query);
+            }
         } else {
             $query = "SELECT * FROM products LIMIT $limit OFFSET $offset";
             $rows = $DB->read($query);

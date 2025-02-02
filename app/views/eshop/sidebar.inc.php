@@ -93,8 +93,8 @@
                 <tr>
                     <td>
                         <div><b>Price range:</b></div>
-                        <div class="well price-range">
-                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[50,950]" id="sl2"><br />
+                        <div class="well price-range" style="margin: 0; padding-bottom: 20px;">
+                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,1000]" id="sl2"><br />
                             <b>$ 0</b> <b class="pull-right">$ 1000</b>
                         </div>
 
@@ -108,13 +108,15 @@
                 <tr>
                     <td>
                         <div><b>Quantity:</b></div>
+                        <div class="well qty-range" style="margin: 0; padding-bottom: 20px;">
+                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="50" data-slider-step="5" data-slider-value="[1,50]" id="sl3"><br />
+                            <b>0</b> <b class="pull-right">50</b>
+                        </div>
 
-                        <label for="">Min</label>
-                        <input type="number" step="0.01" class="form-control" name="min-qty"
+                        <input type="hidden" step="0.01" class="form-control" name="min-qty"
                             value="<?php Search::get_sticky('number', 'min-qty') ?>">
 
-                        <label for="">Max</label>
-                        <input type="number" step="0.01" class="form-control" name="max-qty"
+                        <input type="hidden" step="0.01" class="form-control" name="max-qty"
                             value="<?php Search::get_sticky('number', 'max-qty') ?>">
                     </td>
                 </tr>

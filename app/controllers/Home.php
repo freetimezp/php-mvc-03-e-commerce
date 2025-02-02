@@ -20,6 +20,11 @@ class Home extends Controller
             $find = addslashes($_GET['find']);
         }
 
+        if (isset($_GET['search'])) {
+            //show($_GET);
+            $search = true;
+        }
+
         $data['page_title'] = "Home";
 
         $user = $this->load_model('user');
@@ -33,9 +38,15 @@ class Home extends Controller
 
 
         $rows = false;
-        if ($search && !empty($find)) {
-            $arr['description'] = "%" . $find . "%";
-            $rows = $DB->read("SELECT * FROM products WHERE description LIKE :description LIMIT $limit OFFSET $offset", $arr);
+        if ($search) {
+            if (isset($_GET['find'])) {
+                $arr['description'] = "%" . $find . "%";
+                $rows = $DB->read("SELECT * FROM products WHERE description LIKE :description LIMIT $limit OFFSET $offset", $arr);
+            } else {
+                //advanced search
+                $query = Search::make_query($_GET, $limit, $offset);
+                $rows = $DB->read($query);
+            }
         } else {
             $rows = $DB->read("SELECT * FROM products LIMIT $limit OFFSET $offset");
         }
