@@ -25,9 +25,9 @@ class Search
 
         if (is_array($data)) {
             foreach ($data as $key => $row) {
-                echo "<label for='brand-" . $row->id . "'>
+                echo "<label for='brand-" . $row->id . "' style='margin-right: 10px;' >
                         <input id='brand-$row->id' value='$row->id' type='checkbox' class='form-checkbox-input'
-                            name='brand-$key' "
+                            name='brand-$key' style='margin-right: 5px;' "
                     . self::get_sticky('checkbox', 'brand-' . $key, $row->id) . ">" . $row->brand  . "
                     </label>";
             }

@@ -56,7 +56,7 @@ class Admin extends Controller
     {
         $search = false;
         if (isset($_GET['search'])) {
-            show($_GET);
+            //show($_GET);
             $search = true;
         }
 
@@ -178,7 +178,7 @@ class Admin extends Controller
             $query = trim($query, "AND");
             $query .= " ORDER BY prod.id DESC LIMIT $limit OFFSET $offset";
 
-            show($query);
+            //show($query);
             $products = $db->read($query);
         } else {
             $limit = 5;
