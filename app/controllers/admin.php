@@ -90,6 +90,30 @@ class Admin extends Controller
                 $params['category'] = $_GET['category'];
             }
 
+            if (isset($_GET['year']) && trim($_GET['year']) != "--Choose--") {
+                $params['year'] = $_GET['year'];
+            }
+
+            if (
+                isset($_GET['min-price'])
+                && trim($_GET['max-price']) != "0"
+                && trim($_GET['min-price']) != ""
+                && trim($_GET['max-price']) != ""
+            ) {
+                $params['min-price'] = (float)$_GET['min-price'];
+                $params['max-price'] = (float)$_GET['max-price'];
+            }
+
+            if (
+                isset($_GET['min-qty'])
+                && trim($_GET['max-qty']) != "0"
+                && trim($_GET['min-qty']) != ""
+                && trim($_GET['max-qty']) != ""
+            ) {
+                $params['min-qty'] = (int)$_GET['min-qty'];
+                $params['max-qty'] = (int)$_GET['max-qty'];
+            }
+
 
             foreach ($_GET as $key => $value) {
                 if (strstr($key, "brand-")) {
@@ -122,6 +146,26 @@ class Admin extends Controller
             if (isset($params['category'])) {
                 $category = $params['category'];
                 $query .= "cat.id LIKE '$category' AND ";
+            }
+
+            //search by min, max price
+            if (isset($params['min-price'])) {
+                $min_price = $params['min-price'];
+                $max_price = $params['max-price'];
+                $query .= "(prod.price BETWEEN '$min_price' AND '$max_price') AND ";
+            }
+
+            //search by min, max quantity
+            if (isset($params['min-qty'])) {
+                $min_qty = $params['min-qty'];
+                $max_qty = $params['max-qty'];
+                $query .= "(prod.quantity BETWEEN '$min_qty' AND '$max_qty') AND ";
+            }
+
+            //search by year
+            if (isset($params['year'])) {
+                $year = $params['year'];
+                $query .= "YEAR(prod.date) = '$year' AND ";
             }
 
             //search by brands
