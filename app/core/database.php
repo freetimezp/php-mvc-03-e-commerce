@@ -32,10 +32,10 @@ class Database
 
 
     //read from db
-    public function read($query, $data = [])
+    public function read($query, $arr = [])
     {
         $stm = self::$con->prepare($query);
-        $result = $stm->execute($data);
+        $result = $stm->execute($arr);
 
         if ($result) {
             $data = $stm->fetchAll(PDO::FETCH_OBJ);
@@ -49,10 +49,10 @@ class Database
     }
 
     //write to db
-    public function write($query, $data = [])
+    public function write($query, $arr = [])
     {
         $stm = self::$con->prepare($query);
-        $result = $stm->execute($data);
+        $result = $stm->execute($arr);
 
         if ($result) {
             return true;

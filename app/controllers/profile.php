@@ -17,10 +17,15 @@ class Profile extends Controller
         }
 
         if ($url_address) {
+            $_SESSION['user_url'] = isset($_SESSION['user_url']) ? $_SESSION['user_url'] : '';
+            $url_address = $url_address == 'home' ? $_SESSION['user_url'] : $url_address;
+
             $profile_data = $user->get_user($url_address);
         } else {
             $profile_data = $user_data;
         }
+
+
 
         if (is_object($profile_data)) {
             $data['profile_data'] = $profile_data;

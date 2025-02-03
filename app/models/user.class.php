@@ -112,6 +112,7 @@ class User
     public function get_user($url)
     {
         $db = Database::newInstance();
+        //show($url);
 
         $arr = false;
         $arr['url'] = addslashes($url);
@@ -402,7 +403,7 @@ class User
         subject varchar(100) not null,
         message varchar(100) not null,
         date datetine not null
-    )";
+        )";
         $db = new Database();
         //show($db);
         $db->query($query);

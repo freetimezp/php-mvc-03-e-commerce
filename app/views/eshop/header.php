@@ -90,7 +90,7 @@
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
                                 <?php if (isset($data['user_data']) && $data['user_data']->rank == 'admin'): ?>
-                                    <li><a href="<?= ROOT ?>profile"><i class="fa fa-user"></i> Profile</a></li>
+                                    <li><a href="<?= ROOT ?>profile/<?= $data['user_data']->url_address ?>"><i class="fa fa-user"></i> Profile</a></li>
                                 <?php endif; ?>
 
                                 <li><a href="<?= ROOT ?>"><i class="fa fa-star"></i> Wishlist</a></li>
