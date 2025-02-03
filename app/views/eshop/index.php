@@ -21,9 +21,11 @@
 						</div>
 					<?php endif; ?>
 
-					<!-- Pagination -->
-					<?= Page::show_pagination_links() ?>
 				</div><!--features_items-->
+				<!-- Pagination -->
+				<div>
+					<?= Page::show_pagination_links() ?>
+				</div>
 
 				<?php if (isset($segment_data) && is_array($segment_data)): ?>
 					<div class="category-tab"><!--category-tab-->

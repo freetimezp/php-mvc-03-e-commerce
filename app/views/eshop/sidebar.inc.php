@@ -94,7 +94,8 @@
                     <td>
                         <div><b>Price range:</b></div>
                         <div class="well price-range" style="margin: 0; padding-bottom: 20px;">
-                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,1000]" id="sl2"><br />
+                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" id="sl2"
+                                data-slider-value="[<?php Search::get_sticky('number', 'min-price', '', 0) ?>,<?php Search::get_sticky('number', 'max-price', '', 1000) ?>]"><br />
                             <b>$ 0</b> <b class="pull-right">$ 1000</b>
                         </div>
 
@@ -109,14 +110,14 @@
                     <td>
                         <div><b>Quantity:</b></div>
                         <div class="well qty-range" style="margin: 0; padding-bottom: 20px;">
-                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="50" data-slider-step="5" data-slider-value="[1,50]" id="sl3"><br />
+                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="50" data-slider-step="1" id="sl3"
+                                data-slider-value="[<?php Search::get_sticky('number', 'min-qty', '', 0) ?>,<?php Search::get_sticky('number', 'max-qty', '', 50) ?>]"><br />
                             <b>0</b> <b class="pull-right">50</b>
                         </div>
 
-                        <input type="hidden" step="0.01" class="form-control" name="min-qty"
+                        <input type="hidden" step="1" class="form-control min-qty" name="min-qty"
                             value="<?php Search::get_sticky('number', 'min-qty') ?>">
-
-                        <input type="hidden" step="0.01" class="form-control" name="max-qty"
+                        <input type="hidden" step="1" class="form-control max-qty" name="max-qty"
                             value="<?php Search::get_sticky('number', 'max-qty') ?>">
                     </td>
                 </tr>
@@ -148,6 +149,7 @@
 </div>
 
 <script>
+    //price range
     var price_range = document.querySelector(".price-range");
     price_range.addEventListener("mousemove", change_price_range);
 
@@ -158,13 +160,24 @@
 
         var values = tooltip.innerHTML;
         var parts = values.split(":");
-
         min_price.value = parts[0].trim();
         max_price.value = parts[1].trim();
-
     }
 
-    function exit_price_range(e) {
 
+    //quantity range
+    var qty_range = document.querySelector(".qty-range");
+    qty_range.addEventListener("mousemove", change_qty_range);
+
+    function change_qty_range(e) {
+        var tooltip = e.currentTarget.querySelector(".tooltip-inner");
+        var min_qty = document.querySelector(".min-qty");
+        var max_qty = document.querySelector(".max-qty");
+
+        var values = tooltip.innerHTML;
+        var parts = values.split(":");
+
+        min_qty.value = parts[0].trim();
+        max_qty.value = parts[1].trim();
     }
 </script>

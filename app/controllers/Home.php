@@ -92,7 +92,9 @@ class Home extends Controller
 
 
         //get products for lower segment 
-        $data['segment_data'] = $this->get_segment_data($DB, $data['categories'], $image_class);
+        if (isset($data['categories'])) {
+            $data['segment_data'] = $this->get_segment_data($DB, $data['categories'], $image_class);
+        }
 
 
 

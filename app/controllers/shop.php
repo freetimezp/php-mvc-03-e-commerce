@@ -117,12 +117,12 @@ class Shop extends Controller
 
         //get products by category
         if (empty($cat_arr_children)) {
-            $query = "SELECT * FROM products WHERE category = :cat_id LIMIT $limit OFFSET $offset ORDER BY id DESC";
+            $query = "SELECT * FROM products WHERE category = :cat_id ORDER BY id DESC LIMIT $limit OFFSET $offset";
             $rows = $DB->read($query, $arr);
         } else {
             foreach ($cat_arr_children as $key => $row) {
                 $arr['cat_id'] = $row;
-                $query = "SELECT * FROM products WHERE category = :cat_id LIMIT $limit OFFSET $offset ORDER BY id DESC";
+                $query = "SELECT * FROM products WHERE category = :cat_id ORDER BY id DESC LIMIT $limit OFFSET $offset";
                 $rows2 = $DB->read($query, $arr);
                 if (is_array($rows2)) {
                     $rows = array_merge($rows, $rows2);
